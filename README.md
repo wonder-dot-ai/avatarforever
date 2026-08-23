@@ -32,6 +32,8 @@ Ruibin Li<sup>1,†</sup> · Tao Yang<sup>2</sup> · Zhiyuan Ma<sup>1</sup> · F
 - [x] Paper and supplementary material
 - [x] Inference code
 - [x] Model checkpoints
+- [ ] Training code
+- [ ] Training data
 - [ ] Interactive demo
 
 ## Highlights
