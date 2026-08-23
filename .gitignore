@@ -5,13 +5,35 @@ __pycache__/
 venv/
 
 # Model checkpoints and generated media
-checkpoints/
+checkpoints/*
+!checkpoints/README.md
+models/
 weights/
 outputs/
+videos/
+data/
 *.ckpt
 *.safetensors
 *.pt
 *.pth
+*.bin
+*.gguf
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.m4a
+*.flac
+
+# Python and tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.env
+.env.*
 
 # Editor and operating-system files
 .idea/

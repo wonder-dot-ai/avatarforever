@@ -15,6 +15,8 @@ Ruibin Li<sup>1,†</sup> · Tao Yang<sup>2</sup> · Zhiyuan Ma<sup>1</sup> · F
   ·
   <a href="https://github.com/leeruibin/avatarforever"><strong>Code Repository</strong></a>
   ·
+  <a href="https://huggingface.co/LetsThink/AvatarForever"><strong>Model</strong></a>
+  ·
   <a href="https://arxiv.org/abs/2608.12107"><strong>Paper</strong></a>
 </p>
 
@@ -22,14 +24,14 @@ Ruibin Li<sup>1,†</sup> · Tao Yang<sup>2</sup> · Zhiyuan Ma<sup>1</sup> · F
 
 <sub><sup>†</sup> Work done during an internship at ByteDance. <sup>*</sup> Corresponding author.</sub>
 
-> **Research preview.** The paper, code, models, and demos are being prepared for public release.
+<!-- > **Research preview.** The paper, code, models, and demos are being prepared for public release. -->
 
 ## Release Status
 
 - [x] Method overview
 - [x] Paper and supplementary material
-- [ ] Inference code
-- [ ] Model checkpoints
+- [x] Inference code
+- [x] Model checkpoints
 - [ ] Interactive demo
 
 ## Highlights
@@ -56,6 +58,73 @@ Our key insight is to learn these capabilities independently and compose them on
 - **Streaming inference:** **ForeverCache** reuses stable historical features across denoising steps to avoid redundant context computation.
 
 ![Avatar-Forever framework](assets/overview.png)
+
+## Inference
+
+### Installation
+
+The released inference code is organized as a `uv` workspace and requires Python 3.11 and a CUDA-capable GPU. From the repository root, install all workspace packages with:
+
+```bash
+uv sync --all-packages
+```
+
+Optional optimized attention backends depend on the target GPU and CUDA environment.
+
+### Model checkpoints
+
+Model weights are not stored in Git. Download both the Avatar-Forever checkpoint and the Gemma text encoder into `checkpoints/` so the repository has this layout:
+
+```text
+checkpoints/
+├── avatarforever-ltx-2.3-22b.safetensors
+└── gemma-3-12b-it-qat-q4_0-unquantized/
+    ├── config.json
+    ├── tokenizer.json
+    └── ...
+```
+
+Install the Hugging Face CLI and authenticate first. Gemma is a gated model, so accept its license on [Google's Gemma 3 12B QAT model page](https://huggingface.co/google/gemma-3-12b-it-qat-q4_0-unquantized) before downloading:
+
+```bash
+pip install -U huggingface_hub
+hf auth login
+
+hf download LetsThink/AvatarForever \
+  avatarforever-ltx-2.3-22b.safetensors \
+  --local-dir checkpoints
+
+hf download google/gemma-3-12b-it-qat-q4_0-unquantized \
+  --local-dir checkpoints/gemma-3-12b-it-qat-q4_0-unquantized
+```
+
+The `checkpoints/` directory is ignored by Git; do not commit model weights.
+
+### Run inference
+
+```bash
+uv run python inference.py \
+  --distilled-checkpoint-path checkpoints/avatarforever-ltx-2.3-22b.safetensors \
+  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
+  --audio-path /path/to/input.wav \
+  --output-path outputs/result.mp4
+```
+
+The default configuration uses one-stage distilled inference at 768 × 512 and 25 FPS, generates 2001 frames, uses AR chunk size 4 with one history chunk, derives first-frame channel conditioning from the first generated chunk, and saves H.264 video at CRF 12. Frame counts must be positive and follow `8n+1`, such as 161, 2001, or 8001.
+
+Use `python inference.py --help` to see all controls, including video length, autoregressive history, first-frame conditioning, VAE tiling, x264 CRF, and encoding preset.
+
+### Prompt guidance
+
+The following general-purpose prompt is the default for audio-driven generation:
+
+```text
+Natural audio-driven speaking motion with accurate lip synchronization, smooth and continuous facial animation, subtle head movement, natural blinking, gentle breathing, and relaxed upper-body motion. Expressions and gestures should respond naturally to the rhythm, tone, and emotion of the speech while remaining restrained and realistic.
+
+Maintain strong temporal consistency across all frames. Keep facial appearance, identity, pose, body structure, clothing details, lighting, and background stable throughout the video. Avoid sudden motion changes, excessive gestures, unnatural expression shifts, frame-to-frame appearance variation, flickering, jitter, ghosting, texture instability, temporal artifacts, or deformation. All motion should be coherent, fluid, stable, and naturally driven by the audio.
+```
+
+For longer videos, prepend a concrete scene description covering the subject, identity and appearance, framing, pose, clothing, lighting, background, and camera position. For T2V scene generation, describe the visual content and scene details explicitly, then append the motion and temporal-stability prompt above. When the composition should remain stable, also specify a single continuous shot with a fixed camera and no cuts, transitions, angle changes, or viewpoint changes.
 
 ## Why Avatar-Forever?
 
