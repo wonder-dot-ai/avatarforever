@@ -1,0 +1,201 @@
+{
+  "none": {
+    "model": {
+      "class": "LTXModel",
+      "parameter_count": 19006143744,
+      "blocks": 48,
+      "video_hidden_dim": 4096,
+      "audio_hidden_dim": 2048,
+      "dtype": "torch.bfloat16",
+      "cuda_storage_bytes": 38012287488,
+      "cuda_storage_bytes_by_dtype": {
+        "torch.bfloat16": 38012287488
+      },
+      "attention": "AttentionFunction.DEFAULT"
+    },
+    "statistics": {
+      "cache": true,
+      "runs": 3,
+      "fast_infer": true,
+      "end_to_end_seconds": {
+        "median": 10.660838740001054,
+        "min": 10.65697601699867,
+        "max": 10.672171271999105
+      },
+      "end_to_end_fps": {
+        "median": 24.10692125336234,
+        "min": 24.08132267088878,
+        "max": 24.115659037804523
+      },
+      "first_pixels_seconds": {
+        "median": 8.861494210999808,
+        "min": 8.851146793997032,
+        "max": 8.863417763001053
+      },
+      "dit_forward_seconds": {
+        "median": 7.829716183994606,
+        "min": 7.824104469011218,
+        "max": 7.831644248992234
+      },
+      "ar_sampling_seconds": {
+        "median": 7.872371757999645,
+        "min": 7.866692890002014,
+        "max": 7.873950797998987
+      },
+      "vae_decode_seconds": {
+        "median": 0.8384476690007432,
+        "min": 0.8334148110006936,
+        "max": 0.8405738259971258
+      },
+      "ar_plus_vae_fps": {
+        "median": 29.49819168320277,
+        "min": 29.496339386307735,
+        "max": 29.539864198506436
+      },
+      "encode_other_seconds": {
+        "median": 1.8054777030010882,
+        "min": 1.7970870270037267,
+        "max": 1.810347417002049
+      },
+      "peak_allocated_gib": {
+        "median": 71.36369848251343,
+        "min": 71.36369848251343,
+        "max": 71.36369848251343
+      }
+    }
+  },
+  "fp8-cast": {
+    "model": {
+      "class": "LTXModel",
+      "parameter_count": 19006143744,
+      "blocks": 48,
+      "video_hidden_dim": 4096,
+      "audio_hidden_dim": 2048,
+      "dtype": "torch.float32",
+      "cuda_storage_bytes": 19494984192,
+      "cuda_storage_bytes_by_dtype": {
+        "torch.float32": 18923520,
+        "torch.bfloat16": 949295616,
+        "torch.float8_e4m3fn": 18526765056
+      },
+      "attention": "AttentionFunction.DEFAULT"
+    },
+    "statistics": {
+      "cache": true,
+      "runs": 3,
+      "fast_infer": true,
+      "end_to_end_seconds": {
+        "median": 12.612621389998822,
+        "min": 12.598289567999018,
+        "max": 12.615703563998977
+      },
+      "end_to_end_fps": {
+        "median": 20.376414391047064,
+        "min": 20.371436178430233,
+        "max": 20.399594612653377
+      },
+      "first_pixels_seconds": {
+        "median": 10.768816782998329,
+        "min": 10.763963020999654,
+        "max": 10.770298757001001
+      },
+      "dit_forward_seconds": {
+        "median": 9.739311936995364,
+        "min": 9.738293853009964,
+        "max": 9.739644315006444
+      },
+      "ar_sampling_seconds": {
+        "median": 9.78069313800006,
+        "min": 9.779186460000346,
+        "max": 9.781637906002288
+      },
+      "vae_decode_seconds": {
+        "median": 0.8409524870003224,
+        "min": 0.8338398199994117,
+        "max": 0.8410001060001377
+      },
+      "ar_plus_vae_fps": {
+        "median": 24.19919823468648,
+        "min": 24.19587407389057,
+        "max": 24.209932575196365
+      },
+      "encode_other_seconds": {
+        "median": 1.843465648998972,
+        "min": 1.8339720480034885,
+        "max": 1.8450689560013416
+      },
+      "peak_allocated_gib": {
+        "median": 54.11011075973511,
+        "min": 54.10977506637573,
+        "max": 54.11041593551636
+      }
+    }
+  },
+  "fp8-dynamic": {
+    "model": {
+      "class": "LTXModel",
+      "parameter_count": 19006145088,
+      "blocks": 48,
+      "video_hidden_dim": 4096,
+      "audio_hidden_dim": 2048,
+      "dtype": "torch.float32",
+      "cuda_storage_bytes": 19499708160,
+      "cuda_storage_bytes_by_dtype": {
+        "torch.float32": 18928896,
+        "torch.bfloat16": 958732800,
+        "torch.float8_e4m3fn": 18522046464
+      },
+      "attention": "AttentionFunction.DEFAULT"
+    },
+    "statistics": {
+      "cache": true,
+      "runs": 3,
+      "fast_infer": true,
+      "end_to_end_seconds": {
+        "median": 19.311764801001118,
+        "min": 19.203487279999536,
+        "max": 19.33743079499982
+      },
+      "end_to_end_fps": {
+        "median": 13.307949980142528,
+        "min": 13.290286735839482,
+        "max": 13.382985926085723
+      },
+      "first_pixels_seconds": {
+        "median": 17.471999830999266,
+        "min": 17.335078018000786,
+        "max": 17.488015602000814
+      },
+      "dit_forward_seconds": {
+        "median": 16.446111148994532,
+        "min": 16.311492350010667,
+        "max": 16.463778530003765
+      },
+      "ar_sampling_seconds": {
+        "median": 16.488817249999556,
+        "min": 16.354365087001497,
+        "max": 16.507283502000064
+      },
+      "vae_decode_seconds": {
+        "median": 0.8312437109962048,
+        "min": 0.8308170439995592,
+        "max": 0.8333896539988928
+      },
+      "ar_plus_vae_fps": {
+        "median": 14.836446731315583,
+        "min": 14.822481566217634,
+        "max": 14.954744037096187
+      },
+      "encode_other_seconds": {
+        "median": 1.8490695070031506,
+        "min": 1.8394192040032067,
+        "max": 1.8680493750034657
+      },
+      "peak_allocated_gib": {
+        "median": 54.11609220504761,
+        "min": 54.11575651168823,
+        "max": 54.11611318588257
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "shape": [
+        2,
+        17,
+        128
+      ],
+      "magnitude": 1.0,
+      "relative_rmse_vs_bf16": 0.03747975081205368
+    },
+    {
+      "shape": [
+        1,
+        32,
+        128
+      ],
+      "magnitude": 0.0,
+      "relative_rmse_vs_bf16": 0.0
+    },
+    {
+      "shape": [
+        1,
+        31,
+        128
+      ],
+      "magnitude": 1e-08,
+      "relative_rmse_vs_bf16": 0.03750422224402428
+    },
+    {
+      "shape": [
+        1,
+        48,
+        128
+      ],
+      "magnitude": 1000.0,
+      "relative_rmse_vs_bf16": 0.036994606256484985
+    }
+  ],
+  "native_scaled_mm_observed": true
+}

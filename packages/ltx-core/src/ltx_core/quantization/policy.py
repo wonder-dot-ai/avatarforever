@@ -26,6 +26,17 @@ class QuantizationPolicy:
         )
 
     @classmethod
+    def fp8_dynamic(cls) -> "QuantizationPolicy":
+        """FP8 weights and native GEMM with runtime per-tensor activation scales."""
+        import torch  # noqa: PLC0415
+
+        from ltx_core.quantization.fp8_dynamic import DYNAMIC_FP8_MODULE_OPS, DYNAMIC_FP8_SD_OPS  # noqa: PLC0415
+
+        if not torch.cuda.is_available() or torch.cuda.get_device_capability()[0] < 9:
+            raise RuntimeError("fp8-dynamic requires a Hopper or newer CUDA GPU")
+        return cls(sd_ops=DYNAMIC_FP8_SD_OPS, module_ops=(DYNAMIC_FP8_MODULE_OPS,))
+
+    @classmethod
     def fp8_scaled_mm(cls) -> "QuantizationPolicy":
         """Create policy using FP8 scaled matrix multiplication."""
         try:

@@ -1,0 +1,25 @@
+{
+  "off": {
+    "cache_bytes": 0,
+    "ar_peak_allocated_bytes": 71444653568,
+    "request_peak_allocated_bytes": 76626089472,
+    "request_peak_reserved_bytes": 78620131328,
+    "peak_cache_fields": {}
+  },
+  "on": {
+    "cache_bytes": 3718635520,
+    "ar_peak_allocated_bytes": 75105389568,
+    "request_peak_allocated_bytes": 76626089472,
+    "request_peak_reserved_bytes": 79377203200,
+    "peak_cache_fields": {
+      "video_self_history": 1811939328,
+      "video_self_history_pe": 37748736,
+      "video_cross_history": 1811939328,
+      "video_cross_history_pe": 18874368,
+      "audio_self_history": 18677760,
+      "audio_self_history_pe": 389120,
+      "audio_cross_history": 18677760,
+      "audio_cross_history_pe": 389120
+    }
+  }
+}

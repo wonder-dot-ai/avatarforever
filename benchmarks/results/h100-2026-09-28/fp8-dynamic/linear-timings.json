@@ -1,0 +1,44 @@
+{
+  "method": "Five warmups, 30 calls, synchronized wall-clock average. Representative shapes; excludes bias/padding and full pipeline overhead.",
+  "results": [
+    {
+      "name": "video_projection",
+      "M": 1536,
+      "K": 4096,
+      "N": 4096,
+      "milliseconds_per_call": {
+        "bf16_gemm": 0.07040163327474147,
+        "dynamic_activation_quantization": 0.09380503336918385,
+        "fp8_gemm_prequantized_inputs": 0.04093686669269422,
+        "dynamic_quantization_plus_fp8_gemm": 0.11878333328544007,
+        "fp8_weight_upcast_only": 0.05379176667095938
+      }
+    },
+    {
+      "name": "video_ffn_expansion",
+      "M": 1536,
+      "K": 4096,
+      "N": 16384,
+      "milliseconds_per_call": {
+        "bf16_gemm": 0.26377256666213117,
+        "dynamic_activation_quantization": 0.0921837666586119,
+        "fp8_gemm_prequantized_inputs": 0.1525846333000421,
+        "dynamic_quantization_plus_fp8_gemm": 0.1970741999684833,
+        "fp8_weight_upcast_only": 0.2022243000586362
+      }
+    },
+    {
+      "name": "audio_projection",
+      "M": 96,
+      "K": 2048,
+      "N": 2048,
+      "milliseconds_per_call": {
+        "bf16_gemm": 0.01170953328255564,
+        "dynamic_activation_quantization": 0.08834496669199628,
+        "fp8_gemm_prequantized_inputs": 0.013846133272939673,
+        "dynamic_quantization_plus_fp8_gemm": 0.11461159992904868,
+        "fp8_weight_upcast_only": 0.013673766685921388
+      }
+    }
+  ]
+}

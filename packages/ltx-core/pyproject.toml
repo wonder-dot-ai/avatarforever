@@ -9,7 +9,8 @@ dependencies = [
     "torchaudio",
     "einops",
     "numpy",
-    "transformers>=4.52",
+    # Keep the tested Gemma API while allowing the TensorRT extra's 4.53.1 pin.
+    "transformers>=4.52,<=4.55.4",
     "safetensors",
     "accelerate",
     "scipy>=1.14",

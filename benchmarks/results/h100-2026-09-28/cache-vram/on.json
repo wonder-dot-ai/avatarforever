@@ -1,0 +1,2298 @@
+{
+  "config": {
+    "checkpoint": "checkpoints/avatarforever-ltx-2.3-22b.safetensors",
+    "gemma_root": "checkpoints/gemma-3-12b-it-qat-q4_0-unquantized",
+    "audio": "data/jfk.flac",
+    "reference": null,
+    "cache": "on",
+    "output_dir": "outputs/cache-vram-on"
+  },
+  "models": {
+    "text_encoder": {
+      "parameter_count": 13194203760,
+      "cuda_storage_bytes": 24374683876,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "model": 24374683876
+      }
+    },
+    "gemma_embeddings_processor": {
+      "parameter_count": 3172227584,
+      "cuda_storage_bytes": 6344455168,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "feature_extractor": 2312122368,
+        "video_connector": 3225092608,
+        "audio_connector": 807240192
+      }
+    },
+    "audio_encoder": {
+      "parameter_count": 21333008,
+      "cuda_storage_bytes": 42666528,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "per_channel_statistics": 512,
+        "conv_in": 4864,
+        "non_linearity": 0,
+        "down": 23635200,
+        "mid": 18878464,
+        "norm_out": 0,
+        "conv_out": 147488
+      }
+    },
+    "video_encoder": {
+      "parameter_count": 318936897,
+      "cuda_storage_bytes": 637874306,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "per_channel_statistics": 512,
+        "conv_in": 332032,
+        "down_blocks": 630408320,
+        "conv_norm_out": 0,
+        "conv_act": 0,
+        "conv_out": 7133442
+      }
+    },
+    "transformer": {
+      "parameter_count": 19006143744,
+      "cuda_storage_bytes": 38012287488,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "velocity_model": 38012287488
+      }
+    },
+    "video_decoder": {
+      "parameter_count": 407169072,
+      "cuda_storage_bytes": 814338656,
+      "parameter_dtypes": [
+        "torch.bfloat16"
+      ],
+      "children": {
+        "per_channel_statistics": 512,
+        "conv_in": 7079936,
+        "up_blocks": 806926336,
+        "conv_norm_out": 0,
+        "conv_act": 0,
+        "conv_out": 331872
+      }
+    }
+  },
+  "phases": [
+    {
+      "run": "cold-no-reference",
+      "phase": "load_text_encoder",
+      "before": {
+        "allocated_bytes": 0,
+        "reserved_bytes": 0,
+        "device_used_bytes": 552599552,
+        "inactive_split_bytes": 0,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 24487059456,
+        "reserved_bytes": 24744296448,
+        "device_used_bytes": 25301090304,
+        "inactive_split_bytes": 257236992,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 24487059456,
+      "peak_reserved_bytes": 24744296448
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "load_gemma_embeddings_processor",
+      "before": {
+        "allocated_bytes": 24487059456,
+        "reserved_bytes": 24744296448,
+        "device_used_bytes": 25301090304,
+        "inactive_split_bytes": 257236992,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 30832570368,
+        "reserved_bytes": 31155290112,
+        "device_used_bytes": 31714181120,
+        "inactive_split_bytes": 322719744,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 30832570368,
+      "peak_reserved_bytes": 31155290112
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "load_audio_encoder",
+      "before": {
+        "allocated_bytes": 30832570368,
+        "reserved_bytes": 31155290112,
+        "device_used_bytes": 31714181120,
+        "inactive_split_bytes": 322719744,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 30876812288,
+        "reserved_bytes": 31201427456,
+        "device_used_bytes": 31760318464,
+        "inactive_split_bytes": 324615168,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 30876812288,
+      "peak_reserved_bytes": 31201427456
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "load_video_encoder",
+      "before": {
+        "allocated_bytes": 30876812288,
+        "reserved_bytes": 31201427456,
+        "device_used_bytes": 31760318464,
+        "inactive_split_bytes": 324615168,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 31528059904,
+        "reserved_bytes": 31780241408,
+        "device_used_bytes": 32339132416,
+        "inactive_split_bytes": 252181504,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 31528059904,
+      "peak_reserved_bytes": 31780241408
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "load_transformer",
+      "before": {
+        "allocated_bytes": 31528059904,
+        "reserved_bytes": 31780241408,
+        "device_used_bytes": 32339132416,
+        "inactive_split_bytes": 252181504,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 69541525504,
+        "reserved_bytes": 75130470400,
+        "device_used_bytes": 75787927552,
+        "inactive_split_bytes": 1516275712,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 73592788992,
+      "peak_reserved_bytes": 75130470400
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "load_video_decoder",
+      "before": {
+        "allocated_bytes": 69541525504,
+        "reserved_bytes": 75130470400,
+        "device_used_bytes": 75787927552,
+        "inactive_split_bytes": 1516275712,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70363731456,
+        "reserved_bytes": 75361157120,
+        "device_used_bytes": 76018614272,
+        "inactive_split_bytes": 1600039424,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70363731456,
+      "peak_reserved_bytes": 75361157120
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "prompt_encoding",
+      "before": {
+        "allocated_bytes": 70363731456,
+        "reserved_bytes": 75361157120,
+        "device_used_bytes": 76018614272,
+        "inactive_split_bytes": 1600039424,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70409868800,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77650198528,
+        "inactive_split_bytes": 1621010944,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 72326251008,
+      "peak_reserved_bytes": 76913049600
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "audio_encoding",
+      "before": {
+        "allocated_bytes": 70414063104,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77650198528,
+        "inactive_split_bytes": 1616816640,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70414129152,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77658587136,
+        "inactive_split_bytes": 1616750592,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70534419968,
+      "peak_reserved_bytes": 76913049600
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "image_conditioning",
+      "before": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77658587136,
+        "inactive_split_bytes": 1616750080,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77658587136,
+        "inactive_split_bytes": 1616750080,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70414129664,
+      "peak_reserved_bytes": 76913049600
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "ar_denoising",
+      "before": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 76913049600,
+        "device_used_bytes": 77658587136,
+        "inactive_split_bytes": 1616750080,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70422721024,
+        "reserved_bytes": 78762737664,
+        "device_used_bytes": 79512469504,
+        "inactive_split_bytes": 1608158720,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 75105389568,
+      "peak_reserved_bytes": 78762737664
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "vae_decode_chunk_0",
+      "before": {
+        "allocated_bytes": 70405674496,
+        "reserved_bytes": 78762737664,
+        "device_used_bytes": 79512469504,
+        "inactive_split_bytes": 1591650816,
+        "allocation_retries": 0,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 72531400192,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 2083170816,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 76626089472,
+      "peak_reserved_bytes": 83735085056
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "vae_decode_chunk_1",
+      "before": {
+        "allocated_bytes": 72531400192,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 2083170816,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70870193664,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 2565777920,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 72531400192,
+      "peak_reserved_bytes": 79335260160
+    },
+    {
+      "run": "cold-no-reference",
+      "phase": "vae_decode_chunk_2",
+      "before": {
+        "allocated_bytes": 70870193664,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 2565777920,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70705567232,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 2011081216,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70870193664,
+      "peak_reserved_bytes": 79335260160
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "prompt_encoding",
+      "before": {
+        "allocated_bytes": 70397285888,
+        "reserved_bytes": 79335260160,
+        "device_used_bytes": 80087089152,
+        "inactive_split_bytes": 1600039424,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70409868800,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2176756224,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 72324153856,
+      "peak_reserved_bytes": 79339454464
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "audio_encoding",
+      "before": {
+        "allocated_bytes": 70414063104,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2172561920,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70414129152,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2172495872,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70534419968,
+      "peak_reserved_bytes": 79339454464
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "image_conditioning",
+      "before": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2172495360,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2172495360,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70414129664,
+      "peak_reserved_bytes": 79339454464
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "ar_denoising",
+      "before": {
+        "allocated_bytes": 70414129664,
+        "reserved_bytes": 79339454464,
+        "device_used_bytes": 80091283456,
+        "inactive_split_bytes": 2172495360,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70422721024,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2163904000,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 75105389568,
+      "peak_reserved_bytes": 79377203200
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "vae_decode_chunk_0",
+      "before": {
+        "allocated_bytes": 70405674496,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 1591650816,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 72531400192,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2083170816,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 76626089472,
+      "peak_reserved_bytes": 79377203200
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "vae_decode_chunk_1",
+      "before": {
+        "allocated_bytes": 72531400192,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2083170816,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70870193664,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2565777920,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 72531400192,
+      "peak_reserved_bytes": 79377203200
+    },
+    {
+      "run": "warm-no-reference",
+      "phase": "vae_decode_chunk_2",
+      "before": {
+        "allocated_bytes": 70870193664,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2565777920,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "after": {
+        "allocated_bytes": 70705567232,
+        "reserved_bytes": 79377203200,
+        "device_used_bytes": 80129032192,
+        "inactive_split_bytes": 2011081216,
+        "allocation_retries": 1,
+        "oom_count": 0
+      },
+      "peak_allocated_bytes": 70870193664,
+      "peak_reserved_bytes": 79377203200
+    }
+  ],
+  "cache_samples": [
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70598339072
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73218907136
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74612255232
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646337024
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74614257664
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74614258688
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73567538688
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73585338880
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73585338880
+    },
+    {
+      "run": "cold-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73585338880
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70598339072
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 0,
+      "unique_storage_bytes_by_field": {},
+      "logical_bytes_by_field": {},
+      "allocated_after_blocks_bytes": 70603402240
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73218907136
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2478956544,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 25165824,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 12582912,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 258048,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 258048
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 603979776,
+        "video_self_history_pe": 603979776,
+        "video_cross_history": 603979776,
+        "video_cross_history_pe": 301989888,
+        "audio_self_history": 6291456,
+        "audio_self_history_pe": 6291456,
+        "audio_cross_history": 6291456,
+        "audio_cross_history_pe": 6291456
+      },
+      "allocated_after_blocks_bytes": 73246309376
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74612255232
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646337024
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74613843456
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718234112,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18481152,
+        "audio_self_history_pe": 385024,
+        "audio_cross_history": 18481152,
+        "audio_cross_history_pe": 385024
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74645812736
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74614257664
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 74646236160
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74614258688
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 3718635520,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1811939328,
+        "video_self_history_pe": 37748736,
+        "video_cross_history": 1811939328,
+        "video_cross_history_pe": 18874368,
+        "audio_self_history": 18677760,
+        "audio_self_history_pe": 389120,
+        "audio_cross_history": 18677760,
+        "audio_cross_history_pe": 389120
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12582912,
+        "audio_self_history_pe": 12582912,
+        "audio_cross_history": 12582912,
+        "audio_cross_history_pe": 12582912
+      },
+      "allocated_after_blocks_bytes": 74646232064
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "populate",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73567538688
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73586125312
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73586125312
+    },
+    {
+      "run": "warm-no-reference",
+      "mode": "reuse",
+      "cuda_storage_bytes": 2788474880,
+      "unique_storage_bytes_by_field": {
+        "video_self_history": 1358954496,
+        "video_self_history_pe": 28311552,
+        "video_cross_history": 1358954496,
+        "video_cross_history_pe": 14155776,
+        "audio_self_history": 13762560,
+        "audio_self_history_pe": 286720,
+        "audio_cross_history": 13762560,
+        "audio_cross_history_pe": 286720
+      },
+      "logical_bytes_by_field": {
+        "video_self_history": 1207959552,
+        "video_self_history_pe": 1207959552,
+        "video_cross_history": 1207959552,
+        "video_cross_history_pe": 603979776,
+        "audio_self_history": 12386304,
+        "audio_self_history_pe": 12386304,
+        "audio_cross_history": 12386304,
+        "audio_cross_history_pe": 12386304
+      },
+      "allocated_after_blocks_bytes": 73586125312
+    }
+  ],
+  "request_end": {
+    "cold-no-reference": {
+      "allocated_bytes": 70397285888,
+      "reserved_bytes": 79335260160,
+      "device_used_bytes": 80087089152,
+      "inactive_split_bytes": 1600039424,
+      "allocation_retries": 1,
+      "oom_count": 0
+    },
+    "warm-no-reference": {
+      "allocated_bytes": 70397285888,
+      "reserved_bytes": 79377203200,
+      "device_used_bytes": 80129032192,
+      "inactive_split_bytes": 1600039424,
+      "allocation_retries": 1,
+      "oom_count": 0
+    }
+  },
+  "after_empty_cache": {
+    "allocated_bytes": 70397285888,
+    "reserved_bytes": 71997325312,
+    "device_used_bytes": 72749154304,
+    "inactive_split_bytes": 1600039424,
+    "allocation_retries": 1,
+    "oom_count": 0
+  },
+  "after_text_and_connectors_offloaded": {
+    "allocated_bytes": 39564715520,
+    "reserved_bytes": 41657827328,
+    "device_used_bytes": 42409656320,
+    "inactive_split_bytes": 2093111808,
+    "allocation_retries": 1,
+    "oom_count": 0
+  },
+  "device_total_bytes": 85017493504,
+  "notes": "Bytes, not GB. Model storage deduplicates CUDA storage including buffers. Phase peaks are absolute process allocations, NOT additive. Phase resets are sequential. Cache storage is included in AR phase allocations. Device usage is sampled at boundaries, not a peak. Reference preprocessing's factory load is measured, but its encoder forward is outside phase peaks. CPU-offload snapshot is after all inference and does not benchmark offloaded inference."
+}

@@ -1,0 +1,22 @@
+{
+  "frames": 257,
+  "width": 768,
+  "height": 512,
+  "fps": 25.0,
+  "duration_seconds": 10.28,
+  "video_codec": "h264",
+  "baseline": "outputs/fp8-comparison/review/bf16.mp4",
+  "candidate": "outputs/fp8-comparison/review/fp8.mp4",
+  "rgb_pixel_mae_0_to_255": 9.419979727118756,
+  "rgb_pixel_psnr_db": 20.37522946712954,
+  "baseline_decoded_audio_sha256": "94ddaaa355ebb66e9ab54d230f25da818e99338d08b308845fe30b77ba554130",
+  "candidate_decoded_audio_sha256": "94ddaaa355ebb66e9ab54d230f25da818e99338d08b308845fe30b77ba554130",
+  "decoded_audio_identical": true,
+  "sample_frame_indices_zero_based": [
+    32,
+    96,
+    160,
+    224
+  ],
+  "interpretation": "Pixel metrics measure output difference, not quality or lip-sync. A quantized diffusion model can follow a different motion trajectory with the same seed."
+}

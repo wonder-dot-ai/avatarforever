@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import time
 from pathlib import Path
+from typing import Literal
 
 import torch
 
 from ltx_core.model.video_vae import get_video_chunks_number
+from ltx_core.quantization import QuantizationPolicy
 from ltx_pipelines import ARA2VidDistilledPipeline
 from ltx_pipelines.utils.media_io import encode_video
 from util import (
@@ -43,6 +46,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     model = parser.add_argument_group("model")
     model.add_argument("--distilled-checkpoint-path", type=Path, required=True)
     model.add_argument("--gemma-root", type=Path, required=True)
+    model.add_argument(
+        "--quantization",
+        choices=("none", "fp8-cast", "fp8-dynamic"),
+        default="none",
+        help="Transformer precision: BF16, FP8 storage with BF16 compute, or native FP8 with dynamic activation scaling.",
+    )
 
     generation = parser.add_argument_group("generation")
     generation.add_argument("--audio-path", type=Path, required=True)
@@ -123,31 +132,52 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> None:
-    args = build_arg_parser().parse_args()
+def run_inference(
+    args: argparse.Namespace,
+    *,
+    stage_mode: Literal["one-stage", "two-stage"] = "one-stage",
+    spatial_upsampler_path: Path | None = None,
+    stage2_sigmas: list[float] | None = None,
+) -> None:
+    """Run either sampler with shared audio, image, AR, and encoding settings."""
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
 
+    torch.cuda.synchronize()
+    start_time = time.perf_counter()
     pipeline = ARA2VidDistilledPipeline(
         distilled_checkpoint_path=str(args.distilled_checkpoint_path),
-        spatial_upsampler_path=None,
+        spatial_upsampler_path=str(spatial_upsampler_path) if spatial_upsampler_path is not None else None,
         gemma_root=str(args.gemma_root),
+        loras=[],
+        quantization=getattr(QuantizationPolicy, args.quantization.replace("-", "_"))() if args.quantization != "none" else None,
     )
     images = build_first_frame_images(
         args.first_frame_condition_image_path,
         strength=args.first_frame_image_strength,
         crf=args.first_frame_image_crf,
     )
+    stage1_scale = 2 if stage_mode == "two-stage" else 1
     first_frame_channel_condition_latent = encode_first_frame_channel_condition(
         pipeline,
         image_path=args.first_frame_condition_image_path,
         enabled=args.first_frame_channel_condition,
-        height=args.height,
-        width=args.width,
+        height=args.height // stage1_scale,
+        width=args.width // stage1_scale,
         crf=args.first_frame_image_crf,
     )
+    stage2_first_frame_channel_condition_latent = None
+    if stage_mode == "two-stage":
+        stage2_first_frame_channel_condition_latent = encode_first_frame_channel_condition(
+            pipeline,
+            image_path=args.first_frame_condition_image_path,
+            enabled=args.first_frame_channel_condition,
+            height=args.height,
+            width=args.width,
+            crf=args.first_frame_image_crf,
+        )
     derive_channel_condition_from_first_chunk = (
         args.first_frame_channel_condition and first_frame_channel_condition_latent is None
     )
@@ -155,7 +185,6 @@ def main() -> None:
     video_chunks_number = get_video_chunks_number(args.num_frames, tiling_config)
     output_path = resolve_output_path(args)
 
-    start_time = time.time()
     with torch.inference_mode():
         video, audio = pipeline(
             prompt=args.prompt,
@@ -170,8 +199,9 @@ def main() -> None:
             audio_max_duration=args.num_frames / args.frame_rate,
             tiling_config=tiling_config,
             enhance_prompt=False,
-            stage_mode="one-stage",
+            stage_mode=stage_mode,
             stage1_sigmas=args.stage1_sigmas,
+            stage2_sigmas=stage2_sigmas,
             ar_video_chunk_size=args.ar_video_chunk_size,
             ar_history_chunk_count=args.ar_history_chunk_count,
             ar_sink_first_chunk=args.ar_sink_first_chunk,
@@ -180,6 +210,7 @@ def main() -> None:
             ar_first_frame_prefix_condition=args.first_frame_prefix_condition,
             ar_first_frame_condition_position=args.first_frame_condition_position,
             first_frame_channel_condition_latent=first_frame_channel_condition_latent,
+            stage2_first_frame_channel_condition_latent=stage2_first_frame_channel_condition_latent,
             first_frame_channel_condition_init=args.first_frame_channel_condition_init,
             first_frame_channel_condition_mode=args.first_frame_channel_condition_mode,
             ar_first_frame_channel_condition_from_first_chunk=derive_channel_condition_from_first_chunk,
@@ -197,9 +228,24 @@ def main() -> None:
             preset=args.video_preset,
         )
 
-    generation_seconds = time.time() - start_time
+    torch.cuda.synchronize()
+    generation_seconds = time.perf_counter() - start_time
+    metadata = {
+        "arguments": vars(args),
+        "stage_mode": stage_mode,
+        "spatial_upsampler_path": spatial_upsampler_path,
+        "stage2_sigmas": stage2_sigmas,
+        "elapsed_seconds": generation_seconds,
+        "timing_scope": "Single cold request: model loading, conditioning, sampling, VAE decode and MP4 encoding; "
+        "excludes Python imports and downloads. Not a warmed latency benchmark.",
+    }
+    output_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2, default=str) + "\n")
     logging.info("Generation finished in %.2fs (%d frames).", generation_seconds, args.num_frames)
     logging.info("Saved video to %s", output_path)
+
+
+def main() -> None:
+    run_inference(build_arg_parser().parse_args())
 
 
 if __name__ == "__main__":

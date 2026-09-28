@@ -1,0 +1,154 @@
+# H100 latency benchmark
+
+Avatar-Forever was cloned from `https://github.com/wonder-dot-ai/avatarforever.git`
+and run on the supplied H100 on 2026-09-28. The remote checkout and its environment
+are at `/home/ubuntu/work/avatarforever`. The checkpoint and Gemma weights are in
+that checkout's `checkpoints/` directory.
+
+## Measured results
+
+One H100 80GB HBM3, 768 × 512, 257 frames at 25 FPS (10.28 seconds of video).
+One-stage inference, four Euler steps, AR chunk size 4, one history chunk,
+first-chunk sink and relative positions enabled. Default prompt, seed 42,
+generated first-frame channel conditioning, no reference image.
+
+These are medians of **three measured requests per mode**, following one warm-up
+request per mode. `--fast-infer` retains models on the GPU between requests.
+
+| Measurement | ForeverCache off | ForeverCache on |
+| --- | ---: | ---: |
+| Request to completed MP4 | 14.287 s | **10.742 s** |
+| Request-to-MP4 range across 3 runs | 14.275–14.292 s | 10.738–10.783 s |
+| Complete-request throughput | 17.99 FPS | **23.93 FPS** |
+| Request to first decoded pixel chunk | 12.398 s | **8.833 s** |
+| AR sampling, including transformer calls | 11.424 s | **7.856 s** |
+| VAE decoding | 0.845 s | 0.845 s |
+| AR sampling + VAE throughput | 20.95 FPS | **29.53 FPS** |
+| Encoding / transfer / mux and other decode-iterator overhead | 1.888 s | 1.917 s |
+| Peak PyTorch GPU allocation | 71.36 GiB | 71.36 GiB |
+
+Cache reduced complete-request latency by **24.8%** and AR sampling time by
+**31.2%**. These are measurements for this input, duration, hardware and software
+configuration. Cache reuse is approximate and was not evaluated for visual
+quality equivalence.
+
+The compute portion with cache is faster than 25 FPS playback, but the full MP4
+request remains slightly slower than the 10.28-second clip. The entry point
+finishes sampling all requested latents before VAE decoding. Therefore the
+8.83-second first-pixel latency is not a low-latency streaming result.
+
+For interior full-size chunks with sink + history + current present, the median
+sum of four transformer forward calls was 1.443 s without cache and 0.932 s with
+cache. Those chunks represent 32 output frames (1.28 seconds at 25 FPS). This
+figure excludes VAE decoding, sampler bookkeeping and encoding. It is not the
+latency to deliver a playable chunk.
+
+The first 257-frame request in the resident-model process, with cache off, took
+**33.483 s** including loading and initialization. It was excluded from the warm
+medians. Model factory timings totaled approximately 16.88 s. An earlier
+65-frame smoke test with `fast_infer=False` completed in 27.719 s, using 39.81 GiB
+peak PyTorch allocation. These are first-request timings with weights already
+downloaded; they do not include installation, downloads, Python imports, or
+fresh-machine boot time.
+
+## Environment and inputs
+
+- GPU: NVIDIA H100 80GB HBM3, driver 580.126.20, 700 W power limit.
+- Python 3.11.16; PyTorch 2.14.0 + CUDA 13.0; Transformers 4.55.4.
+- Repository attention mode: `default`, using PyTorch SDPA; no external
+  xFormers or FlashAttention 3 package installed. PyTorch's flash, efficient and
+  math SDPA backends were enabled; their per-operation dispatch was not profiled.
+- bfloat16 inference; no quantization or `torch.compile` was added.
+- Eight CPU threads (`OMP_NUM_THREADS=8`, `MKL_NUM_THREADS=8`).
+- Base commit: `4dfc42b0e2dbbded4d148387d186219bd7601279`.
+- Main checkpoint: `LetsThink/AvatarForever`,
+  `avatarforever-ltx-2.3-22b.safetensors`, 46,183,958,894 bytes.
+- Text encoder: `google/gemma-3-12b-it-qat-q4_0-unquantized`.
+- Speech fixture: [OpenAI Whisper's JFK test audio](https://github.com/openai/whisper/blob/main/tests/jfk.flac),
+  11 seconds, cropped to the requested video duration by the pipeline.
+- Fixture SHA-256:
+  `63a4b1e4c1dc655ac70961ffbf518acd249df237e5a0152faae9a4a836949715`.
+- Spatial VAE tiles: 512 px, overlap 64 px. Temporal tiles: 256 frames,
+  overlap 8 frames. Output: H.264 CRF 12, preset `fast`, source audio as AAC.
+
+The full environment is recorded in
+[`results/h100-2026-09-28/environment.txt`](results/h100-2026-09-28/environment.txt).
+
+## Reproduce on the configured H100
+
+```bash
+cd /home/ubuntu/work/avatarforever
+export OMP_NUM_THREADS=8 MKL_NUM_THREADS=8 TOKENIZERS_PARALLELISM=false
+
+.venv/bin/python benchmarks/latency.py \
+  --checkpoint checkpoints/avatarforever-ltx-2.3-22b.safetensors \
+  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
+  --audio data/jfk.flac \
+  --frames 257 --runs 3 --warmup-runs 1 \
+  --cache both --fast-infer \
+  --output-dir outputs/benchmark-repeat-257
+```
+
+Use a new output directory for each experiment: `results.jsonl` appends each
+completed request and any failure record. `summary.json` describes the current
+invocation. Omit `--fast-infer` to measure the default module-loading behavior.
+Use `--cache off` or `--cache on` to measure only one mode.
+
+To set up a fresh clone, install `uv`, then run
+`uv sync --all-packages --python 3.11`, followed by
+`uv pip install transformers==4.55.4` to reproduce the measured version.
+The workspace resolver selects 4.53.1 because of the optional TensorRT
+dependency; its Gemma layout was checked, but the timings above use 4.55.4.
+Use `.venv/bin/python` as shown to avoid `uv run` resynchronizing the environment
+to the workspace lock. Authenticate to Hugging Face and download
+the two models described in the root README. The existing server is already set
+up and authenticated.
+
+## Changes needed to run
+
+1. `inference.py` now supplies the required `loras=[]` constructor argument.
+2. `ltx-core` bounds Transformers to 4.52–4.55.4; this benchmark used 4.55.4.
+   The range also permits the optional TensorRT extra's 4.53.1 requirement.
+   The original unbounded dependency selected
+   5.17.0; its changed Gemma/SigLIP layout failed with
+   `AttributeError: 'SiglipVisionModel' object has no attribute 'vision_model'`.
+   The upper bound retains the API used by this repository's loader.
+3. `benchmarks/latency.py` instruments existing model factories, transformer
+   calls, AR sampling and lazy VAE iteration. It does not replace model inference.
+
+The dependency pin was first applied to the environment for measurement, then
+recorded in package metadata. The raw manifest captures the working tree at
+measurement time.
+
+## Timing definitions and verification
+
+All GPU timing boundaries call `torch.cuda.synchronize()`. The measured request
+starts immediately before the pipeline call and ends after MP4 encoding and
+muxing complete. Prompt/audio processing is repeated per request. Model loading
+is included when it occurs; resident warm requests reuse previously loaded
+modules. Extra synchronization can impose a small instrumentation overhead.
+
+The decoder is lazy. Its timing covers actual `next()` calls on the video
+iterator, including conversion to uint8. First-pixel latency records delivery
+of the first decoded tensor to the encoder, not browser playback. The encoding
+remainder includes CPU transfer, H.264/AAC work, muxing and residual iterator
+overhead. Nested measurements overlap: transformer time is inside AR time, and
+model-loading time can be inside prompt-processing time. Do not sum overlapping
+fields. Component medians need not sum exactly to the median total.
+
+Both final cache-off and cache-on MP4s were decoded and verified to contain
+257 frames, 768 × 512 resolution, 10.28-second duration, H.264 video and AAC audio.
+Representative generated frames were visually inspected. This is a latency
+benchmark, not a lip-sync accuracy or long-horizon quality evaluation.
+
+Raw evidence:
+
+- [Warm request records](results/h100-2026-09-28/warm-257/results.jsonl)
+- [Warm summary](results/h100-2026-09-28/warm-257/summary.json)
+- [Environment and configuration manifest](results/h100-2026-09-28/warm-257/manifest.json)
+- [Smoke records, including the initial compatibility failure](results/h100-2026-09-28/smoke-65/results.jsonl)
+
+Server outputs are in `outputs/benchmark-warm-257/`, and logs are in
+`benchmarks/logs/`. A cache-on sample has also been copied to the local
+`outputs/h100-benchmark/cache-on-measured-3.mp4`. Generated media and model
+weights remain ignored by Git.

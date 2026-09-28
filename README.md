@@ -116,6 +116,78 @@ The default configuration uses one-stage distilled inference at 768 × 512 and 2
 
 Use `python inference.py --help` to see all controls, including video length, autoregressive history, first-frame conditioning, VAE tiling, x264 CRF, and encoding preset.
 
+### 8-bit transformer weights
+
+Add `--quantization fp8-cast` to store the transformer's attention projections and
+feed-forward weights/biases in FP8 E4M3. This uses the repository's existing
+quantization policy: each linear operation upcasts its weights to the input
+dtype, normally bfloat16. Activations and ForeverCache are not quantized; Gemma,
+prompt connectors and VAEs are unchanged. This is FP8 weight storage, not INT8 or
+native FP8 matrix multiplication. Some transformer parameters retain bfloat16 or
+float32 checkpoint precision.
+
+```bash
+.venv/bin/python inference.py \
+  --distilled-checkpoint-path checkpoints/avatarforever-ltx-2.3-22b.safetensors \
+  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
+  --audio-path /path/to/input.wav \
+  --first-frame-condition-image-path /path/to/reference.png \
+  --quantization fp8-cast \
+  --num-frames 257 --seed 42 --height 512 --width 768 \
+  --ar-history-feature-cache --fast-infer \
+  --output-path outputs/fp8.mp4
+```
+
+For a bfloat16 baseline, use the same command with `--quantization none` and a
+different output path. Quantization happens while loading; it does not rewrite
+the source checkpoint. The two-stage entry point also accepts this flag.
+
+Use `--quantization fp8-dynamic` on Hopper or newer CUDA GPUs to run these
+projections with native FP8 matrix multiplication instead. This experimental
+policy quantizes weights with per-tensor scales once during loading, calculates
+a fresh per-tensor activation scale for each call, and returns BF16 outputs.
+Biases retain checkpoint precision. It uses PyTorch `torch._scaled_mm`, with
+`torch.compile` applied only to the activation quantizer; the first request
+includes compilation. No static calibration file or TensorRT-LLM is needed.
+Attention, ForeverCache, Gemma and VAEs retain their existing computation paths.
+
+### Experimental two-stage comparison
+
+`inference_two_stage.py` runs the existing AR sampler at half resolution, upsamples
+the completed latent sequence by 2×, then refines it with a second AR pass at the
+output resolution. This is an experiment with the Avatar-Forever checkpoint;
+the published training and evaluation do not establish two-stage quality.
+It does not stream chunks between stages.
+
+Download the [LTX-2.3 spatial ×2 upscaler](https://huggingface.co/Lightricks/LTX-2.3/blob/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors):
+
+```bash
+hf download Lightricks/LTX-2.3 ltx-2.3-spatial-upscaler-x2-1.1.safetensors \
+  --local-dir checkpoints
+
+.venv/bin/python inference_two_stage.py \
+  --distilled-checkpoint-path checkpoints/avatarforever-ltx-2.3-22b.safetensors \
+  --spatial-upsampler-path checkpoints/ltx-2.3-spatial-upscaler-x2-1.1.safetensors \
+  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
+  --audio-path /path/to/input.wav \
+  --first-frame-condition-image-path /path/to/reference.png \
+  --num-frames 257 --seed 42 --height 512 --width 768 \
+  --ar-history-feature-cache --fast-infer \
+  --output-path outputs/two-stage.mp4
+```
+
+For a matched one-stage run, use `inference.py` with the same arguments, remove
+`--spatial-upsampler-path`, and set `--output-path outputs/one-stage.mp4`.
+The reference image is optional; use the same image in both modes to control
+identity. Matching seeds do not produce identical noise tensors across resolutions.
+
+The two-stage script defaults to 257 frames and requires output dimensions divisible
+by 64. Stage 1 uses the same four-step schedule as `inference.py`; stage 2 defaults
+to three steps (`--stage2-sigmas 0.909375 0.725 0.421875 0`). The reference image is
+encoded separately at each stage's resolution. Both scripts save a JSON sidecar
+with arguments and cold request time, including model loading and MP4 encoding.
+These times are not warmed throughput benchmarks.
+
 ### Prompt guidance
 
 The following general-purpose prompt is the default for audio-driven generation:
