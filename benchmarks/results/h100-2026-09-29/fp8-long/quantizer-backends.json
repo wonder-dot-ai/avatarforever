@@ -1,0 +1,632 @@
+{
+  "method": "Median of five groups of 100 calls after warmup; synchronized wall-clock. CUDA graph timings include copying each input into static storage. Only quantization is captured. No GEMM or transformer compilation/capture.",
+  "correctness": "Scale tolerance 1e-6; fewer than 1e-5 FP8 values differ, by at most one FP8 step; replay with changed inputs.",
+  "rounding_checks": [
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        96,
+        2048
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 3.178914482759865e-07
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 3.178914482759865e-07
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 4.76837158203125e-07
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 4.76837158203125e-07
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 3.5762786865234375e-07
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 3.5762786865234375e-07
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1,
+      "different_fraction": 5.165736070011917e-07
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1,
+      "different_fraction": 5.165736070011917e-07
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        1536,
+        16384
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 0,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1e-08,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "previous_partial_compile",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 3.7087335158503265e-07
+    },
+    {
+      "backend": "previous_quantizer_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 3.7087335158503265e-07
+    },
+    {
+      "backend": "fused_triton",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    },
+    {
+      "backend": "fused_triton_cudagraph",
+      "shape": [
+        4608,
+        4096
+      ],
+      "magnitude": 1000,
+      "different_fraction": 0.0
+    }
+  ],
+  "results": [
+    {
+      "shape": [
+        96,
+        2048
+      ],
+      "quantizer_us": {
+        "previous_partial_compile": 87.92882996203844,
+        "previous_quantizer_cudagraph": 15.148879974731244,
+        "fused_triton": 51.774029998341575,
+        "fused_triton_cudagraph": 12.870249993284233
+      }
+    },
+    {
+      "shape": [
+        1536,
+        4096
+      ],
+      "quantizer_us": {
+        "previous_partial_compile": 88.04754994343966,
+        "previous_quantizer_cudagraph": 49.10587005724665,
+        "fused_triton": 52.04612003581133,
+        "fused_triton_cudagraph": 20.472499963943847
+      }
+    },
+    {
+      "shape": [
+        1536,
+        16384
+      ],
+      "quantizer_us": {
+        "previous_partial_compile": 130.1427200087346,
+        "previous_quantizer_cudagraph": 166.53686994686723,
+        "fused_triton": 53.21181000908837,
+        "fused_triton_cudagraph": 82.73245002783369
+      }
+    },
+    {
+      "shape": [
+        4608,
+        4096
+      ],
+      "quantizer_us": {
+        "previous_partial_compile": 99.96968001360074,
+        "previous_quantizer_cudagraph": 126.99819002591539,
+        "fused_triton": 52.90253000566736,
+        "fused_triton_cudagraph": 60.37771003320813
+      }
+    }
+  ]
+}

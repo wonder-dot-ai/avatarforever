@@ -1,0 +1,506 @@
+{
+  "modes": {
+    "none": {
+      "frames": 31505,
+      "fps": 25.0,
+      "duration_seconds": 1260.2,
+      "decoded_audio_sha256": "8f6afb1f9abe59dcd86c573000192bdb8d2de9177c68803adbe56c57f5f687c2",
+      "per_minute": {
+        "0": {
+          "mean_luma": 84.35236752827963,
+          "luma_std": 61.661440467834474,
+          "spatial_gradient": 8.08362147808075,
+          "change_from_previous_second": 15.988630612691244,
+          "sample_count": 60
+        },
+        "1": {
+          "mean_luma": 84.37881177266439,
+          "luma_std": 60.460903612772626,
+          "spatial_gradient": 7.831054258346557,
+          "change_from_previous_second": 15.33408477306366,
+          "sample_count": 60
+        },
+        "2": {
+          "mean_luma": 84.78631401062012,
+          "luma_std": 58.8062739054362,
+          "spatial_gradient": 7.593232456843058,
+          "change_from_previous_second": 19.39879246552785,
+          "sample_count": 60
+        },
+        "3": {
+          "mean_luma": 81.667138671875,
+          "luma_std": 56.50275967915853,
+          "spatial_gradient": 7.57067461013794,
+          "change_from_previous_second": 18.921297498544057,
+          "sample_count": 60
+        },
+        "4": {
+          "mean_luma": 75.35495287577311,
+          "luma_std": 50.15784943898519,
+          "spatial_gradient": 7.09991500377655,
+          "change_from_previous_second": 9.833674637476603,
+          "sample_count": 60
+        },
+        "5": {
+          "mean_luma": 61.480485852559404,
+          "luma_std": 44.37389659881592,
+          "spatial_gradient": 7.176202090581258,
+          "change_from_previous_second": 9.081574769814809,
+          "sample_count": 60
+        },
+        "6": {
+          "mean_luma": 46.04555136362712,
+          "luma_std": 42.667526944478354,
+          "spatial_gradient": 6.267623448371888,
+          "change_from_previous_second": 9.604311700661977,
+          "sample_count": 60
+        },
+        "7": {
+          "mean_luma": 32.308577887217204,
+          "luma_std": 38.14580678939819,
+          "spatial_gradient": 5.368179480234782,
+          "change_from_previous_second": 7.398174893856049,
+          "sample_count": 60
+        },
+        "8": {
+          "mean_luma": 64.05823421478271,
+          "luma_std": 48.334526507059735,
+          "spatial_gradient": 8.138175853093465,
+          "change_from_previous_second": 8.586590619881948,
+          "sample_count": 60
+        },
+        "9": {
+          "mean_luma": 66.84997634887695,
+          "luma_std": 47.10512898763021,
+          "spatial_gradient": 8.069906663894653,
+          "change_from_previous_second": 10.92036194006602,
+          "sample_count": 60
+        },
+        "10": {
+          "mean_luma": 72.28830935160319,
+          "luma_std": 49.5108154296875,
+          "spatial_gradient": 8.234737650553386,
+          "change_from_previous_second": 12.747056051095326,
+          "sample_count": 60
+        },
+        "11": {
+          "mean_luma": 70.32276026407878,
+          "luma_std": 45.68849620819092,
+          "spatial_gradient": 8.30960730711619,
+          "change_from_previous_second": 8.54305196205775,
+          "sample_count": 60
+        },
+        "12": {
+          "mean_luma": 72.04542503356933,
+          "luma_std": 47.74600391387939,
+          "spatial_gradient": 8.738920402526855,
+          "change_from_previous_second": 11.259785254796347,
+          "sample_count": 60
+        },
+        "13": {
+          "mean_luma": 80.24709510803223,
+          "luma_std": 51.216865921020506,
+          "spatial_gradient": 9.300016911824544,
+          "change_from_previous_second": 15.069331161181132,
+          "sample_count": 60
+        },
+        "14": {
+          "mean_luma": 75.24560635884603,
+          "luma_std": 50.12435143788655,
+          "spatial_gradient": 9.458044163386027,
+          "change_from_previous_second": 11.139743638038635,
+          "sample_count": 60
+        },
+        "15": {
+          "mean_luma": 72.44491449991862,
+          "luma_std": 49.607252566019696,
+          "spatial_gradient": 9.865148893992107,
+          "change_from_previous_second": 12.084399668375651,
+          "sample_count": 60
+        },
+        "16": {
+          "mean_luma": 68.18002700805664,
+          "luma_std": 50.328742599487306,
+          "spatial_gradient": 8.895115995407105,
+          "change_from_previous_second": 11.992696658770244,
+          "sample_count": 60
+        },
+        "17": {
+          "mean_luma": 67.19949118296306,
+          "luma_std": 50.43793430328369,
+          "spatial_gradient": 7.918228896458944,
+          "change_from_previous_second": 13.985527420043946,
+          "sample_count": 60
+        },
+        "18": {
+          "mean_luma": 88.16504389444987,
+          "luma_std": 60.13830413818359,
+          "spatial_gradient": 8.346790981292724,
+          "change_from_previous_second": 15.444957089424133,
+          "sample_count": 60
+        },
+        "19": {
+          "mean_luma": 79.99415524800618,
+          "luma_std": 54.09984277089437,
+          "spatial_gradient": 8.414896909395853,
+          "change_from_previous_second": 13.947638245423635,
+          "sample_count": 60
+        },
+        "20": {
+          "mean_luma": 69.09023914337158,
+          "luma_std": 50.097878519694014,
+          "spatial_gradient": 8.203050088882446,
+          "change_from_previous_second": 11.726978385448456,
+          "sample_count": 60
+        },
+        "21": {
+          "mean_luma": 72.14630889892578,
+          "luma_std": 51.53889465332031,
+          "spatial_gradient": 8.326375961303711,
+          "change_from_previous_second": 13.29880142211914,
+          "sample_count": 1
+        }
+      }
+    },
+    "fp8-cast": {
+      "frames": 31505,
+      "fps": 25.0,
+      "duration_seconds": 1260.2,
+      "decoded_audio_sha256": "8f6afb1f9abe59dcd86c573000192bdb8d2de9177c68803adbe56c57f5f687c2",
+      "per_minute": {
+        "0": {
+          "mean_luma": 83.96575266520182,
+          "luma_std": 62.35193341573079,
+          "spatial_gradient": 8.055226238568624,
+          "change_from_previous_second": 15.105966289838156,
+          "sample_count": 60
+        },
+        "1": {
+          "mean_luma": 82.07423400878906,
+          "luma_std": 59.20290444691976,
+          "spatial_gradient": 7.961124459902446,
+          "change_from_previous_second": 14.639957964420319,
+          "sample_count": 60
+        },
+        "2": {
+          "mean_luma": 84.08777631123861,
+          "luma_std": 59.81901556650798,
+          "spatial_gradient": 8.220509600639343,
+          "change_from_previous_second": 18.681683667500813,
+          "sample_count": 60
+        },
+        "3": {
+          "mean_luma": 82.65708338419596,
+          "luma_std": 59.57952257792155,
+          "spatial_gradient": 8.3716428677241,
+          "change_from_previous_second": 17.033111437161764,
+          "sample_count": 60
+        },
+        "4": {
+          "mean_luma": 68.36966304779052,
+          "luma_std": 49.96790917714437,
+          "spatial_gradient": 8.459861286481221,
+          "change_from_previous_second": 12.367304380734762,
+          "sample_count": 60
+        },
+        "5": {
+          "mean_luma": 65.04111188252767,
+          "luma_std": 48.25053723653158,
+          "spatial_gradient": 7.86402645111084,
+          "change_from_previous_second": 12.942994872728983,
+          "sample_count": 60
+        },
+        "6": {
+          "mean_luma": 66.829106203715,
+          "luma_std": 50.7495210647583,
+          "spatial_gradient": 7.963023980458577,
+          "change_from_previous_second": 14.305924956003825,
+          "sample_count": 60
+        },
+        "7": {
+          "mean_luma": 68.65533307393392,
+          "luma_std": 51.39256057739258,
+          "spatial_gradient": 8.142859315872192,
+          "change_from_previous_second": 18.244719592730203,
+          "sample_count": 60
+        },
+        "8": {
+          "mean_luma": 69.98615264892578,
+          "luma_std": 50.775219980875654,
+          "spatial_gradient": 8.71194149653117,
+          "change_from_previous_second": 11.026723043123882,
+          "sample_count": 60
+        },
+        "9": {
+          "mean_luma": 64.30890318552653,
+          "luma_std": 47.54927864074707,
+          "spatial_gradient": 8.180885481834412,
+          "change_from_previous_second": 10.74942448536555,
+          "sample_count": 60
+        },
+        "10": {
+          "mean_luma": 60.95536549886068,
+          "luma_std": 46.94816519419352,
+          "spatial_gradient": 7.539107418060302,
+          "change_from_previous_second": 11.152125759919484,
+          "sample_count": 60
+        },
+        "11": {
+          "mean_luma": 62.54669443766276,
+          "luma_std": 49.252203432718915,
+          "spatial_gradient": 7.501616994539897,
+          "change_from_previous_second": 14.484009544054667,
+          "sample_count": 60
+        },
+        "12": {
+          "mean_luma": 60.3156987508138,
+          "luma_std": 50.10461273193359,
+          "spatial_gradient": 7.5872204860051475,
+          "change_from_previous_second": 9.581507734457652,
+          "sample_count": 60
+        },
+        "13": {
+          "mean_luma": 59.68456586201986,
+          "luma_std": 49.05881665547689,
+          "spatial_gradient": 7.38065238793691,
+          "change_from_previous_second": 15.196949291229249,
+          "sample_count": 60
+        },
+        "14": {
+          "mean_luma": 59.88368485768636,
+          "luma_std": 49.27751611073812,
+          "spatial_gradient": 7.492103616396586,
+          "change_from_previous_second": 12.559077095985412,
+          "sample_count": 60
+        },
+        "15": {
+          "mean_luma": 57.845272382100426,
+          "luma_std": 48.33396638234456,
+          "spatial_gradient": 7.408757925033569,
+          "change_from_previous_second": 9.369456911087036,
+          "sample_count": 60
+        },
+        "16": {
+          "mean_luma": 74.76227296193441,
+          "luma_std": 56.89386386871338,
+          "spatial_gradient": 7.9367112477620445,
+          "change_from_previous_second": 14.270072837670645,
+          "sample_count": 60
+        },
+        "17": {
+          "mean_luma": 84.45163904825846,
+          "luma_std": 61.13721955617269,
+          "spatial_gradient": 8.042036390304565,
+          "change_from_previous_second": 16.066825262705485,
+          "sample_count": 60
+        },
+        "18": {
+          "mean_luma": 88.13724034627279,
+          "luma_std": 61.9970282236735,
+          "spatial_gradient": 8.16555856068929,
+          "change_from_previous_second": 15.941308569908141,
+          "sample_count": 60
+        },
+        "19": {
+          "mean_luma": 83.38348859151205,
+          "luma_std": 56.42799765268962,
+          "spatial_gradient": 8.250154201189677,
+          "change_from_previous_second": 13.285469929377237,
+          "sample_count": 60
+        },
+        "20": {
+          "mean_luma": 82.23859227498373,
+          "luma_std": 57.57934182484944,
+          "spatial_gradient": 8.044644872347513,
+          "change_from_previous_second": 15.894891262054443,
+          "sample_count": 60
+        },
+        "21": {
+          "mean_luma": 79.5750732421875,
+          "luma_std": 60.154052734375,
+          "spatial_gradient": 7.902632713317871,
+          "change_from_previous_second": 15.328721046447754,
+          "sample_count": 1
+        }
+      }
+    },
+    "fp8-dynamic": {
+      "frames": 31505,
+      "fps": 25.0,
+      "duration_seconds": 1260.2,
+      "decoded_audio_sha256": "8f6afb1f9abe59dcd86c573000192bdb8d2de9177c68803adbe56c57f5f687c2",
+      "per_minute": {
+        "0": {
+          "mean_luma": 84.94383786519369,
+          "luma_std": 63.400848134358725,
+          "spatial_gradient": 8.155449946721395,
+          "change_from_previous_second": 15.471508876482646,
+          "sample_count": 60
+        },
+        "1": {
+          "mean_luma": 83.38633155822754,
+          "luma_std": 61.1520191192627,
+          "spatial_gradient": 7.9754409472147625,
+          "change_from_previous_second": 18.11402520338694,
+          "sample_count": 60
+        },
+        "2": {
+          "mean_luma": 91.73783251444499,
+          "luma_std": 62.57456550598145,
+          "spatial_gradient": 8.39876738389333,
+          "change_from_previous_second": 26.186528968811036,
+          "sample_count": 60
+        },
+        "3": {
+          "mean_luma": 86.26612129211426,
+          "luma_std": 63.17995185852051,
+          "spatial_gradient": 8.212052170435587,
+          "change_from_previous_second": 19.126705368359882,
+          "sample_count": 60
+        },
+        "4": {
+          "mean_luma": 85.99501037597656,
+          "luma_std": 60.78370221455892,
+          "spatial_gradient": 8.08016996383667,
+          "change_from_previous_second": 17.63955685297648,
+          "sample_count": 60
+        },
+        "5": {
+          "mean_luma": 81.69917971293131,
+          "luma_std": 55.54413401285807,
+          "spatial_gradient": 8.275400098164877,
+          "change_from_previous_second": 14.645091199874878,
+          "sample_count": 60
+        },
+        "6": {
+          "mean_luma": 73.57232907613118,
+          "luma_std": 49.81344668070475,
+          "spatial_gradient": 8.422008220354716,
+          "change_from_previous_second": 13.680065099398295,
+          "sample_count": 60
+        },
+        "7": {
+          "mean_luma": 66.08530394236247,
+          "luma_std": 47.737300109863284,
+          "spatial_gradient": 8.291741760571798,
+          "change_from_previous_second": 12.246854432423909,
+          "sample_count": 60
+        },
+        "8": {
+          "mean_luma": 62.13136386871338,
+          "luma_std": 50.551964886983235,
+          "spatial_gradient": 8.427557587623596,
+          "change_from_previous_second": 11.70878798564275,
+          "sample_count": 60
+        },
+        "9": {
+          "mean_luma": 59.98224868774414,
+          "luma_std": 48.57867202758789,
+          "spatial_gradient": 8.101956415176392,
+          "change_from_previous_second": 10.323502552509307,
+          "sample_count": 60
+        },
+        "10": {
+          "mean_luma": 64.67537860870361,
+          "luma_std": 49.98181432088216,
+          "spatial_gradient": 8.033704686164857,
+          "change_from_previous_second": 11.445819652080536,
+          "sample_count": 60
+        },
+        "11": {
+          "mean_luma": 74.82858619689941,
+          "luma_std": 54.64446055094401,
+          "spatial_gradient": 8.107189702987672,
+          "change_from_previous_second": 12.638119594256084,
+          "sample_count": 60
+        },
+        "12": {
+          "mean_luma": 82.69505310058594,
+          "luma_std": 60.58041273752848,
+          "spatial_gradient": 8.239463416735331,
+          "change_from_previous_second": 14.734498794873556,
+          "sample_count": 60
+        },
+        "13": {
+          "mean_luma": 85.7250436147054,
+          "luma_std": 60.72404664357503,
+          "spatial_gradient": 8.315940086046854,
+          "change_from_previous_second": 15.974646083513896,
+          "sample_count": 60
+        },
+        "14": {
+          "mean_luma": 84.11781387329101,
+          "luma_std": 60.8440850575765,
+          "spatial_gradient": 8.225470105806986,
+          "change_from_previous_second": 13.826816844940186,
+          "sample_count": 60
+        },
+        "15": {
+          "mean_luma": 87.68469543457032,
+          "luma_std": 59.985062472025554,
+          "spatial_gradient": 8.333744700749715,
+          "change_from_previous_second": 16.913057645161945,
+          "sample_count": 60
+        },
+        "16": {
+          "mean_luma": 88.17906761169434,
+          "luma_std": 61.55938854217529,
+          "spatial_gradient": 8.457465974489848,
+          "change_from_previous_second": 15.749273316065471,
+          "sample_count": 60
+        },
+        "17": {
+          "mean_luma": 87.25376586914062,
+          "luma_std": 61.782907485961914,
+          "spatial_gradient": 8.573095472653707,
+          "change_from_previous_second": 16.02379800081253,
+          "sample_count": 60
+        },
+        "18": {
+          "mean_luma": 87.08587506612142,
+          "luma_std": 61.84962323506673,
+          "spatial_gradient": 8.433843994140625,
+          "change_from_previous_second": 11.289044245084126,
+          "sample_count": 60
+        },
+        "19": {
+          "mean_luma": 81.43992640177409,
+          "luma_std": 55.603687604268394,
+          "spatial_gradient": 8.350462611516317,
+          "change_from_previous_second": 13.664899889628092,
+          "sample_count": 60
+        },
+        "20": {
+          "mean_luma": 80.42653223673503,
+          "luma_std": 55.59608478546143,
+          "spatial_gradient": 8.248431817690532,
+          "change_from_previous_second": 12.392328731218974,
+          "sample_count": 60
+        },
+        "21": {
+          "mean_luma": 85.8819351196289,
+          "luma_std": 60.731319427490234,
+          "spatial_gradient": 8.2504301071167,
+          "change_from_previous_second": 10.771647453308105,
+          "sample_count": 1
+        }
+      }
+    }
+  },
+  "sample_seconds": [
+    10,
+    120,
+    240,
+    360,
+    480,
+    600,
+    720,
+    840,
+    960,
+    1080,
+    1200,
+    1255
+  ],
+  "audio_identical": true,
+  "interpretation": "Statistics describe brightness, spatial detail and motion change; they are not identity, perceptual quality or lip-sync scores. Review synchronized videos and sampled frames."
+}

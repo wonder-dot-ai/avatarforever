@@ -151,6 +151,15 @@ Biases retain checkpoint precision. It uses PyTorch `torch._scaled_mm`, with
 includes compilation. No static calibration file or TensorRT-LLM is needed.
 Attention, ForeverCache, Gemma and VAEs retain their existing computation paths.
 
+To try the optimized activation quantizer on H100, add
+`--fp8-activation-backend auto` alongside `--quantization fp8-dynamic`. It uses
+parallel fused Triton kernels and captures only the quantizer for smaller
+activation tensors; GEMM and the transformer are not captured. The original
+`compiled` backend remains the default. See [the long-video comparison report](benchmarks/FP8_LONG.md)
+for quantizer timings, the matched three-mode results, and the continuous
+21-minute speech test. The long benchmark uses precomputed overlapping-window
+audio latents shared by all modes; it never restarts video AR history.
+
 ### Experimental two-stage comparison
 
 `inference_two_stage.py` runs the existing AR sampler at half resolution, upsamples

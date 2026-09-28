@@ -40,6 +40,12 @@ DEFAULT_PROMPT = (
 # relaxed hand gestures while speaking.
 
 
+def build_quantization_policy(args: argparse.Namespace) -> QuantizationPolicy | None:
+    if args.quantization == "fp8-dynamic":
+        return QuantizationPolicy.fp8_dynamic(args.fp8_activation_backend)
+    return QuantizationPolicy.fp8_cast() if args.quantization == "fp8-cast" else None
+
+
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="AvatarForever one-stage autoregressive A2V inference.")
 
@@ -50,7 +56,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--quantization",
         choices=("none", "fp8-cast", "fp8-dynamic"),
         default="none",
-        help="Transformer precision: BF16, FP8 storage with BF16 compute, or native FP8 with dynamic activation scaling.",
+        help="Transformer precision: BF16, FP8 storage/BF16 compute, or native FP8 with dynamic activation scaling.",
+    )
+
+    model.add_argument(
+        "--fp8-activation-backend", choices=("compiled", "triton", "cudagraph", "auto"), default="compiled",
+        help="Activation quantizer for fp8-dynamic only; CUDA graphs include only quantization.",
     )
 
     generation = parser.add_argument_group("generation")
@@ -152,7 +163,7 @@ def run_inference(
         spatial_upsampler_path=str(spatial_upsampler_path) if spatial_upsampler_path is not None else None,
         gemma_root=str(args.gemma_root),
         loras=[],
-        quantization=getattr(QuantizationPolicy, args.quantization.replace("-", "_"))() if args.quantization != "none" else None,
+        quantization=build_quantization_policy(args),
     )
     images = build_first_frame_images(
         args.first_frame_condition_image_path,

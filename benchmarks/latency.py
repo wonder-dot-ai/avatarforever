@@ -27,10 +27,9 @@ sys.path.insert(0, str(ROOT))
 import torch
 
 import ltx_pipelines.a2vid_distilled as a2v
-from inference import DEFAULT_PROMPT
+from inference import DEFAULT_PROMPT, build_quantization_policy
 from ltx_core.model.transformer import X0Model
 from ltx_core.model.video_vae import SpatialTilingConfig, TemporalTilingConfig, TilingConfig, get_video_chunks_number
-from ltx_core.quantization import QuantizationPolicy
 from ltx_pipelines import ARA2VidDistilledPipeline
 from ltx_pipelines.utils.media_io import encode_video
 from ltx_pipelines.utils.model_ledger import ModelLedger
@@ -103,6 +102,9 @@ def main():
     parser.add_argument("--audio", required=True)
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--quantization", choices=("none", "fp8-cast", "fp8-dynamic"), default="none")
+    parser.add_argument("--fp8-activation-backend", choices=("compiled", "triton", "cudagraph", "auto"), default="compiled")
+    parser.add_argument("--audio-latents", type=Path)
+    parser.add_argument("--warmup-frames", type=int)
     parser.add_argument("--frames", type=int, default=257)
     parser.add_argument("--width", type=int, default=768)
     parser.add_argument("--height", type=int, default=512)
@@ -116,12 +118,22 @@ def main():
     args = parser.parse_args()
     if args.frames <= 0 or (args.frames - 1) % 8:
         parser.error("--frames must be positive and 8n+1")
+    if args.warmup_frames is not None and (args.warmup_frames <= 0 or (args.warmup_frames - 1) % 8):
+        parser.error("--warmup-frames must be positive and 8n+1")
     if args.runs < 1 or args.warmup_runs < 0:
         parser.error("--runs must be positive and --warmup-runs nonnegative")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
         "arguments": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
+        "source_sha256": {
+            name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in ("inference.py", "benchmarks/latency.py",
+                         "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py",
+                         "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py",
+                         "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py",
+                         "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py")
+        },
         "commit": command_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"]),
         "working_tree": command_output(["git", "-C", str(ROOT), "status", "--short"]),
         "python": sys.version,
@@ -142,6 +154,12 @@ def main():
         "sigmas": [1.0, 0.98125, 0.909375, 0.421875, 0.0],
     }
     (args.output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    precomputed_audio = torch.load(args.audio_latents, map_location="cpu", weights_only=True) if args.audio_latents else None
+    if precomputed_audio is not None:
+        assert precomputed_audio["audio_sha256"] == manifest["audio_sha256"], "Audio latent/source mismatch"
+        manifest["audio_latents_sha256"] = hashlib.sha256(args.audio_latents.read_bytes()).hexdigest()
+        manifest["audio_preprocessing"] = precomputed_audio["recipe"]
+        (args.output_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     recorder = Recorder()
     recorder.install()
     pipeline = ARA2VidDistilledPipeline(
@@ -149,7 +167,7 @@ def main():
         spatial_upsampler_path=None,
         gemma_root=args.gemma_root,
         loras=[],
-        quantization=getattr(QuantizationPolicy, args.quantization.replace("-", "_"))() if args.quantization != "none" else None,
+        quantization=build_quantization_policy(args),
     )
     images = build_first_frame_images(args.reference, strength=1.0, crf=0)
     reference_latent = encode_first_frame_channel_condition(
@@ -165,6 +183,7 @@ def main():
     for cached in modes:
         for run in range(args.warmup_runs + args.runs):
             warmup = run < args.warmup_runs
+            request_frames = args.warmup_frames if warmup and args.warmup_frames else args.frames
             label = f"cache-{'on' if cached else 'off'}-{'warmup' if warmup else 'measured'}-{run}"
             recorder.samples.clear()
             torch.cuda.reset_peak_memory_stats()
@@ -178,12 +197,13 @@ def main():
                         seed=args.seed,
                         height=args.height,
                         width=args.width,
-                        num_frames=args.frames,
+                        num_frames=request_frames,
                         frame_rate=args.fps,
                         images=images,
                         audio_path=args.audio,
                         audio_start_time=0.0,
-                        audio_max_duration=args.frames / args.fps,
+                        audio_max_duration=request_frames / args.fps,
+                        precomputed_audio_latent=precomputed_audio["latent"] if precomputed_audio else None,
                         tiling_config=tiling,
                         enhance_prompt=False,
                         stage_mode="one-stage",
@@ -227,7 +247,7 @@ def main():
                     encode_video(
                         video=timed_video(), fps=args.fps, audio=audio,
                         output_path=str(args.output_dir / f"{label}.mp4"),
-                        video_chunks_number=get_video_chunks_number(args.frames, tiling),
+                        video_chunks_number=get_video_chunks_number(request_frames, tiling),
                         crf=12, preset="fast",
                     )
                     sync()
@@ -262,7 +282,7 @@ def main():
                     "model": recorder.model_info,
                     "final_latent_finite": bool(torch.isfinite(pipeline.last_final_video_latent).all()),
                 }
-                assert decoded_frames == args.frames, (decoded_frames, args.frames)
+                assert decoded_frames == request_frames, (decoded_frames, request_frames)
             except Exception as exc:
                 result = {"label": label, "error": str(exc), "traceback": traceback.format_exc()}
                 with (args.output_dir / "results.jsonl").open("a") as f:

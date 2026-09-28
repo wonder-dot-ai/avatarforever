@@ -1,0 +1,16 @@
+{
+  "window_seconds": 30,
+  "context_each_side_seconds": 2,
+  "latent_rate": 25,
+  "duration_seconds": 1260.2,
+  "latent_shape": [
+    1,
+    8,
+    31505,
+    16
+  ],
+  "note": "Overlapping-window audio encoding, shared unchanged by all modes. Video AR history never resets.",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Jfk_American_University_4654_06-10-63.ogg",
+  "license": "Public domain, US federal government recording",
+  "speech": "JFK American University address, June 10 1963; first 21 minutes"
+}

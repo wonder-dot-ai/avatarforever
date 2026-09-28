@@ -884,6 +884,7 @@ class A2VidDistilledPipeline:
         audio_path: str,
         audio_start_time: float = 0.0,
         audio_max_duration: float | None = None,
+        precomputed_audio_latent: torch.Tensor | None = None,
         tiling_config: TilingConfig | None = None,
         enhance_prompt: bool = False,
         negative_prompt: str = "",
@@ -1014,7 +1015,12 @@ class A2VidDistilledPipeline:
         if decoded_audio is None:
             raise ValueError(f"No audio stream found in {audio_path!r}.")
         audio_encoder = fast_modules.audio_encoder if fast_modules is not None else self.model_ledger.audio_encoder()
-        encoded_audio_latent = vae_encode_audio(decoded_audio, audio_encoder)
+        if precomputed_audio_latent is None:
+            encoded_audio_latent = vae_encode_audio(decoded_audio, audio_encoder)
+        else:
+            if precomputed_audio_latent.ndim != 4 or precomputed_audio_latent.shape[1::2] != (8, 16):
+                raise ValueError("Expected precomputed audio latents with shape [batch, 8, time, 16]")
+            encoded_audio_latent = precomputed_audio_latent.to(device=self.device, dtype=self.dtype)
         audio_shape = AudioLatentShape.from_duration(batch=1, duration=num_frames / frame_rate, channels=8, mel_bins=16)
         encoded_audio_latent = encoded_audio_latent[:, :, : audio_shape.frames]
         encoded_audio_latent = self._replace_audio_latent_prefix(

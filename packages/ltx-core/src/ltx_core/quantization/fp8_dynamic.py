@@ -5,6 +5,8 @@ outputs/biases. Only activation quantization is compiled, not the transformer.
 The transposed weight layout also matches the existing scaled-FP8 LoRA merger.
 """
 
+from functools import partial
+
 import torch
 from torch import nn
 
@@ -45,6 +47,7 @@ class DynamicFP8Linear(nn.Module):
         super().__init__()
         if in_features % 16 or out_features % 16:
             raise ValueError("FP8 GEMM requires input/output feature sizes divisible by 16")
+        self.quantizer = quantize_activation
         self.in_features = in_features
         self.out_features = out_features
         # Column-major (K, N), without a per-forward transpose/copy of weights.
@@ -64,7 +67,7 @@ class DynamicFP8Linear(nn.Module):
         padding = (-rows) % 16
         if padding:
             flat = torch.nn.functional.pad(flat, (0, 0, 0, padding))
-        qinput, input_scale = quantize_activation(flat)
+        qinput, input_scale = self.quantizer(flat)
         output = torch._scaled_mm(
             qinput, self.weight, scale_a=input_scale, scale_b=self.weight_scale,
             out_dtype=x.dtype, use_fast_accum=False,
@@ -91,13 +94,27 @@ def quantize_weight(key: str, value: torch.Tensor) -> list[KeyValueOperationResu
     ]
 
 
-def replace_linears(model: nn.Module) -> nn.Module:
+def replace_linears(model: nn.Module, activation_backend: str = "compiled") -> nn.Module:
+    quantizer = quantize_activation
+    if activation_backend != "compiled":
+        from ltx_core.quantization.fp8_quantizer import (  # noqa: PLC0415
+            AdaptiveQuantizer,
+            CapturedQuantizer,
+            fused_quantize,
+        )
+
+        if activation_backend not in ("triton", "cudagraph", "auto"):
+            raise ValueError(f"Unknown FP8 activation backend: {activation_backend}")
+        quantizer = {
+            "triton": fused_quantize, "cudagraph": CapturedQuantizer(), "auto": AdaptiveQuantizer(),
+        }[activation_backend]
     for name, layer in list(model.named_modules()):
         if isinstance(layer, nn.Linear) and selected_linear(name):
             parent, attr = name.rsplit(".", 1)
             setattr(model.get_submodule(parent), attr, DynamicFP8Linear(
                 layer.in_features, layer.out_features, layer.bias is not None, device=layer.weight.device,
             ))
+            model.get_submodule(name).quantizer = quantizer
     return model
 
 
@@ -107,3 +124,11 @@ DYNAMIC_FP8_SD_OPS = SDOps("dynamic_fp8_weights").with_kv_operation(
 DYNAMIC_FP8_MODULE_OPS = ModuleOps(
     name="dynamic_fp8_linears", matcher=lambda model: isinstance(model, LTXModel), mutator=replace_linears,
 )
+
+
+def dynamic_module_ops(activation_backend: str) -> ModuleOps:
+    return ModuleOps(
+        name=f"dynamic_fp8_linears_{activation_backend}",
+        matcher=lambda model: isinstance(model, LTXModel),
+        mutator=partial(replace_linears, activation_backend=activation_backend),
+    )

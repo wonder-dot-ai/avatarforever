@@ -1,0 +1,69 @@
+{
+  "arguments": {
+    "checkpoint": "checkpoints/avatarforever-ltx-2.3-22b.safetensors",
+    "gemma_root": "checkpoints/gemma-3-12b-it-qat-q4_0-unquantized",
+    "audio": "data/jfk-american-university.ogg",
+    "reference": "outputs/stage-comparison/reference.png",
+    "quantization": "fp8-dynamic",
+    "fp8_activation_backend": "auto",
+    "audio_latents": "outputs/fp8-long-comparison/audio-latents.pt",
+    "warmup_frames": null,
+    "frames": 257,
+    "width": 768,
+    "height": 512,
+    "fps": 25,
+    "seed": 42,
+    "runs": 3,
+    "warmup_runs": 1,
+    "cache": "on",
+    "fast_infer": true,
+    "output_dir": "outputs/fp8-long-comparison/short/fp8-dynamic"
+  },
+  "commit": "4dfc42b0e2dbbded4d148387d186219bd7601279",
+  "working_tree": "M README.md\n M inference.py\n M packages/ltx-core/pyproject.toml\n M packages/ltx-core/src/ltx_core/quantization/policy.py\n M packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py\n M packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py\n?? ._inference.py\n?? benchmarks/\n?? inference_two_stage.py\n?? packages/ltx-core/src/ltx_core/quantization/._fp8_dynamic.py\n?? packages/ltx-core/src/ltx_core/quantization/._fp8_quantizer.py\n?? packages/ltx-core/src/ltx_core/quantization/._policy.py\n?? packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py\n?? packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py\n?? packages/ltx-pipelines/src/ltx_pipelines/._a2vid_distilled.py\n?? uv.lock",
+  "python": "3.11.16 (main, Sep 24 2026, 17:56:40) [Clang 22.1.3 ]",
+  "platform": "Linux-6.8.0-1046-nvidia-x86_64-with-glibc2.35",
+  "versions": {
+    "torch": "2.14.0",
+    "torchaudio": "2.11.0",
+    "transformers": "4.55.4",
+    "safetensors": "0.8.0",
+    "av": "18.1.0"
+  },
+  "cuda": "13.0",
+  "torch_cpu_threads": 8,
+  "sdpa_backends_enabled": {
+    "flash": true,
+    "memory_efficient": true,
+    "math": true
+  },
+  "checkpoint_bytes": 46183958894,
+  "audio_sha256": "5bbf9630fe28f4cdfc77afacbda0176379c0186660d98a19e6492ed6967ae89e",
+  "reference_sha256": "98ea0eeab4d6fced997656c5bbad9cc73e2a553604537095b4f6913a29329db9",
+  "gpu": "NVIDIA H100 80GB HBM3, 580.126.20, 81559 MiB, 700.00 W",
+  "timing_method": "Synchronized wall clock. End-to-end starts before pipeline call and ends after MP4 mux. Imports and downloads excluded. Model loading included unless already resident. VAE timing measures generator next() calls. Nested timings overlap. No simulated inference.",
+  "sigmas": [
+    1.0,
+    0.98125,
+    0.909375,
+    0.421875,
+    0.0
+  ],
+  "audio_latents_sha256": "0f23adfc2d3281018731e6ace0c7bfb0decd7924e26d98d157280fffb2177abe",
+  "audio_preprocessing": {
+    "window_seconds": 30,
+    "context_each_side_seconds": 2,
+    "latent_rate": 25,
+    "duration_seconds": 1260.2,
+    "latent_shape": [
+      1,
+      8,
+      31505,
+      16
+    ],
+    "note": "Overlapping-window audio encoding, shared unchanged by all modes. Video AR history never resets.",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Jfk_American_University_4654_06-10-63.ogg",
+    "license": "Public domain, US federal government recording",
+    "speech": "JFK American University address, June 10 1963; first 21 minutes"
+  }
+}
