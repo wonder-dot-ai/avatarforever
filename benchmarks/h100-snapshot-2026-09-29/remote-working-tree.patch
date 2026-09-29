@@ -1,0 +1,434 @@
+diff --git a/README.md b/README.md
+index 425880c..a385b12 100644
+--- a/README.md
++++ b/README.md
+@@ -116,6 +116,78 @@ The default configuration uses one-stage distilled inference at 768 × 512 and 2
+ 
+ Use `python inference.py --help` to see all controls, including video length, autoregressive history, first-frame conditioning, VAE tiling, x264 CRF, and encoding preset.
+ 
++### 8-bit transformer weights
++
++Add `--quantization fp8-cast` to store the transformer's attention projections and
++feed-forward weights/biases in FP8 E4M3. This uses the repository's existing
++quantization policy: each linear operation upcasts its weights to the input
++dtype, normally bfloat16. Activations and ForeverCache are not quantized; Gemma,
++prompt connectors and VAEs are unchanged. This is FP8 weight storage, not INT8 or
++native FP8 matrix multiplication. Some transformer parameters retain bfloat16 or
++float32 checkpoint precision.
++
++```bash
++.venv/bin/python inference.py \
++  --distilled-checkpoint-path checkpoints/avatarforever-ltx-2.3-22b.safetensors \
++  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
++  --audio-path /path/to/input.wav \
++  --first-frame-condition-image-path /path/to/reference.png \
++  --quantization fp8-cast \
++  --num-frames 257 --seed 42 --height 512 --width 768 \
++  --ar-history-feature-cache --fast-infer \
++  --output-path outputs/fp8.mp4
++```
++
++For a bfloat16 baseline, use the same command with `--quantization none` and a
++different output path. Quantization happens while loading; it does not rewrite
++the source checkpoint. The two-stage entry point also accepts this flag.
++
++Use `--quantization fp8-dynamic` on Hopper or newer CUDA GPUs to run these
++projections with native FP8 matrix multiplication instead. This experimental
++policy quantizes weights with per-tensor scales once during loading, calculates
++a fresh per-tensor activation scale for each call, and returns BF16 outputs.
++Biases retain checkpoint precision. It uses PyTorch `torch._scaled_mm`, with
++`torch.compile` applied only to the activation quantizer; the first request
++includes compilation. No static calibration file or TensorRT-LLM is needed.
++Attention, ForeverCache, Gemma and VAEs retain their existing computation paths.
++
++### Experimental two-stage comparison
++
++`inference_two_stage.py` runs the existing AR sampler at half resolution, upsamples
++the completed latent sequence by 2×, then refines it with a second AR pass at the
++output resolution. This is an experiment with the Avatar-Forever checkpoint;
++the published training and evaluation do not establish two-stage quality.
++It does not stream chunks between stages.
++
++Download the [LTX-2.3 spatial ×2 upscaler](https://huggingface.co/Lightricks/LTX-2.3/blob/main/ltx-2.3-spatial-upscaler-x2-1.1.safetensors):
++
++```bash
++hf download Lightricks/LTX-2.3 ltx-2.3-spatial-upscaler-x2-1.1.safetensors \
++  --local-dir checkpoints
++
++.venv/bin/python inference_two_stage.py \
++  --distilled-checkpoint-path checkpoints/avatarforever-ltx-2.3-22b.safetensors \
++  --spatial-upsampler-path checkpoints/ltx-2.3-spatial-upscaler-x2-1.1.safetensors \
++  --gemma-root checkpoints/gemma-3-12b-it-qat-q4_0-unquantized \
++  --audio-path /path/to/input.wav \
++  --first-frame-condition-image-path /path/to/reference.png \
++  --num-frames 257 --seed 42 --height 512 --width 768 \
++  --ar-history-feature-cache --fast-infer \
++  --output-path outputs/two-stage.mp4
++```
++
++For a matched one-stage run, use `inference.py` with the same arguments, remove
++`--spatial-upsampler-path`, and set `--output-path outputs/one-stage.mp4`.
++The reference image is optional; use the same image in both modes to control
++identity. Matching seeds do not produce identical noise tensors across resolutions.
++
++The two-stage script defaults to 257 frames and requires output dimensions divisible
++by 64. Stage 1 uses the same four-step schedule as `inference.py`; stage 2 defaults
++to three steps (`--stage2-sigmas 0.909375 0.725 0.421875 0`). The reference image is
++encoded separately at each stage's resolution. Both scripts save a JSON sidecar
++with arguments and cold request time, including model loading and MP4 encoding.
++These times are not warmed throughput benchmarks.
++
+ ### Prompt guidance
+ 
+ The following general-purpose prompt is the default for audio-driven generation:
+diff --git a/inference.py b/inference.py
+index 755fd0e..fd85bd1 100644
+--- a/inference.py
++++ b/inference.py
+@@ -1,13 +1,16 @@
+ from __future__ import annotations
+ 
+ import argparse
++import json
+ import logging
+ import time
+ from pathlib import Path
++from typing import Literal
+ 
+ import torch
+ 
+ from ltx_core.model.video_vae import get_video_chunks_number
++from ltx_core.quantization import QuantizationPolicy
+ from ltx_pipelines import ARA2VidDistilledPipeline
+ from ltx_pipelines.utils.media_io import encode_video
+ from util import (
+@@ -37,12 +40,36 @@ DEFAULT_PROMPT = (
+ # relaxed hand gestures while speaking.
+ 
+ 
++def build_quantization_policy(args: argparse.Namespace) -> QuantizationPolicy | None:
++    if args.quantization == "fp8-dynamic":
++        return QuantizationPolicy.fp8_dynamic(args.fp8_activation_backend)
++    return QuantizationPolicy.fp8_cast() if args.quantization == "fp8-cast" else None
++
++
+ def build_arg_parser() -> argparse.ArgumentParser:
+     parser = argparse.ArgumentParser(description="AvatarForever one-stage autoregressive A2V inference.")
+ 
+     model = parser.add_argument_group("model")
+     model.add_argument("--distilled-checkpoint-path", type=Path, required=True)
+     model.add_argument("--gemma-root", type=Path, required=True)
++    model.add_argument(
++        "--quantization",
++        choices=("none", "fp8-cast", "fp8-dynamic"),
++        default="none",
++        help="Transformer precision: BF16, FP8 storage/BF16 compute, or native FP8 with dynamic activation scaling.",
++    )
++
++    model.add_argument(
++        "--fp8-activation-backend", choices=("compiled", "triton", "cudagraph", "auto"), default="compiled",
++        help="Activation quantizer for fp8-dynamic only; CUDA graphs include only quantization.",
++    )
++
++    model.add_argument(
++        "--compile-transformer", choices=("none", "full", "blocks", "regional"), default="none",
++        help="Strict torch.compile scope; weights remain in the selected storage dtype. First calls compile lazily.",
++    )
++
++    model.add_argument("--compile-video-decoder", action="store_true", help="Also compile each video-VAE tile forward.")
+ 
+     generation = parser.add_argument_group("generation")
+     generation.add_argument("--audio-path", type=Path, required=True)
+@@ -123,31 +150,54 @@ def build_arg_parser() -> argparse.ArgumentParser:
+     return parser
+ 
+ 
+-def main() -> None:
+-    args = build_arg_parser().parse_args()
++def run_inference(
++    args: argparse.Namespace,
++    *,
++    stage_mode: Literal["one-stage", "two-stage"] = "one-stage",
++    spatial_upsampler_path: Path | None = None,
++    stage2_sigmas: list[float] | None = None,
++) -> None:
++    """Run either sampler with shared audio, image, AR, and encoding settings."""
+     logging.basicConfig(
+         level=logging.INFO,
+         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+     )
+ 
++    torch.cuda.synchronize()
++    start_time = time.perf_counter()
+     pipeline = ARA2VidDistilledPipeline(
+         distilled_checkpoint_path=str(args.distilled_checkpoint_path),
+-        spatial_upsampler_path=None,
++        spatial_upsampler_path=str(spatial_upsampler_path) if spatial_upsampler_path is not None else None,
+         gemma_root=str(args.gemma_root),
++        loras=[],
++        quantization=build_quantization_policy(args),
++        transformer_compile=args.compile_transformer,
++        compile_video_decoder=args.compile_video_decoder,
+     )
+     images = build_first_frame_images(
+         args.first_frame_condition_image_path,
+         strength=args.first_frame_image_strength,
+         crf=args.first_frame_image_crf,
+     )
++    stage1_scale = 2 if stage_mode == "two-stage" else 1
+     first_frame_channel_condition_latent = encode_first_frame_channel_condition(
+         pipeline,
+         image_path=args.first_frame_condition_image_path,
+         enabled=args.first_frame_channel_condition,
+-        height=args.height,
+-        width=args.width,
++        height=args.height // stage1_scale,
++        width=args.width // stage1_scale,
+         crf=args.first_frame_image_crf,
+     )
++    stage2_first_frame_channel_condition_latent = None
++    if stage_mode == "two-stage":
++        stage2_first_frame_channel_condition_latent = encode_first_frame_channel_condition(
++            pipeline,
++            image_path=args.first_frame_condition_image_path,
++            enabled=args.first_frame_channel_condition,
++            height=args.height,
++            width=args.width,
++            crf=args.first_frame_image_crf,
++        )
+     derive_channel_condition_from_first_chunk = (
+         args.first_frame_channel_condition and first_frame_channel_condition_latent is None
+     )
+@@ -155,7 +205,6 @@ def main() -> None:
+     video_chunks_number = get_video_chunks_number(args.num_frames, tiling_config)
+     output_path = resolve_output_path(args)
+ 
+-    start_time = time.time()
+     with torch.inference_mode():
+         video, audio = pipeline(
+             prompt=args.prompt,
+@@ -170,8 +219,9 @@ def main() -> None:
+             audio_max_duration=args.num_frames / args.frame_rate,
+             tiling_config=tiling_config,
+             enhance_prompt=False,
+-            stage_mode="one-stage",
++            stage_mode=stage_mode,
+             stage1_sigmas=args.stage1_sigmas,
++            stage2_sigmas=stage2_sigmas,
+             ar_video_chunk_size=args.ar_video_chunk_size,
+             ar_history_chunk_count=args.ar_history_chunk_count,
+             ar_sink_first_chunk=args.ar_sink_first_chunk,
+@@ -180,6 +230,7 @@ def main() -> None:
+             ar_first_frame_prefix_condition=args.first_frame_prefix_condition,
+             ar_first_frame_condition_position=args.first_frame_condition_position,
+             first_frame_channel_condition_latent=first_frame_channel_condition_latent,
++            stage2_first_frame_channel_condition_latent=stage2_first_frame_channel_condition_latent,
+             first_frame_channel_condition_init=args.first_frame_channel_condition_init,
+             first_frame_channel_condition_mode=args.first_frame_channel_condition_mode,
+             ar_first_frame_channel_condition_from_first_chunk=derive_channel_condition_from_first_chunk,
+@@ -197,10 +248,25 @@ def main() -> None:
+             preset=args.video_preset,
+         )
+ 
+-    generation_seconds = time.time() - start_time
++    torch.cuda.synchronize()
++    generation_seconds = time.perf_counter() - start_time
++    metadata = {
++        "arguments": vars(args),
++        "stage_mode": stage_mode,
++        "spatial_upsampler_path": spatial_upsampler_path,
++        "stage2_sigmas": stage2_sigmas,
++        "elapsed_seconds": generation_seconds,
++        "timing_scope": "Single cold request: model loading, conditioning, sampling, VAE decode and MP4 encoding; "
++        "excludes Python imports and downloads. Not a warmed latency benchmark.",
++    }
++    output_path.with_suffix(".json").write_text(json.dumps(metadata, indent=2, default=str) + "\n")
+     logging.info("Generation finished in %.2fs (%d frames).", generation_seconds, args.num_frames)
+     logging.info("Saved video to %s", output_path)
+ 
+ 
++def main() -> None:
++    run_inference(build_arg_parser().parse_args())
++
++
+ if __name__ == "__main__":
+     main()
+diff --git a/packages/ltx-core/pyproject.toml b/packages/ltx-core/pyproject.toml
+index f8d82df..51ba0f2 100644
+--- a/packages/ltx-core/pyproject.toml
++++ b/packages/ltx-core/pyproject.toml
+@@ -9,7 +9,8 @@ dependencies = [
+     "torchaudio",
+     "einops",
+     "numpy",
+-    "transformers>=4.52",
++    # Keep the tested Gemma API while allowing the TensorRT extra's 4.53.1 pin.
++    "transformers>=4.52,<=4.55.4",
+     "safetensors",
+     "accelerate",
+     "scipy>=1.14",
+diff --git a/packages/ltx-core/src/ltx_core/quantization/policy.py b/packages/ltx-core/src/ltx_core/quantization/policy.py
+index 56dad51..554adbc 100644
+--- a/packages/ltx-core/src/ltx_core/quantization/policy.py
++++ b/packages/ltx-core/src/ltx_core/quantization/policy.py
+@@ -25,6 +25,17 @@ class QuantizationPolicy:
+             module_ops=(UPCAST_DURING_INFERENCE,),
+         )
+ 
++    @classmethod
++    def fp8_dynamic(cls, activation_backend: str = "compiled") -> "QuantizationPolicy":
++        """FP8 weights and native GEMM with runtime per-tensor activation scales."""
++        import torch  # noqa: PLC0415
++
++        from ltx_core.quantization.fp8_dynamic import DYNAMIC_FP8_SD_OPS, dynamic_module_ops  # noqa: PLC0415
++
++        if not torch.cuda.is_available() or torch.cuda.get_device_capability()[0] < 9:
++            raise RuntimeError("fp8-dynamic requires a Hopper or newer CUDA GPU")
++        return cls(sd_ops=DYNAMIC_FP8_SD_OPS, module_ops=(dynamic_module_ops(activation_backend),))
++
+     @classmethod
+     def fp8_scaled_mm(cls) -> "QuantizationPolicy":
+         """Create policy using FP8 scaled matrix multiplication."""
+diff --git a/packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py b/packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py
+index 58c8e3f..1dd211a 100644
+--- a/packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py
++++ b/packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py
+@@ -243,6 +243,8 @@ class A2VidDistilledPipeline:
+         loras: list[LoraPathStrengthAndSDOps],
+         device: torch.device = device,
+         quantization: QuantizationPolicy | None = None,
++        transformer_compile: str = "none",
++        compile_video_decoder: bool = False,
+     ):
+         self.device = device
+         self.dtype = torch.bfloat16
+@@ -255,6 +257,8 @@ class A2VidDistilledPipeline:
+             gemma_root_path=gemma_root,
+             loras=loras,
+             quantization=quantization,
++            transformer_compile=transformer_compile,
++            compile_video_decoder=compile_video_decoder,
+         )
+ 
+         self.pipeline_components = PipelineComponents(
+@@ -884,6 +888,7 @@ class A2VidDistilledPipeline:
+         audio_path: str,
+         audio_start_time: float = 0.0,
+         audio_max_duration: float | None = None,
++        precomputed_audio_latent: torch.Tensor | None = None,
+         tiling_config: TilingConfig | None = None,
+         enhance_prompt: bool = False,
+         negative_prompt: str = "",
+@@ -1014,7 +1019,12 @@ class A2VidDistilledPipeline:
+         if decoded_audio is None:
+             raise ValueError(f"No audio stream found in {audio_path!r}.")
+         audio_encoder = fast_modules.audio_encoder if fast_modules is not None else self.model_ledger.audio_encoder()
+-        encoded_audio_latent = vae_encode_audio(decoded_audio, audio_encoder)
++        if precomputed_audio_latent is None:
++            encoded_audio_latent = vae_encode_audio(decoded_audio, audio_encoder)
++        else:
++            if precomputed_audio_latent.ndim != 4 or precomputed_audio_latent.shape[1::2] != (8, 16):
++                raise ValueError("Expected precomputed audio latents with shape [batch, 8, time, 16]")
++            encoded_audio_latent = precomputed_audio_latent.to(device=self.device, dtype=self.dtype)
+         audio_shape = AudioLatentShape.from_duration(batch=1, duration=num_frames / frame_rate, channels=8, mel_bins=16)
+         encoded_audio_latent = encoded_audio_latent[:, :, : audio_shape.frames]
+         encoded_audio_latent = self._replace_audio_latent_prefix(
+diff --git a/packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py b/packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py
+index e9c42e1..eef834a 100644
+--- a/packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py
++++ b/packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py
+@@ -61,6 +61,7 @@ class ARA2VidDistilledPipeline(A2VidDistilledPipeline):
+         ar_rope_max_temporal_index: int | None = None,
+         audio_start_time: float = 0.0,
+         audio_max_duration: float | None = None,
++        precomputed_audio_latent: torch.Tensor | None = None,
+         tiling_config: TilingConfig | None = None,
+         enhance_prompt: bool = False,
+         stage_mode: DistilledStageMode = "two-stage",
+@@ -90,6 +91,7 @@ class ARA2VidDistilledPipeline(A2VidDistilledPipeline):
+             audio_path=audio_path,
+             audio_start_time=audio_start_time,
+             audio_max_duration=audio_max_duration,
++            precomputed_audio_latent=precomputed_audio_latent,
+             tiling_config=tiling_config,
+             enhance_prompt=enhance_prompt,
+             stage_mode=stage_mode,
+diff --git a/packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py b/packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py
+index 2c69db5..22c064c 100644
+--- a/packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py
++++ b/packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py
+@@ -22,6 +22,7 @@ from ltx_core.model.transformer import (
+     LTXModelConfigurator,
+     X0Model,
+ )
++from ltx_core.model.transformer.compilation import compile_transformer, configure_compile_variant_limit
+ from ltx_core.model.upsampler import LatentUpsampler, LatentUpsamplerConfigurator
+ from ltx_core.model.video_vae import (
+     VAE_DECODER_COMFY_KEYS_FILTER,
+@@ -103,6 +104,8 @@ class ModelLedger:
+         loras: tuple[LoraPathStrengthAndSDOps, ...] = (),
+         registry: Registry | None = None,
+         quantization: QuantizationPolicy | None = None,
++        transformer_compile: str = "none",
++        compile_video_decoder: bool = False,
+     ):
+         self.dtype = dtype
+         self.device = device
+@@ -112,6 +115,8 @@ class ModelLedger:
+         self.loras = loras
+         self.registry = registry or DummyRegistry()
+         self.quantization = quantization
++        self.transformer_compile = transformer_compile
++        self.compile_video_decoder = compile_video_decoder
+         self.build_model_builders()
+ 
+     def build_model_builders(self) -> None:
+@@ -208,6 +213,8 @@ class ModelLedger:
+             loras=loras,
+             registry=self.registry,
+             quantization=self.quantization,
++            transformer_compile=self.transformer_compile,
++            compile_video_decoder=self.compile_video_decoder,
+         )
+ 
+     def transformer(self, extra_config=None) -> X0Model:
+@@ -221,11 +228,12 @@ class ModelLedger:
+                 extra_config=extra_config
+             )
+         if self.quantization is None:
+-            return (
++            model = (
+                 X0Model(self.transformer_builder.build(device=self._target_device(), dtype=self.dtype))
+                 .to(self.device)
+                 .eval()
+             )
++            return compile_transformer(model, self.transformer_compile)
+         else:
+             sd_ops = self.transformer_builder.model_sd_ops
+             if self.quantization.sd_ops is not None:
+@@ -238,7 +246,8 @@ class ModelLedger:
+                 module_ops=(*self.transformer_builder.module_ops, *self.quantization.module_ops),
+                 model_sd_ops=sd_ops,
+             )
+-            return X0Model(builder.build(device=self._target_device())).to(self.device).eval()
++            model = X0Model(builder.build(device=self._target_device())).to(self.device).eval()
++            return compile_transformer(model, self.transformer_compile)
+ 
+     def video_decoder(self) -> VideoDecoder:
+         if not hasattr(self, "vae_decoder_builder"):
+@@ -246,7 +255,14 @@ class ModelLedger:
+                 "Video decoder not initialized. Please provide a checkpoint path to the ModelLedger constructor."
+             )
+ 
+-        return self.vae_decoder_builder.build(device=self._target_device(), dtype=self.dtype).to(self.device).eval()
++        model = self.vae_decoder_builder.build(device=self._target_device(), dtype=self.dtype).to(self.device).eval()
++        if self.compile_video_decoder:
++            configure_compile_variant_limit()
++            # Tiled decoding calls self.forward directly, bypassing Module.__call__.
++            model.forward = torch.compile(
++                model.forward, fullgraph=True, dynamic=False, options={"emulate_precision_casts": True}
++            )
++        return model
+ 
+     def video_encoder(self) -> VideoEncoder:
+         if not hasattr(self, "vae_encoder_builder"):

@@ -1,0 +1,1074 @@
+{
+  "remote_head": "4dfc42b0e2dbbded4d148387d186219bd7601279",
+  "local_base": "647422ac406edf23b7a133944d10a9009dc375fd",
+  "files": [
+    {
+      "path": "._inference.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/._latency.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/._prepare_long_audio.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/._quantizer_backends.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/FP8.md",
+      "size": 4521,
+      "sha256": "d07ad2a3dcee2dddfd38aa73de567f54944b8a99d7e6fb35a7e45ee837c835ce",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/FP8_DYNAMIC.md",
+      "size": 6846,
+      "sha256": "5e053c0c145ca98a7971eea840eaf7db552ee3ff2e993319cc4575d169767e24",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/FP8_LONG.md",
+      "size": 9502,
+      "sha256": "c75c228eae69e27b44b93e723aec1d2483368e369f14b6d65051c4f26ddfb745",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/README.md",
+      "size": 8215,
+      "sha256": "58c59339bdcf3a30fd67a2a7b5db5b8e5fbd2c9e017e0fb6f81b408512f0a020",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/analyze_long_comparison.py",
+      "size": 3891,
+      "sha256": "5c59b4fdeefb599911b7cb32d0026a0bc106c560646a0bd5e624cf63d6bb4eea",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/build_compile_viewer.py",
+      "size": 7425,
+      "sha256": "e84d07dd0886967b328cb59f157d5f9d0caf4d69d559a7764a7f1494dfd85d57",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/build_long_viewer.py",
+      "size": 7891,
+      "sha256": "ff754e91f851128c78b72566687275d7f8866a764dc94ca3c743ccc41e312fe0",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/check_compiled_transformer.py",
+      "size": 3332,
+      "sha256": "ae881fd480e7d8f05cd20a8bcff7e2e3236ea5e78a39fbf3571ea42d5f6ed5ed",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/check_fp8_dynamic.py",
+      "size": 2393,
+      "sha256": "582c9d46538301e518225e5e59e1fea102634b36e7d9a652b166e453d396a0f5",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/compare_video_outputs.py",
+      "size": 3872,
+      "sha256": "1b090e29eb02fba8b64251ce862382d6ab9a54c9f643dea7f76f36cfe25cd9a3",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/compile_probe.py",
+      "size": 1006,
+      "sha256": "f2f2f98aa7386e575b0a073b8673a1955dd5d9095d8676be02c1b03177ed07bb",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/compile_vae_probe.py",
+      "size": 1815,
+      "sha256": "c7fa3f88180bdd374913e1217e05c8f1855921678fc8d2cbeff8b5b578ee90b0",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/environment-h100.txt",
+      "size": 1592,
+      "sha256": "d788fefebeff33a8a3fb56c50b6f34093867e63e444900aa0484703c2cc4b953",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/latency.py",
+      "size": 17381,
+      "sha256": "b7c490b05335e0bf9dd5d6af18b6a02dfc3ee0aab4480febce1614cab06cb361",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/download-avatar.log",
+      "size": 114,
+      "sha256": "b9211480cc20a4222f9f4016eefde721a0b1e874b767185808c4269a2df1d29d",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/download-gemma.log",
+      "size": 982,
+      "sha256": "30004b6a17f546a8d0385fb732e48e04bab9411158bff7ba806fc6cca41194c7",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/setup.log",
+      "size": 4946,
+      "sha256": "040542757972548d71ac7655f1cd587dcabc25f1137a287f5b47709e0223f8cf",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/smoke-transformers5-failure.log",
+      "size": 2846,
+      "sha256": "97e0b962547d718a28a5884737f8a048c51bac97ce2426cd404da0271d842da0",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/smoke.exit",
+      "size": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/smoke.log",
+      "size": 3659,
+      "sha256": "be364ff838ebfabfcfca71b20f430bdbe565f85349c16cc4775df86bcb6306d9",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/warm.exit",
+      "size": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/logs/warm.log",
+      "size": 35517,
+      "sha256": "216d294eba1b3d9ad49a4b7ad553a5c47dbbb72f3c7c9fe2cb39ba81390d1219",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/prepare_long_audio.py",
+      "size": 2973,
+      "sha256": "e3ec2ad823d9c27c31fd3efe4066ddf0722c979206e97b7127050f7f1901111b",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/profile_fp8_dynamic.py",
+      "size": 2097,
+      "sha256": "91bd1987ea1d5f7ff3f33096f4c0b3816107ebccb308e0fc85ec6cd4492845ca",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/quantizer_backends.py",
+      "size": 2807,
+      "sha256": "a6d54a15507462ba14d50c7ae50e9defad9299257307ea16f472dad0f7e10b42",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/environment.txt",
+      "size": 1592,
+      "sha256": "d788fefebeff33a8a3fb56c50b6f34093867e63e444900aa0484703c2cc4b953",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/smoke-65/manifest.json",
+      "size": 1252,
+      "sha256": "ec4bc5cfd7843cf00c500c156228dc9251d8b62817e00180d853c6e94723525a",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/smoke-65/results.jsonl",
+      "size": 4397,
+      "sha256": "0a74ba9d4fbdc81aee1ae3a47154872fa8db5b2fa93e1650c51b5b6d3c8129d6",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/smoke-65/summary.json",
+      "size": 1288,
+      "sha256": "aeffccf9c2d7ac9376288086f09952e233c04421418704d2dddd773076ca5679",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/warm-257/manifest.json",
+      "size": 1503,
+      "sha256": "cd907ff53054176441af70ec2fe5e7576edb585424d988260ea4bc1f1feffcbf",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/warm-257/results.jsonl",
+      "size": 16072,
+      "sha256": "b217879b7322b4f83867129ec705f981cbf61fecf10e748761a89437a699db7d",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/results/h100-2026-09-28/warm-257/summary.json",
+      "size": 2556,
+      "sha256": "31bd6e720e1721c9702288ca28061ac571988ddaa13bfc880b45cdb19965f2d3",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/run-smoke.sh",
+      "size": 479,
+      "sha256": "82e1ed68bafa39bf8178992bb3077392be2545fa95140e93dec9a1cdade8bec1",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/run-warm.sh",
+      "size": 496,
+      "sha256": "ff60f8f58ab48485a1c0777777a1a0643a11fddbe0f96e62ff6992f988e651c2",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/run_long_comparison.sh",
+      "size": 1114,
+      "sha256": "4bae669b3633e1c980407be6cec3ffc8e85e1214668c7a3170fbd411ba038bb6",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/setup.sh",
+      "size": 434,
+      "sha256": "bca66075d821f3fb501a33d6f8e04bb6e53bd3956ebe87482582443f6a773ca0",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/transformer_components.py",
+      "size": 7203,
+      "sha256": "8eb88df6ed6b94e1ffa35fbebfe28ad6de8eb803cce5f46ca730b1069a2e5470",
+      "group": "source"
+    },
+    {
+      "path": "benchmarks/vram.py",
+      "size": 11241,
+      "sha256": "398cad7a5fd43aff01d3cc0a176e4db3b9d464dcfae09509707918b6ca7ea707",
+      "group": "source"
+    },
+    {
+      "path": "inference_two_stage.py",
+      "size": 1452,
+      "sha256": "097fbe8c1fa077045fe05e102bfebb870954e007e0b9c3fa99ba6e952ce25ebf",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/compilation.py",
+      "size": 2284,
+      "sha256": "c4234f239d6190458668551815d1c919b8ea58f70a6e2102ad126a46acc08e73",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/._fp8_dynamic.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/._fp8_quantizer.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/._policy.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py",
+      "size": 5952,
+      "sha256": "af6ebd36827e1e6356b215e172c9dbf63971d0431ba475a7d04557e9a15d7380",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py",
+      "size": 3656,
+      "sha256": "5d373f14904ceaf03f132e7073ade008c069e62568f3174464c0a9299768c4ae",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/._a2vid_distilled.py",
+      "size": 163,
+      "sha256": "f68d7e49b1c6705a84932a36ea4497dadf29911042f29b88e15a64924bfcc4fc",
+      "group": "source"
+    },
+    {
+      "path": "uv.lock",
+      "size": 1584661,
+      "sha256": "7325a887682412d09ce395990c55a5ab9d033e790b216ac9915897f5488dba35",
+      "group": "source"
+    },
+    {
+      "path": ".gitignore",
+      "size": 420,
+      "sha256": "1f097c9ce85dcc262bcdc73381b3f4066cafaecb6dc2ee94c91ad1f3c459d1b6",
+      "group": "source"
+    },
+    {
+      "path": "LICENSE",
+      "size": 21467,
+      "sha256": "7c8ef302fa1444a3a5650c2dfa09c6927a52b233202431023abb32519f354397",
+      "group": "source"
+    },
+    {
+      "path": "README.md",
+      "size": 11876,
+      "sha256": "b75917635f0c39be107f86470066e15efcf59a4e1f4092b8f49c5ea5a8934237",
+      "group": "source"
+    },
+    {
+      "path": "assets/avatar-forever-logo.png",
+      "size": 811460,
+      "sha256": "fc8b3c87116e9d839189ef6bcb5f466630a79605402d7ca52d73b469d5262b46",
+      "group": "source"
+    },
+    {
+      "path": "assets/avatar-forever-mark.png",
+      "size": 241592,
+      "sha256": "4f081f89d9c06974b81ea3eb8af5474a75392b1f797eefd337f53f467cf5bc15",
+      "group": "source"
+    },
+    {
+      "path": "assets/overview.png",
+      "size": 3413164,
+      "sha256": "a0ae4e3d2dca84044725c22438377fc7d84a27248edb7eb611681e80057e2b90",
+      "group": "source"
+    },
+    {
+      "path": "checkpoints/README.md",
+      "size": 806,
+      "sha256": "e27d06a3cff7ab6c28558f011c6ca9bb3d55a189c38d991e43aeba0e3ef1703d",
+      "group": "source"
+    },
+    {
+      "path": "inference.py",
+      "size": 12215,
+      "sha256": "5957363352def25b7e4cd6d70aa21ca791894697fb82b2ddda2a0b575e4977d5",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/README.md",
+      "size": 22451,
+      "sha256": "ac8f390ad9d8462d26c1c3669bcaffcba8a3e18b0e17cdfe38e759797a4d231a",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/pyproject.toml",
+      "size": 1060,
+      "sha256": "9b0122b6e6fd34cdd831e71b0cdfd3653011b73a3627319c3a21a8b4608c9423",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/__init__.py",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/__init__.py",
+      "size": 485,
+      "sha256": "319cdb78afb9d95413d0da0cd4c96afeb1b4dd3d1f4cf6aa30c838f03bccb393",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/diffusion_steps.py",
+      "size": 4101,
+      "sha256": "0c9609ee94862fbc0a5d1d7c708ed8808616615edbf1d39f6138d91e501f4d15",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/guiders.py",
+      "size": 15207,
+      "sha256": "21f41fb77fcea2567ddcc833a8a757f8c6bcf794d53263c0b8d48ad7821d5069",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/noisers.py",
+      "size": 1088,
+      "sha256": "b7764741bba285c5d6aa1c6045ee6fddda20f19ef177ca7ebb882fefa07e848d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/patchifiers.py",
+      "size": 14286,
+      "sha256": "65ae83be774f1c10dbda5de16891d2a2554207da27e9bd1017468cdc39b4a07d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/protocols.py",
+      "size": 3147,
+      "sha256": "d1d79c9507c57b786ff752aedc8fc988b24895ef81eb95f31506cdcb8253dbc3",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/components/schedulers.py",
+      "size": 4855,
+      "sha256": "ca318b9e9d0e3166e7085b8abf1950a2851790f9427bfdcb8e825cc6a8d06be4",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/__init__.py",
+      "size": 853,
+      "sha256": "74e38e206066bd591c50826612f15d9df7eb250df1e1574bde60b4e11aa4cdcc",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/exceptions.py",
+      "size": 95,
+      "sha256": "fb618772f349090b17cee84e28f862a42b5273b2da2e9f50f94c9a44692c0585",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/item.py",
+      "size": 905,
+      "sha256": "cd2986b448dd539d5a2bef860e982d869522a0034d7b3da832c494c4983bc35d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/mask_utils.py",
+      "size": 9174,
+      "sha256": "2f401b1ec81dd56646d9ead6f1bbb08def409976761d7a743c7d2fa11b01e6a3",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/__init__.py",
+      "size": 985,
+      "sha256": "494d7bb0cab6b43dcaae1ccd28599462b568821de0f4da23e4b46d2e599605a1",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/attention_strength_wrapper.py",
+      "size": 3007,
+      "sha256": "370279deb618d63d7bdf3d71e6b83fa6fcbdc071cb5d631a51f767c1f4d5dcc6",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/global_prefix_cond.py",
+      "size": 5795,
+      "sha256": "60efc805a5a10a46fd3c80b1ff6f3cf6c6fb62486acfae9eb722c3c567d03d29",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/global_suffix_cond.py",
+      "size": 5769,
+      "sha256": "1397f9fe9672b909b832da75aedabc847e88511f60d7ed502c5835a44781381b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/keyframe_cond.py",
+      "size": 2840,
+      "sha256": "813c0cc368e86a8d56ce10056fb9bd908640889ee484c639405fa9cece4228b9",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/latent_cond.py",
+      "size": 2000,
+      "sha256": "96cb70f92cfdc934ace8432238aba7aaba1704feacec73b549269bacc1b4abeb",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/reference_audio_cond.py",
+      "size": 2093,
+      "sha256": "e8c7f956fbb76ac5c8ddc73c5fba0a829ccfd6006e0c87a0905228d8e3721cab",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/conditioning/types/reference_video_cond.py",
+      "size": 3864,
+      "sha256": "ce61121ec2ffd22dca7a8f14d1c490387f68c76ea012f668892bb6863ee9503b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/guidance/__init__.py",
+      "size": 332,
+      "sha256": "87d78713485160abab95edb4eae52a4a65d037e1f4ab26369fa228ef4e8b294e",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/guidance/perturbations.py",
+      "size": 2890,
+      "sha256": "a78a5b105e8fbbf4bcd793572997f70d134adae55745f3ef1db4e0763168a820",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/__init__.py",
+      "size": 1388,
+      "sha256": "14d949755009633f1cb70f309b8f2cb6e7be12837acef0f087e50b28c00271a8",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/fuse_loras.py",
+      "size": 5194,
+      "sha256": "776b9f51aa6d5c4764d5de46309cef79c37b7a81c01db8497d31f7fc0cc1cbcb",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/kernels.py",
+      "size": 2699,
+      "sha256": "6bf2fbbdb066308efe33ea5b0bbd3f6ca2fdeea68edb903210feb1524bb7f134",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/module_ops.py",
+      "size": 397,
+      "sha256": "70f4a23a285fd174ddeec90580d0f73322f51ea72c54a40a57a1c99911196db8",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/primitives.py",
+      "size": 3283,
+      "sha256": "13cdf0fc44036312a2bfaf4d4761b94bacb0b94eba737cbbe74238410669dd36",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/registry.py",
+      "size": 2835,
+      "sha256": "fc61a22fc6644d9b5e7a0c946993c74c58e89779a3089c94381addb3237c7d8c",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/sd_ops.py",
+      "size": 4267,
+      "sha256": "a19760beb01f97894c9ad466ef61c780571881c6526d70371ea40d6cef038cc2",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/sft_loader.py",
+      "size": 2789,
+      "sha256": "66999542a48e4899cf6dbe04ef490f5fe170d6c8e9034ad08447a62da4b55759",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/loader/single_gpu_model_builder.py",
+      "size": 8437,
+      "sha256": "605c902680dbab23a333f33bd054c7a6a0fb8e2add976950d117001a5069b030",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/__init__.py",
+      "size": 164,
+      "sha256": "1403e9f983f414b7f8428410e6c197082ecd1d9fcb9b2dec3326be099c078b5c",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/__init__.py",
+      "size": 884,
+      "sha256": "3741027ec23edb22148eb939b3f2343bacb3b153d807e153f344d1f6e5a2ea44",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/attention.py",
+      "size": 2459,
+      "sha256": "8e6d04197b2d92f409e555261eca7be1c6fe177d78c80d3c806d44a2d41d7918",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/audio_vae.py",
+      "size": 20011,
+      "sha256": "61045a649458b8b4987dfd3360c5e36b7d112c86ad594157b2b95f09f38ba0bc",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/causal_conv_2d.py",
+      "size": 3853,
+      "sha256": "739a4793d9418df48b440b2820decbc95ad4a5d8aa878cc8a65a8fc5d1c4317c",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/causality_axis.py",
+      "size": 231,
+      "sha256": "3d37e5bc06ed13c689c822efd25bc8a4743ea2919281cbb0780623a4b3c752a9",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/downsample.py",
+      "size": 3855,
+      "sha256": "9835e1b0b55463a2b9edc49fb73e628ab303d37cb714c32bc6db10436f8531aa",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/model_configurator.py",
+      "size": 8876,
+      "sha256": "18a156c81e8a496682d0a41753809bb55c3532f7d3aae6c0562964c56661c65b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/ops.py",
+      "size": 2691,
+      "sha256": "5897dd6089e3f0dc7192f36d6bdba09267bed01e55a744aeb15ed605a7311478",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/resnet.py",
+      "size": 5850,
+      "sha256": "00e571dd7f78ba455d94686b8cf1c8610cf24da09167a62fb2e2c4e3d8117c0e",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/upsample.py",
+      "size": 4074,
+      "sha256": "40dea5e410aa17eb1c070d42a2b13d3da010beef5823170f5549af4068607c5f",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/audio_vae/vocoder.py",
+      "size": 23668,
+      "sha256": "9f4333b92ebe441133b7513d1756ace2f8dd853af094ae89394de6e67259ea04",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/common/__init__.py",
+      "size": 207,
+      "sha256": "8b04d2684dd4e483ae35d08dc475c664a4ca6bdea44d5723c4ffa5e7b0083f70",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/common/normalization.py",
+      "size": 1970,
+      "sha256": "e0cc7179f1e00d8a517c8c8a61ee0f2f8dd6476fe21c69175b9fd57bc35e840b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/model_protocol.py",
+      "size": 296,
+      "sha256": "6722def2769fd92a79e5e31b6846085688cfefdcca8cbfe1b95963f79f1c6dc0",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/sparse_attn/core.py",
+      "size": 6842,
+      "sha256": "0a8dc2b166624e13a129d2b7e1166d7c7f31cfa9eed7a471ce828da4cc4dd954",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/sparse_attn/kernel.py",
+      "size": 20822,
+      "sha256": "fda1c5040c4221be7f51d85e58309eb80507bb923c35c76b0623fed634fdd461",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/sparse_attn/utils.py",
+      "size": 3614,
+      "sha256": "a58414411e76d3b07bcc295564f0fd43a52d52d61878a7339763f53f7ee8d5d1",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/__init__.py",
+      "size": 479,
+      "sha256": "870d22c64a7e7590d547249ddb8cf43b3feb1eebbe45768de44f1d37b34f39b1",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/adaln.py",
+      "size": 1732,
+      "sha256": "87be8b1ec9b1395156d2e0f22834ed993af31d684198109d33e61c68f53cd065",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/ar_feature_cache.py",
+      "size": 1321,
+      "sha256": "d437bbc4f92be215106fa18e79f454e3b10ba765d05e7d8262d3f45ea1f47785",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/attention.py",
+      "size": 10619,
+      "sha256": "24dbdb0bd3024662fc14d1222a48781f2bc3cee29564a5b02f237d059caddb58",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/feed_forward.py",
+      "size": 490,
+      "sha256": "e2616cd5d64a01c2429d193426a7ca6122caa00de66208175c80551ac0bed9bb",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/gelu_approx.py",
+      "size": 320,
+      "sha256": "411cda521697663f14142fa7b3108cdc43bcc9392f5c8995e5b154a880cab8d8",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/modality.py",
+      "size": 2259,
+      "sha256": "27b8fcde0fc89d99f357f57700a026aa66d5b310ebf01df619183eb78d83857c",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/model.py",
+      "size": 28705,
+      "sha256": "d2becb1289925703a9f0bcab7c6291097e21ac83adf1e1da070a77525d49f26f",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/model_configurator.py",
+      "size": 13043,
+      "sha256": "86ec03545e4a4591d54cbd58ef4bd06274e66250f9da4557714adb6d49788068",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/model_tf.py",
+      "size": 23240,
+      "sha256": "f2e1ac307b5cf735222952e254a0d922def74bddb357ac2ba79cd94ed84b2b1b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/rope.py",
+      "size": 7051,
+      "sha256": "5829640c65338f7e6ac69528222108c3cf74bac617067497e8cda19b6e8ef871",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/text_projection.py",
+      "size": 1795,
+      "sha256": "989cd23bfd6491328625a5850f8212afda855418570f1059b20377415b8b2e7a",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/timestep_embedding.py",
+      "size": 4737,
+      "sha256": "3a75ff5ef6231bed408f10279a4fb3f0b76c7b027ebaf0aae8c0255fb5338b97",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/transformer.py",
+      "size": 31680,
+      "sha256": "9e4040d4feed85d11a705c6decb682c57aa9ac9f78c940d369c1dd39793e5389",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/transformer_args.py",
+      "size": 13685,
+      "sha256": "c60d2cca43023fb2a9fb7fc36c1e4f2d0b40cc0dde16c400ba7f1b7d25bbf81a",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/transformer/transformer_tf.py",
+      "size": 16637,
+      "sha256": "4c4120c23248483eb6d47df4b90268365d5726ea810a617ab8efc2eb612dabc9",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/__init__.py",
+      "size": 296,
+      "sha256": "0b45fe1ac690abd8b60c626c6777649faa46bddb94052b9f308623e8e01bbe82",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/blur_downsample.py",
+      "size": 2124,
+      "sha256": "e0a33bee6f7e747b23894217f8c5eb37abfd76044001d80b5e5b6dd0a5d58107",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/model.py",
+      "size": 5680,
+      "sha256": "bd20f50bae5c640b33dd481bf912003c88d7c0420933c9f87ab8349cd359328e",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/model_configurator.py",
+      "size": 1283,
+      "sha256": "144556893c1ced2f1a211bc41e19ab06362668ab2758c39b09c7a92c76f1437e",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/pixel_shuffle.py",
+      "size": 2089,
+      "sha256": "b5d7f2848ee36b7d11eb1d7db9dd924ba8bc8cbe7a74376b51924216653916d8",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/res_block.py",
+      "size": 1332,
+      "sha256": "721bd9ba693081956951218bf09b13d293160f70cbf01d77fbff860c63cd161d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/upsampler/spatial_rational_resampler.py",
+      "size": 2005,
+      "sha256": "7053d186f03c3905a0cf17da703df757e436f23b21271045eeca319a81bc15c7",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/__init__.py",
+      "size": 748,
+      "sha256": "d38cbcadf79c02ea67e3463a760e79ed6b65cb19c56f105ebb4682973d5e1fea",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/convolution.py",
+      "size": 10404,
+      "sha256": "593eb8ab8e7290a25f665f3088a2f67c3583ce8ce6c56912b2a61d4be170e060",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/enums.py",
+      "size": 371,
+      "sha256": "9e9f9fc83f0f76ab1022576a52c65b5ba8dc99f5ad872e7de372333479d3bedd",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/model_configurator.py",
+      "size": 3508,
+      "sha256": "4f2360b7d7d3ab70b98c512358c33057cd2c3bf978e6c5867dacfb3ebdabf6fd",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/normalization.py",
+      "size": 139,
+      "sha256": "f89acdf4e98d01c343b4891e31b2be83a4cc5c148b1a8bc1eb5e07d5b717c8d9",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/ops.py",
+      "size": 3369,
+      "sha256": "c1e0dbd37bf9131d2f2589d4d712e4224de067fb0b9d370424c2449dded6e02d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/resnet.py",
+      "size": 10341,
+      "sha256": "347924a483610c3fb66da2dc8dd2d9ed323cb6b8fe8d43b44f587323e1a7b852",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/sampling.py",
+      "size": 3687,
+      "sha256": "1dea756da9269d1552c0659c63cb88d960d957e7b54605f762113497aea0a614",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/tiling.py",
+      "size": 11013,
+      "sha256": "c3bd9e9de8935e5b18d38c490d0734d35d466780553cd32bff8f07af860f4def",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/model/video_vae/video_vae.py",
+      "size": 51880,
+      "sha256": "0d83a1c1c92b5d33a7e3eba666223bd536f3fc03da4362a4d4a01a6c1acb78e9",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/__init__.py",
+      "size": 505,
+      "sha256": "4e8dd9f754ababd30ecaf4d81e1adc3747e6d17cc60ae26ad84e1f5a09d8d84b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py",
+      "size": 6092,
+      "sha256": "47f8f6cc18772dbc65ce2d39ef91e406b7d97a209ef0d9832a0365e17b77670f",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/fp8_scaled_mm.py",
+      "size": 7076,
+      "sha256": "7ba65cc70cf22b61aec905efa5a38636e66b898ad27836350f416e958d6e5ed4",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/quantization/policy.py",
+      "size": 2004,
+      "sha256": "a14d68cfc10142cbdd0f0cfec74b98cf6bba1e82c9224413dd90f9cd2bbaae9b",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/__init__.py",
+      "size": 42,
+      "sha256": "c2d22b6df4c2298cdd872ded0636c4c710e7b52a638eac7df4bee330c085cc16",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/__init__.py",
+      "size": 951,
+      "sha256": "bd71e87ee57ba89ecaa1c9434a640ac49f8ca9db1886f182119d62fcb97e54ce",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/config.py",
+      "size": 2319,
+      "sha256": "872886f10c0314ad7872c16b9c1a5df048589fa28b8937b5e32e2c1376963fef",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/embeddings_connector.py",
+      "size": 11369,
+      "sha256": "e86b0dd3b09b391eb3aee6629c85c3494d54758513cae9e9faf0d31b02317839",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/embeddings_processor.py",
+      "size": 3931,
+      "sha256": "9353e27d3e70d30b1686096ba95ecc42a2eac3c354a2b561ee34f710f8412c8c",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/encoders/base_encoder.py",
+      "size": 7679,
+      "sha256": "be97c98ff8ff59b29e6fd9e272c0ae6543fdc2e545613a33fe5f8096df479dc5",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/encoders/encoder_configurator.py",
+      "size": 8446,
+      "sha256": "0bd43b5978a92d2ca07e98483f79d2a6f046691964912b77262de7d1db28cdf7",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/encoders/prompts/gemma_i2v_system_prompt.txt",
+      "size": 3817,
+      "sha256": "dbba877a41e60f9a3de152be953164b7611d7951c19713022e64d6c08e7c8766",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/encoders/prompts/gemma_t2v_system_prompt.txt",
+      "size": 4182,
+      "sha256": "0f98f02f9fffae27ee3f576685d6d9f9ef13194a0c2068aacdd97f86ea96efd2",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/feature_extractor.py",
+      "size": 5432,
+      "sha256": "57f05094914c43134314f7c509e0b041d321fac39b04c24ce7a956a2e21b1543",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/text_encoders/gemma/tokenizer.py",
+      "size": 2849,
+      "sha256": "a571a44241f0826c5646ba0ed1504937cded0e73892e707770dfd832c2441457",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/tools.py",
+      "size": 7679,
+      "sha256": "bc64a6eead93142bf76dae23049a03f7b92361f5b96b6abe29fcb04c553ef423",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/types.py",
+      "size": 7103,
+      "sha256": "5cb30bf7f9efa5f571eac8b29a393d66ff8bcbaea99335736110c5be75ed7656",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-core/src/ltx_core/utils.py",
+      "size": 2018,
+      "sha256": "d4acb090aa380165e47739ec5c9dc89d58e9ab2b20e7db06c45c1c7554ab4810",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/README.md",
+      "size": 609,
+      "sha256": "70f237d003e71ac0b4c1145f342a610cd00765e8d5f79c6b97b5d1b409f7299d",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/pyproject.toml",
+      "size": 302,
+      "sha256": "b6ea8c88a00702fcfbb8361c505470eb9a057cbfd525aabd79f8ade832239faf",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/__init__.py",
+      "size": 172,
+      "sha256": "ad2681651a4441ca068fdebda5ae55a090d10a77f8778853c08d4facefb25a0a",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py",
+      "size": 61108,
+      "sha256": "efcbb704f5194cef1a07402a8aa0d5e5817baa12c24f93232a641850a8293264",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py",
+      "size": 11123,
+      "sha256": "8af55d8ccb2785bd31bd23300853157da75dd4c39e145079909282d80538dce6",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/__init__.py",
+      "size": 1202,
+      "sha256": "03fedf629fec49656e7bdc19df6a6468d872159035dd192525ca05e819f4d39e",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/args.py",
+      "size": 19352,
+      "sha256": "77df0cfd1295223a8bf0809d14f8d14d94a91a6769263746cabaee7bec5cfcef",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/autoregressive.py",
+      "size": 30016,
+      "sha256": "d95a954838594947e9d6ebf496fda60cdcafad1bbf43e4a05ab9af2d65af0d34",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/constants.py",
+      "size": 5420,
+      "sha256": "8ceb5be5df621a6c61d9229ffc8b1024d9d9035efbf2ae3b9b2424c8744e7cbd",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/helpers.py",
+      "size": 32456,
+      "sha256": "093f5a07b493bd897557842fdfb437fb63d845910218aaa6b470a37328af2e70",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/media_io.py",
+      "size": 16451,
+      "sha256": "8c7d9a09bca7a7f05ce7fdbc89043860512cb8bf1190846060a26337222bf706",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py",
+      "size": 14336,
+      "sha256": "38a6d8479ddc4040fce496c553c441899079ee87c3153f917dcef2470ae17bbe",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/res2s.py",
+      "size": 1998,
+      "sha256": "c4c17d9a3fb9c656977c8610447eddf2a456692c8a1cac345c2547de1e5dd419",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/samplers.py",
+      "size": 16983,
+      "sha256": "2fb572d2fce06321f1b196a1ad9e0e80fa20efeeaae4ee45dc25f147862f3ad1",
+      "group": "source"
+    },
+    {
+      "path": "packages/ltx-pipelines/src/ltx_pipelines/utils/types.py",
+      "size": 3113,
+      "sha256": "e7bdd7eb45eda96d7554d1f3897bb1f2167d9e1c1d7ab8a87d15fcc33e31c2cd",
+      "group": "source"
+    },
+    {
+      "path": "pyproject.toml",
+      "size": 1531,
+      "sha256": "803a7a34b4e4cfa957c5b099a476ffbc9fc8ab2f355bf94ac119d9d998e7e7e4",
+      "group": "source"
+    },
+    {
+      "path": "util.py",
+      "size": 3864,
+      "sha256": "81e1dd0560e1617cb3187199356b0426588ae20437e1d47e56d6be4c7ac2d1fe",
+      "group": "source"
+    }
+  ]
+}
