@@ -12,6 +12,7 @@ import hashlib
 import importlib.metadata
 import json
 import logging
+import os
 import platform
 import statistics
 import subprocess
@@ -103,6 +104,9 @@ def main():
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--quantization", choices=("none", "fp8-cast", "fp8-dynamic"), default="none")
     parser.add_argument("--fp8-activation-backend", choices=("compiled", "triton", "cudagraph", "auto"), default="compiled")
+    parser.add_argument("--compile-transformer", choices=("none", "full", "blocks", "regional"), default="none")
+    parser.add_argument("--compile-video-decoder", action="store_true")
+    parser.add_argument("--save-latents", action="store_true")
     parser.add_argument("--audio-latents", type=Path)
     parser.add_argument("--warmup-frames", type=int)
     parser.add_argument("--frames", type=int, default=257)
@@ -126,11 +130,21 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = {
         "arguments": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
+        "compiler_cache_directory": os.environ.get("TORCHINDUCTOR_CACHE_DIR"),
+        "compiler_settings": {
+            "fullgraph": True,
+            "dynamic": False,
+            "emulate_precision_casts": True,
+            "note": "Only applies to opted-in transformer/decoder regions.",
+        },
         "source_sha256": {
             name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
             for name in ("inference.py", "benchmarks/latency.py",
                          "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py",
                          "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py",
+                         "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py",
+                         "packages/ltx-core/src/ltx_core/model/transformer/compilation.py",
+                         "packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py",
                          "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py",
                          "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py")
         },
@@ -168,6 +182,8 @@ def main():
         gemma_root=args.gemma_root,
         loras=[],
         quantization=build_quantization_policy(args),
+        transformer_compile=args.compile_transformer,
+        compile_video_decoder=args.compile_video_decoder,
     )
     images = build_first_frame_images(args.reference, strength=1.0, crf=0)
     reference_latent = encode_first_frame_channel_condition(
@@ -282,6 +298,12 @@ def main():
                     "model": recorder.model_info,
                     "final_latent_finite": bool(torch.isfinite(pipeline.last_final_video_latent).all()),
                 }
+                result["dynamo_counters"] = {
+                    group: dict(torch._dynamo.utils.counters[group])
+                    for group in ("stats", "graph_break", "unimplemented")
+                }
+                if args.save_latents and not warmup:
+                    torch.save(pipeline.last_final_video_latent.cpu(), args.output_dir / f"{label}-latent.pt")
                 assert decoded_frames == request_frames, (decoded_frames, request_frames)
             except Exception as exc:
                 result = {"label": label, "error": str(exc), "traceback": traceback.format_exc()}

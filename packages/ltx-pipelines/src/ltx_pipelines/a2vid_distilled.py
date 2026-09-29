@@ -243,6 +243,8 @@ class A2VidDistilledPipeline:
         loras: list[LoraPathStrengthAndSDOps],
         device: torch.device = device,
         quantization: QuantizationPolicy | None = None,
+        transformer_compile: str = "none",
+        compile_video_decoder: bool = False,
     ):
         self.device = device
         self.dtype = torch.bfloat16
@@ -255,6 +257,8 @@ class A2VidDistilledPipeline:
             gemma_root_path=gemma_root,
             loras=loras,
             quantization=quantization,
+            transformer_compile=transformer_compile,
+            compile_video_decoder=compile_video_decoder,
         )
 
         self.pipeline_components = PipelineComponents(

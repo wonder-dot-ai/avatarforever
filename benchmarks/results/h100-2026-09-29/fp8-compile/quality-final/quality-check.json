@@ -1,0 +1,22 @@
+{
+  "frames": 257,
+  "width": 768,
+  "height": 512,
+  "fps": 25.0,
+  "duration_seconds": 10.28,
+  "video_codec": "h264",
+  "baseline": "outputs/fp8-compile/eager/cache-on-measured-1.mp4",
+  "candidate": "outputs/fp8-compile/regional-decoder/cache-on-measured-1.mp4",
+  "rgb_pixel_mae_0_to_255": 22.223168850975846,
+  "rgb_pixel_psnr_db": 15.34643172763387,
+  "baseline_decoded_audio_sha256": "e1e0ac5b10eada4dac5d2ee66a1b4a02ebfbec135cc63f3b23ec013e23b7d3b8",
+  "candidate_decoded_audio_sha256": "e1e0ac5b10eada4dac5d2ee66a1b4a02ebfbec135cc63f3b23ec013e23b7d3b8",
+  "decoded_audio_identical": true,
+  "sample_frame_indices_zero_based": [
+    32,
+    96,
+    160,
+    224
+  ],
+  "interpretation": "Pixel metrics measure output difference, not quality or lip-sync. Numerical changes can produce different diffusion trajectories with the same seed."
+}

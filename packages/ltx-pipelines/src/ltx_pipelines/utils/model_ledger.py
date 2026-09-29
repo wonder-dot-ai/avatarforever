@@ -22,6 +22,7 @@ from ltx_core.model.transformer import (
     LTXModelConfigurator,
     X0Model,
 )
+from ltx_core.model.transformer.compilation import compile_transformer, configure_compile_variant_limit
 from ltx_core.model.upsampler import LatentUpsampler, LatentUpsamplerConfigurator
 from ltx_core.model.video_vae import (
     VAE_DECODER_COMFY_KEYS_FILTER,
@@ -103,6 +104,8 @@ class ModelLedger:
         loras: tuple[LoraPathStrengthAndSDOps, ...] = (),
         registry: Registry | None = None,
         quantization: QuantizationPolicy | None = None,
+        transformer_compile: str = "none",
+        compile_video_decoder: bool = False,
     ):
         self.dtype = dtype
         self.device = device
@@ -112,6 +115,8 @@ class ModelLedger:
         self.loras = loras
         self.registry = registry or DummyRegistry()
         self.quantization = quantization
+        self.transformer_compile = transformer_compile
+        self.compile_video_decoder = compile_video_decoder
         self.build_model_builders()
 
     def build_model_builders(self) -> None:
@@ -208,6 +213,8 @@ class ModelLedger:
             loras=loras,
             registry=self.registry,
             quantization=self.quantization,
+            transformer_compile=self.transformer_compile,
+            compile_video_decoder=self.compile_video_decoder,
         )
 
     def transformer(self, extra_config=None) -> X0Model:
@@ -221,11 +228,12 @@ class ModelLedger:
                 extra_config=extra_config
             )
         if self.quantization is None:
-            return (
+            model = (
                 X0Model(self.transformer_builder.build(device=self._target_device(), dtype=self.dtype))
                 .to(self.device)
                 .eval()
             )
+            return compile_transformer(model, self.transformer_compile)
         else:
             sd_ops = self.transformer_builder.model_sd_ops
             if self.quantization.sd_ops is not None:
@@ -238,7 +246,8 @@ class ModelLedger:
                 module_ops=(*self.transformer_builder.module_ops, *self.quantization.module_ops),
                 model_sd_ops=sd_ops,
             )
-            return X0Model(builder.build(device=self._target_device())).to(self.device).eval()
+            model = X0Model(builder.build(device=self._target_device())).to(self.device).eval()
+            return compile_transformer(model, self.transformer_compile)
 
     def video_decoder(self) -> VideoDecoder:
         if not hasattr(self, "vae_decoder_builder"):
@@ -246,7 +255,14 @@ class ModelLedger:
                 "Video decoder not initialized. Please provide a checkpoint path to the ModelLedger constructor."
             )
 
-        return self.vae_decoder_builder.build(device=self._target_device(), dtype=self.dtype).to(self.device).eval()
+        model = self.vae_decoder_builder.build(device=self._target_device(), dtype=self.dtype).to(self.device).eval()
+        if self.compile_video_decoder:
+            configure_compile_variant_limit()
+            # Tiled decoding calls self.forward directly, bypassing Module.__call__.
+            model.forward = torch.compile(
+                model.forward, fullgraph=True, dynamic=False, options={"emulate_precision_casts": True}
+            )
+        return model
 
     def video_encoder(self) -> VideoEncoder:
         if not hasattr(self, "vae_encoder_builder"):

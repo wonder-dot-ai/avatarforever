@@ -64,6 +64,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="Activation quantizer for fp8-dynamic only; CUDA graphs include only quantization.",
     )
 
+    model.add_argument(
+        "--compile-transformer", choices=("none", "full", "blocks", "regional"), default="none",
+        help="Strict torch.compile scope; weights remain in the selected storage dtype. First calls compile lazily.",
+    )
+
+    model.add_argument("--compile-video-decoder", action="store_true", help="Also compile each video-VAE tile forward.")
+
     generation = parser.add_argument_group("generation")
     generation.add_argument("--audio-path", type=Path, required=True)
     generation.add_argument("--prompt", default=DEFAULT_PROMPT)
@@ -164,6 +171,8 @@ def run_inference(
         gemma_root=str(args.gemma_root),
         loras=[],
         quantization=build_quantization_policy(args),
+        transformer_compile=args.compile_transformer,
+        compile_video_decoder=args.compile_video_decoder,
     )
     images = build_first_frame_images(
         args.first_frame_condition_image_path,

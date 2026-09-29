@@ -9,6 +9,9 @@ For the released checkpoint's inactive first-frame channel, remaining conditioni
 paths, author discussion and unresolved drift questions, see the
 [conditioning and drift report](DRIFT_AUDIT.md) (researched 2026-09-29).
 
+For the opt-in FP8-storage/BF16-compute compiler optimization, startup cost,
+numerical checks and matched measurements, see [FP8_COMPILE.md](FP8_COMPILE.md).
+
 ## Measured results
 
 One H100 80GB HBM3, 768 × 512, 257 frames at 25 FPS (10.28 seconds of video).

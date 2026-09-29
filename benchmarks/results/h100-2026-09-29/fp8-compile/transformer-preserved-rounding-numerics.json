@@ -1,0 +1,202 @@
+[
+  {
+    "call": 0,
+    "video": {
+      "shape": [
+        1,
+        1536,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.515625,
+      "relative_rms_error": 0.016345955431461334,
+      "cosine_similarity": 0.9998664259910583
+    },
+    "audio": {
+      "shape": [
+        1,
+        32,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.0625,
+      "relative_rms_error": 0.006683878600597382,
+      "cosine_similarity": 0.9999777674674988
+    }
+  },
+  {
+    "call": 1,
+    "video": {
+      "shape": [
+        1,
+        1536,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.296875,
+      "relative_rms_error": 0.015990354120731354,
+      "cosine_similarity": 0.9998722076416016
+    },
+    "audio": {
+      "shape": [
+        1,
+        32,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.046875,
+      "relative_rms_error": 0.006680571008473635,
+      "cosine_similarity": 0.9999779462814331
+    }
+  },
+  {
+    "call": 4,
+    "video": {
+      "shape": [
+        1,
+        3072,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.25,
+      "relative_rms_error": 0.013267779722809792,
+      "cosine_similarity": 0.9999120235443115
+    },
+    "audio": {
+      "shape": [
+        1,
+        63,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.0625,
+      "relative_rms_error": 0.006321443244814873,
+      "cosine_similarity": 0.9999799728393555
+    }
+  },
+  {
+    "call": 5,
+    "video": {
+      "shape": [
+        1,
+        3072,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.265625,
+      "relative_rms_error": 0.008896139450371265,
+      "cosine_similarity": 0.9999604225158691
+    },
+    "audio": {
+      "shape": [
+        1,
+        63,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.03125,
+      "relative_rms_error": 0.005396460182964802,
+      "cosine_similarity": 0.9999855756759644
+    }
+  },
+  {
+    "call": 8,
+    "video": {
+      "shape": [
+        1,
+        4608,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.173828125,
+      "relative_rms_error": 0.010273893363773823,
+      "cosine_similarity": 0.9999473094940186
+    },
+    "audio": {
+      "shape": [
+        1,
+        94,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.0390625,
+      "relative_rms_error": 0.006265541538596153,
+      "cosine_similarity": 0.9999803304672241
+    }
+  },
+  {
+    "call": 9,
+    "video": {
+      "shape": [
+        1,
+        4608,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.05712890625,
+      "relative_rms_error": 0.006169380620121956,
+      "cosine_similarity": 0.9999809265136719
+    },
+    "audio": {
+      "shape": [
+        1,
+        94,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.0546875,
+      "relative_rms_error": 0.006761371158063412,
+      "cosine_similarity": 0.9999775886535645
+    }
+  },
+  {
+    "call": 32,
+    "video": {
+      "shape": [
+        1,
+        3456,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.171875,
+      "relative_rms_error": 0.010542954318225384,
+      "cosine_similarity": 0.9999444484710693
+    },
+    "audio": {
+      "shape": [
+        1,
+        70,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.06640625,
+      "relative_rms_error": 0.008357045240700245,
+      "cosine_similarity": 0.9999650716781616
+    }
+  },
+  {
+    "call": 33,
+    "video": {
+      "shape": [
+        1,
+        3456,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.171875,
+      "relative_rms_error": 0.009554225020110607,
+      "cosine_similarity": 0.9999544024467468
+    },
+    "audio": {
+      "shape": [
+        1,
+        70,
+        128
+      ],
+      "finite": true,
+      "max_abs_difference": 0.021484375,
+      "relative_rms_error": 0.00967035535722971,
+      "cosine_similarity": 0.9999538660049438
+    }
+  }
+]

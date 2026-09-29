@@ -28,6 +28,8 @@ def main() -> None:
     parser.add_argument("--baseline", type=Path, required=True)
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--baseline-label", default="BF16")
+    parser.add_argument("--candidate-label", default="FP8")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     sample_indices = (32, 96, 160, 224)
@@ -51,7 +53,7 @@ def main() -> None:
             elements += diff.size
             if frames in sample_indices:
                 row = sample_indices.index(frames)
-                for col, (array, label) in enumerate(((aa, "BF16"), (bb, "FP8"))):
+                for col, (array, label) in enumerate(((aa, args.baseline_label), (bb, args.candidate_label))):
                     image = Image.fromarray(array)
                     image.save(args.output_dir / f"{label.lower()}-frame-{frames}.png")
                     sheet.paste(image.resize((384, 256)), (col * 384, row * 280 + 24))
@@ -72,7 +74,7 @@ def main() -> None:
         "decoded_audio_identical": ah == bh,
         "sample_frame_indices_zero_based": sample_indices,
         "interpretation": "Pixel metrics measure output difference, not quality or lip-sync. "
-        "A quantized diffusion model can follow a different motion trajectory with the same seed.",
+        "Numerical changes can produce different diffusion trajectories with the same seed.",
     }
     sheet.save(args.output_dir / "sampled-comparison.png")
     (args.output_dir / "quality-check.json").write_text(json.dumps(report, indent=2) + "\n")
