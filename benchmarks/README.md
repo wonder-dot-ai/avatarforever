@@ -5,6 +5,10 @@ and run on the supplied H100 on 2026-09-28. The remote checkout and its environm
 are at `/home/ubuntu/work/avatarforever`. The checkpoint and Gemma weights are in
 that checkout's `checkpoints/` directory.
 
+For the released checkpoint's inactive first-frame channel, remaining conditioning
+paths, author discussion and unresolved drift questions, see the
+[conditioning and drift report](DRIFT_AUDIT.md) (researched 2026-09-29).
+
 ## Measured results
 
 One H100 80GB HBM3, 768 × 512, 257 frames at 25 FPS (10.28 seconds of video).

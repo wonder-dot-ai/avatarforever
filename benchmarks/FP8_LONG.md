@@ -112,6 +112,14 @@ precomputed identically for all modes and is excluded from request times.
 
 ## Visual review and validation
 
+**Subsequent checkpoint audit:** the released checkpoint's additional first-frame
+projection and gate tensors are all zero, making that conditioning channel
+inactive. Initial-image and first-chunk sink conditioning remain active. Intent
+and the channel's contribution to drift are unresolved; upstream issue #5 already
+tracks the discrepancy. See [the conditioning report](DRIFT_AUDIT.md). These runs remain matched precision
+comparisons, but should not be treated as a verified reproduction of the paper's
+long-horizon stability result.
+
 All three MP4s decoded to exactly 31,505 frames at 25 FPS; decoded audio hashes
 match. All warm-up and measured requests have finite final latents. Runtime
 source hashes, original audio, precomputed audio latents, reference and sampling

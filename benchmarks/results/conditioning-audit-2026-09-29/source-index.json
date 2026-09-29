@@ -1,0 +1,256 @@
+{
+  "retrieved_at_utc": "2026-09-29T02:53:51.559710+00:00",
+  "scope": "Public upstream default-branch commits, all-state issues and comments for issues 4/5/6; Hugging Face main commits, file tree and discussions. Compact metadata only; read original discussions at the linked URLs.",
+  "endpoints": {
+    "upstream-commits": "https://api.github.com/repos/leeruibin/avatarforever/commits?per_page=100",
+    "upstream-issues": "https://api.github.com/repos/leeruibin/avatarforever/issues?state=all&per_page=100",
+    "hf-commits": "https://huggingface.co/api/models/LetsThink/AvatarForever/commits/main",
+    "hf-discussions": "https://huggingface.co/api/models/LetsThink/AvatarForever/discussions",
+    "hf-tree": "https://huggingface.co/api/models/LetsThink/AvatarForever/tree/main",
+    "issue-5-comments": "https://api.github.com/repos/leeruibin/avatarforever/issues/5/comments?per_page=100",
+    "issue-6-comments": "https://api.github.com/repos/leeruibin/avatarforever/issues/6/comments?per_page=100",
+    "issue-4-comments": "https://api.github.com/repos/leeruibin/avatarforever/issues/4/comments?per_page=100"
+  },
+  "github_commits": [
+    {
+      "sha": "4dfc42b0e2dbbded4d148387d186219bd7601279",
+      "date": "2026-08-23T11:43:36Z",
+      "title": "update readme file"
+    },
+    {
+      "sha": "5a280d1d171f6546ff76f55396764fe01d2b437f",
+      "date": "2026-08-23T07:32:14Z",
+      "title": "Release inference code and model setup"
+    },
+    {
+      "sha": "aa63d1353c2877bef0bbdeb30b6986bf0258e57f",
+      "date": "2026-08-13T02:59:06Z",
+      "title": "update readme about paper"
+    },
+    {
+      "sha": "ea1b389abc3301174b70db84e3bffa081c0d0a92",
+      "date": "2026-08-11T08:35:08Z",
+      "title": "update readme"
+    },
+    {
+      "sha": "1d5d068fcfe26c652480654bd6b027cb003760f8",
+      "date": "2026-08-11T07:50:24Z",
+      "title": "Replace README branding with full logo"
+    },
+    {
+      "sha": "f900a812473fdb7d3c7ec1c1c572713fce55317c",
+      "date": "2026-08-11T07:45:13Z",
+      "title": "Merge pull request #3 from leeruibin/feature/update-overview"
+    },
+    {
+      "sha": "f9f44a73a807d69e1e7950299741fb42b48d0ea7",
+      "date": "2026-08-11T07:42:12Z",
+      "title": "Update framework overview figure"
+    },
+    {
+      "sha": "ab7b73f2b15d9461db7aa419e34eb2e16caf2eee",
+      "date": "2026-08-11T07:37:33Z",
+      "title": "Merge pull request #2 from leeruibin/feature/readme-branding"
+    },
+    {
+      "sha": "f3be6268fe351459a79ec167b9cc6a6c1d6378f1",
+      "date": "2026-08-11T07:35:08Z",
+      "title": "Add project branding to README"
+    },
+    {
+      "sha": "091e85c513a195350e30dde533d00eb7015ed343",
+      "date": "2026-08-07T07:40:58Z",
+      "title": "Initialize Avatar-Forever project (#1)"
+    },
+    {
+      "sha": "b694a8118b0975d3411418faf5426e8057a80d78",
+      "date": "2026-08-07T07:36:45Z",
+      "title": "Initial commit"
+    }
+  ],
+  "github_issues": [
+    {
+      "number": 9,
+      "title": "No lip movement in speech, and heavy drift within ~10s (drift worse with `--ar-history-feature-cache`)",
+      "state": "open",
+      "created_at": "2026-09-23T10:45:40Z",
+      "updated_at": "2026-09-23T12:04:59Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/9",
+      "comments": 0
+    },
+    {
+      "number": 8,
+      "title": "How to reproduce the listening behavior in Conversation Case 02?",
+      "state": "open",
+      "created_at": "2026-09-16T01:39:18Z",
+      "updated_at": "2026-09-16T01:53:41Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/8",
+      "comments": 0
+    },
+    {
+      "number": 7,
+      "title": "Any plans to release the training code and RRT adapter?",
+      "state": "open",
+      "created_at": "2026-09-15T08:37:13Z",
+      "updated_at": "2026-09-15T08:37:13Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/7",
+      "comments": 0
+    },
+    {
+      "number": 6,
+      "title": "Request to release the pre-merge RRT LoRA and Full-parameter DMD checkpoint",
+      "state": "open",
+      "created_at": "2026-08-28T07:06:33Z",
+      "updated_at": "2026-08-28T08:33:14Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/6",
+      "comments": 2
+    },
+    {
+      "number": 5,
+      "title": "请问为什么发布的权重里 channel-condition 全是零?",
+      "state": "open",
+      "created_at": "2026-08-27T17:25:25Z",
+      "updated_at": "2026-09-02T14:29:27Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/5",
+      "comments": 2
+    },
+    {
+      "number": 4,
+      "title": "timeline for release",
+      "state": "closed",
+      "created_at": "2026-08-13T03:19:08Z",
+      "updated_at": "2026-08-23T07:58:50Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/issues/4",
+      "comments": 2
+    },
+    {
+      "number": 3,
+      "title": "Update framework overview figure",
+      "state": "closed",
+      "created_at": "2026-08-11T07:43:54Z",
+      "updated_at": "2026-08-11T07:45:14Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/pull/3",
+      "comments": 0
+    },
+    {
+      "number": 2,
+      "title": "Add project branding to README",
+      "state": "closed",
+      "created_at": "2026-08-11T07:36:42Z",
+      "updated_at": "2026-08-11T07:37:34Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/pull/2",
+      "comments": 0
+    },
+    {
+      "number": 1,
+      "title": "Initialize Avatar-Forever project",
+      "state": "closed",
+      "created_at": "2026-08-07T07:38:42Z",
+      "updated_at": "2026-08-07T07:41:01Z",
+      "html_url": "https://github.com/leeruibin/avatarforever/pull/1",
+      "comments": 0
+    }
+  ],
+  "github_comments": {
+    "4": [
+      {
+        "author": "leeruibin",
+        "association": "OWNER",
+        "created_at": "2026-08-13T11:41:08Z",
+        "updated_at": "2026-08-13T11:41:08Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/4#issuecomment-5279923427"
+      },
+      {
+        "author": "leeruibin",
+        "association": "OWNER",
+        "created_at": "2026-08-23T07:58:50Z",
+        "updated_at": "2026-08-23T07:58:50Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/4#issuecomment-5384948708"
+      }
+    ],
+    "5": [
+      {
+        "author": "leeruibin",
+        "association": "OWNER",
+        "created_at": "2026-08-28T07:20:53Z",
+        "updated_at": "2026-08-28T07:20:53Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/5#issuecomment-5449644201"
+      },
+      {
+        "author": "qfy0316-lab",
+        "association": "NONE",
+        "created_at": "2026-09-02T14:29:27Z",
+        "updated_at": "2026-09-02T14:29:27Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/5#issuecomment-5511165310"
+      }
+    ],
+    "6": [
+      {
+        "author": "leeruibin",
+        "association": "OWNER",
+        "created_at": "2026-08-28T07:24:57Z",
+        "updated_at": "2026-08-28T07:24:57Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/6#issuecomment-5449678700"
+      },
+      {
+        "author": "kele2026",
+        "association": "NONE",
+        "created_at": "2026-08-28T08:33:14Z",
+        "updated_at": "2026-08-28T08:33:14Z",
+        "url": "https://github.com/leeruibin/avatarforever/issues/6#issuecomment-5450296409"
+      }
+    ]
+  },
+  "hf-commits": [
+    {
+      "id": "622ea82482c09e7fb2d8e29cb7ff1d009c820f05",
+      "title": "Upload avatarforever-ltx-2.3-22b.safetensors with huggingface_hub",
+      "message": "",
+      "authors": [
+        {
+          "user": "LetsThink",
+          "avatar": "/avatars/9bbea28cefd71a119dfd7eaf4bf40715.svg"
+        }
+      ],
+      "date": "2026-08-23T07:24:16.000Z"
+    },
+    {
+      "id": "59649b7d555155280be13f3004dd92864d88b002",
+      "title": "initial commit",
+      "message": "",
+      "authors": [
+        {
+          "user": "LetsThink",
+          "avatar": "/avatars/9bbea28cefd71a119dfd7eaf4bf40715.svg"
+        }
+      ],
+      "date": "2026-08-23T07:06:52.000Z"
+    }
+  ],
+  "hf-discussions": {
+    "discussions": [],
+    "count": 0,
+    "start": 0,
+    "numClosedDiscussions": 0
+  },
+  "hf-tree": [
+    {
+      "type": "file",
+      "oid": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+      "size": 1519,
+      "path": ".gitattributes"
+    },
+    {
+      "type": "file",
+      "oid": "940a47b354b5d8481a57c4365fbdea40fd32523c",
+      "size": 46183958894,
+      "lfs": {
+        "oid": "08dea67ed3d35a75da49b056ce2ca59a0e9ce538b429143fb9022c9bd5c3b145",
+        "size": 46183958894,
+        "pointerSize": 136
+      },
+      "xetHash": "37b3b25d5c57be84910355a9fa87fb74b606f253ba0961e02432cf8e7fca066c",
+      "path": "avatarforever-ltx-2.3-22b.safetensors"
+    }
+  ]
+}
