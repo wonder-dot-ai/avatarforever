@@ -1,0 +1,16 @@
+{
+  "purpose": "First end-to-end validation on a physical A100-SXM4-40GB",
+  "remote_repository": "/home/ubuntu/work/avatarforever",
+  "branch": "codex/fp8-inference-comparison",
+  "commit": "647422ac406edf23b7a133944d10a9009dc375fd",
+  "mode": "FP8 weight storage, BF16 computation, eager, ForeverCache on; fast_infer false releases modules sequentially",
+  "measurement": "One request, no warmup; total latency includes model loading. Not a steady-state serving benchmark.",
+  "output_validation": {
+    "decoded_frames": 257,
+    "width": 768,
+    "height": 512,
+    "final_latents_finite": true
+  },
+  "video": "outputs/a100-validation/eager-offloaded/cache-on-measured-0.mp4",
+  "scope": "No inference source changes, no torch.compile validation yet; GPU idle after test."
+}
