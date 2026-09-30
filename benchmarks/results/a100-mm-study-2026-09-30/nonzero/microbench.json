@@ -1,0 +1,719 @@
+{
+  "method": "A100 microbenchmarks on captured real AvatarForever linear tensors.\n\nNot an end-to-end video benchmark. Every timed sample flushes L2 with 64 MiB\nbefore its start event. We report median GPU-event time including the operation's\nlaunch gap; allocation, weight packing and compilation are excluded unless stated.\n",
+  "torch": "2.14.0+cu130",
+  "triton": "3.8.0",
+  "device": "NVIDIA A100-SXM4-40GB",
+  "total_linear_flops": 307452712583168,
+  "results": [
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 4096,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x4096x4096.pt",
+      "key": "4608x4096x4096",
+      "calls_per_chunk": 584,
+      "flops_per_chunk": 90297392431104,
+      "fp8_roundtrip_exact": false,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.8007680177688599,
+          "min_ms": 0.7997440099716187,
+          "max_ms": 0.8386560082435608
+        },
+        "fp8_cast_plus_torch_bf16": {
+          "median_ms": 0.9154559969902039,
+          "min_ms": 0.9144319891929626,
+          "max_ms": 0.9236479997634888
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.8478720188140869,
+          "min_ms": 0.8468480110168457,
+          "max_ms": 0.9502720236778259
+        },
+        "fp8_cast_only": {
+          "median_ms": 0.11878400295972824,
+          "min_ms": 0.11776000261306763,
+          "max_ms": 0.11980800330638885
+        },
+        "cublaslt_tuned": {
+          "median_ms": 0.7260159850120544,
+          "min_ms": 0.7249919772148132,
+          "max_ms": 0.7383040189743042,
+          "index": 3,
+          "search": [
+            {
+              "index": 0,
+              "median_ms": 0.8007680177688599,
+              "min_ms": 0.7997440099716187,
+              "max_ms": 0.8161280155181885,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "index": 1,
+              "median_ms": 0.8191999793052673,
+              "min_ms": 0.8181759715080261,
+              "max_ms": 0.839680016040802,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0019211615435779095,
+                "max_abs": 0.0078125,
+                "cosine": 0.9999982118606567
+              }
+            },
+            {
+              "index": 2,
+              "median_ms": 0.8755199909210205,
+              "min_ms": 0.8744959831237793,
+              "max_ms": 0.8857600092887878,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.002329755574464798,
+                "max_abs": 0.0078125,
+                "cosine": 0.9999974370002747
+              }
+            },
+            {
+              "index": 3,
+              "median_ms": 0.7260159850120544,
+              "min_ms": 0.7239680290222168,
+              "max_ms": 0.7383040189743042,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "index": 4,
+              "median_ms": 0.7587839961051941,
+              "min_ms": 0.7587839961051941,
+              "max_ms": 0.7731199860572815,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0019211615435779095,
+                "max_abs": 0.0078125,
+                "cosine": 0.9999982118606567
+              }
+            },
+            {
+              "index": 5,
+              "median_ms": 0.7741439938545227,
+              "min_ms": 0.7731199860572815,
+              "max_ms": 0.7874559760093689,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.002329755574464798,
+                "max_abs": 0.0078125,
+                "cosine": 0.9999974370002747
+              }
+            },
+            {
+              "index": 6,
+              "median_ms": 0.8407040238380432,
+              "min_ms": 0.8386560082435608,
+              "max_ms": 0.8509439826011658,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "index": 7,
+              "median_ms": 0.8181759715080261,
+              "min_ms": 0.8161280155181885,
+              "max_ms": 0.8314880132675171,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            }
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.6430720090866089,
+          "min_ms": 0.6359040141105652,
+          "max_ms": 0.6809599995613098,
+          "config": [
+            128,
+            256,
+            32,
+            8,
+            3
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          },
+          "search": [
+            {
+              "config": [
+                64,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 1.277951955795288,
+              "min_ms": 1.2615679502487183,
+              "max_ms": 1.3301759958267212,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 0.8079360127449036,
+              "min_ms": 0.8038399815559387,
+              "max_ms": 0.8437759876251221,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 0.826367974281311,
+              "min_ms": 0.8171520233154297,
+              "max_ms": 0.8734719753265381,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 0.6666240096092224,
+              "min_ms": 0.6656000018119812,
+              "max_ms": 0.7055360078811646,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 0.6440960168838501,
+              "min_ms": 0.6399999856948853,
+              "max_ms": 0.6860799789428711,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 0.7024639844894409,
+              "min_ms": 0.7004160284996033,
+              "max_ms": 0.7557119727134705,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                64,
+                8,
+                3
+              ],
+              "median_ms": 0.6625279784202576,
+              "min_ms": 0.6604800224304199,
+              "max_ms": 0.707584023475647,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                64,
+                4,
+                4
+              ],
+              "median_ms": 0.7813119888305664,
+              "min_ms": 0.7731199860572815,
+              "max_ms": 0.8171520233154297,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            }
+          ]
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 2.2272000312805176,
+          "min_ms": 2.2261760234832764,
+          "max_ms": 2.2661120891571045,
+          "config": [
+            64,
+            128,
+            64,
+            4,
+            4
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          },
+          "search": [
+            {
+              "config": [
+                64,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 4.019199848175049,
+              "min_ms": 4.018176078796387,
+              "max_ms": 4.069375991821289,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 2.3961598873138428,
+              "min_ms": 2.3951361179351807,
+              "max_ms": 2.4330239295959473,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 2.2712318897247314,
+              "min_ms": 2.2702078819274902,
+              "max_ms": 2.3101439476013184,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 2.718719959259033,
+              "min_ms": 2.717695951461792,
+              "max_ms": 2.766848087310791,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 2.805759906768799,
+              "min_ms": 2.805759906768799,
+              "max_ms": 2.8436479568481445,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 2.2917120456695557,
+              "min_ms": 2.2896640300750732,
+              "max_ms": 2.3296000957489014,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                64,
+                8,
+                3
+              ],
+              "median_ms": 2.4391679763793945,
+              "min_ms": 2.4391679763793945,
+              "max_ms": 2.4780800342559814,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                64,
+                4,
+                4
+              ],
+              "median_ms": 2.2272000312805176,
+              "min_ms": 2.2272000312805176,
+              "max_ms": 2.2650880813598633,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.0,
+                "max_abs": 0.0,
+                "cosine": 1.0
+              }
+            }
+          ]
+        },
+        "int8_mm_only": {
+          "median_ms": 2.3787519931793213,
+          "min_ms": 2.3060479164123535,
+          "max_ms": 2.3941121101379395
+        },
+        "int8_mm_transposed_weight": {
+          "median_ms": 0.37273600697517395,
+          "min_ms": 0.37068799138069153,
+          "max_ms": 0.3829759955406189
+        },
+        "int8_dynamic_full": {
+          "median_ms": 2.5169920921325684,
+          "min_ms": 2.5088000297546387,
+          "max_ms": 2.615295886993408,
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          },
+          "note": "Different numerical computation: per-row dynamic INT8 activations, per-output-channel INT8 weights. Includes activation quantization and output rescaling; excludes offline weight packing."
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.506879985332489,
+          "min_ms": 0.5048320293426514,
+          "max_ms": 0.5939199924468994,
+          "search": [
+            {
+              "index": 0,
+              "median_ms": 0.37171199917793274,
+              "min_ms": 0.37068799138069153,
+              "max_ms": 0.392192006111145,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "index": 1,
+              "median_ms": 0.7905279994010925,
+              "min_ms": 0.7905279994010925,
+              "max_ms": 0.8058879971504211,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "index": 2,
+              "median_ms": 2.382848024368286,
+              "min_ms": 2.338815927505493,
+              "max_ms": 2.3951361179351807,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            }
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.7854080200195312,
+          "min_ms": 0.78438401222229,
+          "max_ms": 0.8929280042648315,
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          },
+          "search": [
+            {
+              "config": [
+                64,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 1.8042880296707153,
+              "min_ms": 1.8032640218734741,
+              "max_ms": 1.9159040451049805,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 1.7305599451065063,
+              "min_ms": 1.7295360565185547,
+              "max_ms": 1.8585599660873413,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                128,
+                64,
+                32,
+                4,
+                3
+              ],
+              "median_ms": 1.7029119729995728,
+              "min_ms": 1.7018879652023315,
+              "max_ms": 1.8135039806365967,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 1.7018879652023315,
+              "min_ms": 1.7018879652023315,
+              "max_ms": 1.810431957244873,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                128,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 2.288640022277832,
+              "min_ms": 2.2855679988861084,
+              "max_ms": 2.397183895111084,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                64,
+                256,
+                32,
+                8,
+                3
+              ],
+              "median_ms": 1.8606079816818237,
+              "min_ms": 1.8585599660873413,
+              "max_ms": 1.9711999893188477,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                128,
+                128,
+                64,
+                8,
+                3
+              ],
+              "median_ms": 0.8939520120620728,
+              "min_ms": 0.8929280042648315,
+              "max_ms": 1.0024960041046143,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            },
+            {
+              "config": [
+                64,
+                128,
+                64,
+                4,
+                4
+              ],
+              "median_ms": 0.7854080200195312,
+              "min_ms": 0.7854080200195312,
+              "max_ms": 0.9164800047874451,
+              "accuracy": {
+                "finite": true,
+                "relative_rms": 0.026601269841194153,
+                "max_abs": 0.015625,
+                "cosine": 0.9996524453163147
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "covered_linear_flops": 90297392431104
+}

@@ -1,0 +1,784 @@
+{
+  "forward_indices": [
+    16,
+    17,
+    18,
+    19
+  ],
+  "note": "Real single-stage FP8-storage/BF16-compute workload. Prefer the first nonzero-weight linear of each shape. Diagnostic timings invalid.",
+  "total_linear_flops": 307452712583168,
+  "shapes": [
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 4096,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x4096x4096.pt",
+      "key": "4608x4096x4096",
+      "calls_per_chunk": 584,
+      "flops_per_chunk": 90297392431104
+    },
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 2048,
+      "input_stride": [
+        18874368,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x4096x2048.pt",
+      "key": "4608x4096x2048",
+      "calls_per_chunk": 432,
+      "flops_per_chunk": 33397665693696
+    },
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 16384,
+      "input_stride": [
+        18874368,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x4096x16384.pt",
+      "key": "4608x4096x16384",
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 29686813949952
+    },
+    {
+      "M": 4608,
+      "K": 16384,
+      "N": 4096,
+      "input_stride": [
+        75497472,
+        16384,
+        1
+      ],
+      "weight_stride": [
+        16384,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x16384x4096.pt",
+      "key": "4608x16384x4096",
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 29686813949952
+    },
+    {
+      "M": 1536,
+      "K": 4096,
+      "N": 4096,
+      "input_stride": [
+        6291456,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1536x4096x4096.pt",
+      "key": "1536x4096x4096",
+      "calls_per_chunk": 576,
+      "flops_per_chunk": 29686813949952
+    },
+    {
+      "M": 1536,
+      "K": 4096,
+      "N": 16384,
+      "input_stride": [
+        6291456,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1536x4096x16384.pt",
+      "key": "1536x4096x16384",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 29686813949952
+    },
+    {
+      "M": 1536,
+      "K": 16384,
+      "N": 4096,
+      "input_stride": [
+        25165824,
+        16384,
+        1
+      ],
+      "weight_stride": [
+        16384,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1536x16384x4096.pt",
+      "key": "1536x16384x4096",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 29686813949952
+    },
+    {
+      "M": 1024,
+      "K": 4096,
+      "N": 4096,
+      "input_stride": [
+        4194304,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1024x4096x4096.pt",
+      "key": "1024x4096x4096",
+      "calls_per_chunk": 384,
+      "flops_per_chunk": 13194139533312
+    },
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 36864,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x4096x36864.pt",
+      "key": "4608x4096x36864",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 5566277615616
+    },
+    {
+      "M": 4608,
+      "K": 2048,
+      "N": 4096,
+      "input_stride": [
+        9437184,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/4608x2048x4096.pt",
+      "key": "4608x2048x4096",
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 3710851743744
+    },
+    {
+      "M": 1536,
+      "K": 4096,
+      "N": 2048,
+      "input_stride": [
+        6291456,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1536x4096x2048.pt",
+      "key": "1536x4096x2048",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 3710851743744
+    },
+    {
+      "M": 1536,
+      "K": 2048,
+      "N": 4096,
+      "input_stride": [
+        3145728,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1536x2048x4096.pt",
+      "key": "1536x2048x4096",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 3710851743744
+    },
+    {
+      "M": 1024,
+      "K": 2048,
+      "N": 2048,
+      "input_stride": [
+        2097152,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "example_zero_weight": false,
+      "tensor_path": "outputs/a100-mm-study/nonzero/capture/tensors/1024x2048x2048.pt",
+      "key": "1024x2048x2048",
+      "calls_per_chunk": 384,
+      "flops_per_chunk": 3298534883328
+    },
+    {
+      "M": 94,
+      "K": 2048,
+      "N": 2048,
+      "input_stride": [
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x2048x2048",
+      "calls_per_chunk": 1060,
+      "flops_per_chunk": 835840901120
+    },
+    {
+      "M": 31,
+      "K": 2048,
+      "N": 2048,
+      "input_stride": [
+        63488,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "31x2048x2048",
+      "calls_per_chunk": 864,
+      "flops_per_chunk": 224680476672
+    },
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 32,
+      "input_stride": [
+        18874368,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "4608x4096x32",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 173946175488
+    },
+    {
+      "M": 1536,
+      "K": 4096,
+      "N": 32,
+      "input_stride": [
+        6291456,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1536x4096x32",
+      "calls_per_chunk": 432,
+      "flops_per_chunk": 173946175488
+    },
+    {
+      "M": 94,
+      "K": 2048,
+      "N": 8192,
+      "input_stride": [
+        192512,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x2048x8192",
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 151397597184
+    },
+    {
+      "M": 94,
+      "K": 8192,
+      "N": 2048,
+      "input_stride": [
+        770048,
+        8192,
+        1
+      ],
+      "weight_stride": [
+        8192,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x8192x2048",
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 151397597184
+    },
+    {
+      "M": 31,
+      "K": 2048,
+      "N": 8192,
+      "input_stride": [
+        63488,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "31x2048x8192",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 149786984448
+    },
+    {
+      "M": 31,
+      "K": 8192,
+      "N": 2048,
+      "input_stride": [
+        253952,
+        8192,
+        1
+      ],
+      "weight_stride": [
+        8192,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "31x8192x2048",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 149786984448
+    },
+    {
+      "M": 4608,
+      "K": 128,
+      "N": 4096,
+      "input_stride": [
+        589824,
+        128,
+        1
+      ],
+      "weight_stride": [
+        128,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "4608x128x4096",
+      "calls_per_chunk": 8,
+      "flops_per_chunk": 38654705664
+    },
+    {
+      "M": 4608,
+      "K": 256,
+      "N": 4096,
+      "input_stride": [
+        256,
+        1
+      ],
+      "weight_stride": [
+        256,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "4608x256x4096",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 38654705664
+    },
+    {
+      "M": 94,
+      "K": 2048,
+      "N": 18432,
+      "input_stride": [
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x2048x18432",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 28387049472
+    },
+    {
+      "M": 4608,
+      "K": 4096,
+      "N": 128,
+      "input_stride": [
+        18874368,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "4608x4096x128",
+      "calls_per_chunk": 1,
+      "flops_per_chunk": 4831838208
+    },
+    {
+      "M": 1536,
+      "K": 4096,
+      "N": 128,
+      "input_stride": [
+        6291456,
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1536x4096x128",
+      "calls_per_chunk": 3,
+      "flops_per_chunk": 4831838208
+    },
+    {
+      "M": 94,
+      "K": 2048,
+      "N": 32,
+      "input_stride": [
+        192512,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x2048x32",
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 1774190592
+    },
+    {
+      "M": 31,
+      "K": 2048,
+      "N": 32,
+      "input_stride": [
+        63488,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "31x2048x32",
+      "calls_per_chunk": 432,
+      "flops_per_chunk": 1755316224
+    },
+    {
+      "M": 1,
+      "K": 4096,
+      "N": 4096,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x4096x4096",
+      "calls_per_chunk": 16,
+      "flops_per_chunk": 536870912
+    },
+    {
+      "M": 1,
+      "K": 4096,
+      "N": 16384,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x4096x16384",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 536870912
+    },
+    {
+      "M": 94,
+      "K": 256,
+      "N": 2048,
+      "input_stride": [
+        256,
+        1
+      ],
+      "weight_stride": [
+        256,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x256x2048",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 394264576
+    },
+    {
+      "M": 1,
+      "K": 4096,
+      "N": 8192,
+      "input_stride": [
+        4096,
+        1
+      ],
+      "weight_stride": [
+        4096,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x4096x8192",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 268435456
+    },
+    {
+      "M": 94,
+      "K": 128,
+      "N": 2048,
+      "input_stride": [
+        12032,
+        128,
+        1
+      ],
+      "weight_stride": [
+        128,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x128x2048",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 197132288
+    },
+    {
+      "M": 1,
+      "K": 2048,
+      "N": 2048,
+      "input_stride": [
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x2048x2048",
+      "calls_per_chunk": 16,
+      "flops_per_chunk": 134217728
+    },
+    {
+      "M": 1,
+      "K": 2048,
+      "N": 8192,
+      "input_stride": [
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x2048x8192",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 134217728
+    },
+    {
+      "M": 1,
+      "K": 2048,
+      "N": 4096,
+      "input_stride": [
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x2048x4096",
+      "calls_per_chunk": 4,
+      "flops_per_chunk": 67108864
+    },
+    {
+      "M": 94,
+      "K": 2048,
+      "N": 128,
+      "input_stride": [
+        192512,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "94x2048x128",
+      "calls_per_chunk": 1,
+      "flops_per_chunk": 49283072
+    },
+    {
+      "M": 31,
+      "K": 2048,
+      "N": 128,
+      "input_stride": [
+        63488,
+        2048,
+        1
+      ],
+      "weight_stride": [
+        2048,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "31x2048x128",
+      "calls_per_chunk": 3,
+      "flops_per_chunk": 48758784
+    },
+    {
+      "M": 1,
+      "K": 256,
+      "N": 4096,
+      "input_stride": [
+        256,
+        1
+      ],
+      "weight_stride": [
+        256,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x256x4096",
+      "calls_per_chunk": 12,
+      "flops_per_chunk": 25165824
+    },
+    {
+      "M": 1,
+      "K": 256,
+      "N": 2048,
+      "input_stride": [
+        256,
+        1
+      ],
+      "weight_stride": [
+        256,
+        1
+      ],
+      "dtype": "torch.bfloat16",
+      "bias": true,
+      "key": "1x256x2048",
+      "calls_per_chunk": 12,
+      "flops_per_chunk": 12582912
+    }
+  ]
+}

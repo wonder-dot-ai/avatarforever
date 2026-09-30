@@ -1,0 +1,71 @@
+{
+  "gpu": "NVIDIA A100-SXM4-40GB, 580.126.20, 40960 MiB, 400.00 W",
+  "torch": "2.14.0+cu130",
+  "cuda": "13.0",
+  "triton": "3.8.0",
+  "ninja": "1.13.2",
+  "source_sha256": {
+    "benchmarks/capture_mm_workload.py": "7aa1d15526d960bbad06228df85eb5784a75771bff5c10af664ba94ff62c870a",
+    "benchmarks/benchmark_mm_candidates.py": "daa041908481c537d7585cf9f7d25b2a8bcea8daacfa357167749673bf388467",
+    "benchmarks/remeasure_mm_winners.py": "95b05d967a3e741878a605a022bf2d73c0f480f226c4f6c06aba0b26d0c3929f",
+    "benchmarks/mm_cublaslt.cpp": "84063008a8821b608c5bf151e3feb79d13be953cd712ffb769cc040646d2228f"
+  },
+  "example_stats": [
+    {
+      "key": "4608x4096x4096",
+      "weight_nonzero": 0,
+      "weight_elements": 16777216,
+      "input_rms": 0.0,
+      "tensor_sha256": "4a28845a702b293326598f6c3bee60740d2b42e62395c850db86c48a0653b94d"
+    },
+    {
+      "key": "4608x4096x2048",
+      "weight_nonzero": 7930135,
+      "weight_elements": 8388608,
+      "input_rms": 1.5335215330123901,
+      "tensor_sha256": "562b0fe60d11c21e1f9604793729ac4f05c4186346683aa730db91a14824b3d2"
+    },
+    {
+      "key": "4608x4096x16384",
+      "weight_nonzero": 60082548,
+      "weight_elements": 67108864,
+      "input_rms": 0.19895891845226288,
+      "tensor_sha256": "8fc45ba5195a0e13bfd7fdf88841f2064bff89ad622da63bf1c41b4d6d1f2f57"
+    },
+    {
+      "key": "4608x16384x4096",
+      "weight_nonzero": 52882825,
+      "weight_elements": 67108864,
+      "input_rms": 0.11623944342136383,
+      "tensor_sha256": "bc39e32c100dbe5792222cbd568a064208f8ad7d00cbc9d44f37639d67bf358f"
+    },
+    {
+      "key": "1536x4096x4096",
+      "weight_nonzero": 15182274,
+      "weight_elements": 16777216,
+      "input_rms": 0.42727363109588623,
+      "tensor_sha256": "38622d8094d3d368b7cb3f464dabc330fa40b985a68dd3fda3cd69c117150fe2"
+    },
+    {
+      "key": "1536x4096x16384",
+      "weight_nonzero": 60082548,
+      "weight_elements": 67108864,
+      "input_rms": 0.17904651165008545,
+      "tensor_sha256": "4e6206d53886a5ccb02af1bbc34d58c1a42d8d138f462c82f323221bc791471a"
+    },
+    {
+      "key": "1536x16384x4096",
+      "weight_nonzero": 52882825,
+      "weight_elements": 67108864,
+      "input_rms": 0.06742198765277863,
+      "tensor_sha256": "d311fbaf28c2a6f2855b33466808e56f1c285b3b3e0f1014f6d013fdb1991a30"
+    },
+    {
+      "key": "1024x4096x4096",
+      "weight_nonzero": 15668624,
+      "weight_elements": 16777216,
+      "input_rms": 0.6700221300125122,
+      "tensor_sha256": "7dda745fa874555f80c2b327e664da86946c6111823aed885c92f2ea3a879d00"
+    }
+  ]
+}

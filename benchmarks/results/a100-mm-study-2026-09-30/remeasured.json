@@ -1,0 +1,1213 @@
+{
+  "method": "Three rounds, shuffled candidate order (seed 42), each with 21 cold-L2 GPU-event samples. 400 4096-square BF16 GEMMs preheat GPU before each batch, after lazy compilation. 64 MiB zero-fill precedes and is excluded from each timed operation. Weights already packed. Full INT8 includes dynamic activation quantization, MM, scaling and bias. Microbenchmark data, not video throughput.",
+  "results": [
+    {
+      "key": "4608x4096x4096",
+      "M": 4608,
+      "K": 4096,
+      "N": 4096,
+      "calls_per_chunk": 584,
+      "flops_per_chunk": 90297392431104,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.6789119839668274,
+          "round_medians_ms": [
+            0.6871039867401123,
+            0.6789119839668274,
+            0.6717439889907837
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.7137280106544495,
+          "round_medians_ms": [
+            0.7290880084037781,
+            0.7137280106544495,
+            0.707584023475647
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.609279990196228,
+          "round_medians_ms": [
+            0.609279990196228,
+            0.609279990196228,
+            0.6113280057907104
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 0.7137280106544495,
+          "round_medians_ms": [
+            0.6993920207023621,
+            0.7147520184516907,
+            0.7137280106544495
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.711679995059967,
+          "round_medians_ms": [
+            0.7055360078811646,
+            0.711679995059967,
+            0.7127040028572083
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 2.32857608795166,
+          "round_medians_ms": [
+            2.4350719451904297,
+            2.3244800567626953,
+            2.32857608795166
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.5355520248413086,
+          "round_medians_ms": [
+            0.5355520248413086,
+            0.5406720042228699,
+            0.5355520248413086
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.5406720042228699,
+          "round_medians_ms": [
+            0.532480001449585,
+            0.5406720042228699,
+            0.5406720042228699
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.5447679758071899,
+          "round_medians_ms": [
+            0.5355520248413086,
+            0.5447679758071899,
+            0.5509120225906372
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.8540160059928894,
+          "round_medians_ms": [
+            0.8437759876251221,
+            0.8622080087661743,
+            0.8540160059928894
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 0.0
+          }
+        }
+      }
+    },
+    {
+      "key": "4608x4096x2048",
+      "M": 4608,
+      "K": 4096,
+      "N": 2048,
+      "calls_per_chunk": 432,
+      "flops_per_chunk": 33397665693696,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.3481599986553192,
+          "round_medians_ms": [
+            0.3409920036792755,
+            0.3481599986553192,
+            0.3491840064525604
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.000000238418579
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.37171199917793274,
+          "round_medians_ms": [
+            0.3635199964046478,
+            0.374783992767334,
+            0.37171199917793274
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.000000238418579
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.33792001008987427,
+          "round_medians_ms": [
+            0.33792001008987427,
+            0.3338240087032318,
+            0.33792001008987427
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0021668793633580208,
+            "max_abs": 0.5,
+            "cosine": 0.9999977350234985
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 0.3901439905166626,
+          "round_medians_ms": [
+            0.38092800974845886,
+            0.3901439905166626,
+            0.3901439905166626
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0021668793633580208,
+            "max_abs": 0.5,
+            "cosine": 0.9999977350234985
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.34508800506591797,
+          "round_medians_ms": [
+            0.34508800506591797,
+            0.34508800506591797,
+            0.35123199224472046
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.000000238418579
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 1.252351999282837,
+          "round_medians_ms": [
+            1.2369920015335083,
+            1.252351999282837,
+            1.2544000148773193
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 1.522096590633737e-05,
+            "max_abs": 0.25,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.317440003156662,
+          "round_medians_ms": [
+            0.317440003156662,
+            0.31334400177001953,
+            0.32051199674606323
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.01927890256047249,
+            "max_abs": 9.25,
+            "cosine": 0.9998160600662231
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.31334400177001953,
+          "round_medians_ms": [
+            0.35020801424980164,
+            0.31334400177001953,
+            0.3123199939727783
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.01927890256047249,
+            "max_abs": 9.25,
+            "cosine": 0.9998160600662231
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.31436800956726074,
+          "round_medians_ms": [
+            0.31334400177001953,
+            0.317440003156662,
+            0.31436800956726074
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.01927890256047249,
+            "max_abs": 9.25,
+            "cosine": 0.9998160600662231
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.4618239998817444,
+          "round_medians_ms": [
+            0.4679679870605469,
+            0.4618239998817444,
+            0.4618239998817444
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.01927890256047249,
+            "max_abs": 9.25,
+            "cosine": 0.9998160600662231
+          }
+        }
+      }
+    },
+    {
+      "key": "4608x4096x16384",
+      "M": 4608,
+      "K": 4096,
+      "N": 16384,
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 29686813949952,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 2.466815948486328,
+          "round_medians_ms": [
+            2.466815948486328,
+            2.4688639640808105,
+            2.465791940689087
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 2.619391918182373,
+          "round_medians_ms": [
+            2.619391918182373,
+            2.6019840240478516,
+            2.6255359649658203
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 2.3654398918151855,
+          "round_medians_ms": [
+            2.387968063354492,
+            2.3633921146392822,
+            2.3654398918151855
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 2.7412478923797607,
+          "round_medians_ms": [
+            2.7402238845825195,
+            2.7412478923797607,
+            2.771967887878418
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 2.7832319736480713,
+          "round_medians_ms": [
+            2.7535359859466553,
+            2.7832319736480713,
+            2.787328004837036
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 8.741888046264648,
+          "round_medians_ms": [
+            8.767487525939941,
+            8.741888046264648,
+            8.741888046264648
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 1.0890692465181928e-05,
+            "max_abs": 0.03125,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 1.9425280094146729,
+          "round_medians_ms": [
+            1.9425280094146729,
+            1.938431978225708,
+            1.9630080461502075
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006691589020192623,
+            "max_abs": 0.4140625,
+            "cosine": 0.9999777674674988
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 1.9251199960708618,
+          "round_medians_ms": [
+            1.9230719804763794,
+            1.9251199960708618,
+            1.9271680116653442
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006691589020192623,
+            "max_abs": 0.4140625,
+            "cosine": 0.9999777674674988
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 1.9251199960708618,
+          "round_medians_ms": [
+            1.9220479726791382,
+            1.9343359470367432,
+            1.9251199960708618
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006691589020192623,
+            "max_abs": 0.4140625,
+            "cosine": 0.9999777674674988
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 3.053567886352539,
+          "round_medians_ms": [
+            3.053567886352539,
+            3.0863358974456787,
+            3.023871898651123
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006691589020192623,
+            "max_abs": 0.4140625,
+            "cosine": 0.9999777674674988
+          }
+        }
+      }
+    },
+    {
+      "key": "4608x16384x4096",
+      "M": 4608,
+      "K": 16384,
+      "N": 4096,
+      "calls_per_chunk": 48,
+      "flops_per_chunk": 29686813949952,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 2.531327962875366,
+          "round_medians_ms": [
+            2.530303955078125,
+            2.5876479148864746,
+            2.531327962875366
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 2.6900479793548584,
+          "round_medians_ms": [
+            2.6951680183410645,
+            2.659327983856201,
+            2.6900479793548584
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 2.4268798828125,
+          "round_medians_ms": [
+            2.4268798828125,
+            2.417664051055908,
+            2.475008010864258
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0018372505437582731,
+            "max_abs": 0.25,
+            "cosine": 0.9999982714653015
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 2.766848087310791,
+          "round_medians_ms": [
+            2.736128091812134,
+            2.7688961029052734,
+            2.766848087310791
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0018372505437582731,
+            "max_abs": 0.25,
+            "cosine": 0.9999982714653015
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 2.8190720081329346,
+          "round_medians_ms": [
+            2.8190720081329346,
+            2.796544075012207,
+            2.8395519256591797
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 8.992768287658691,
+          "round_medians_ms": [
+            8.992768287658691,
+            8.992768287658691,
+            8.960000038146973
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 5.85022680752445e-05,
+            "max_abs": 0.0625,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 1.9537919759750366,
+          "round_medians_ms": [
+            1.9537919759750366,
+            1.9711999893188477,
+            1.9537919759750366
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.045240819454193115,
+            "max_abs": 3.0625,
+            "cosine": 0.9990322589874268
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 1.9578880071640015,
+          "round_medians_ms": [
+            1.9578880071640015,
+            1.9466240406036377,
+            1.960960030555725
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.045240819454193115,
+            "max_abs": 3.0625,
+            "cosine": 0.9990322589874268
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 1.9742720127105713,
+          "round_medians_ms": [
+            1.9374079704284668,
+            1.9763200283050537,
+            1.9742720127105713
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.045240819454193115,
+            "max_abs": 3.0625,
+            "cosine": 0.9990322589874268
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 3.1836159229278564,
+          "round_medians_ms": [
+            3.1385600566864014,
+            3.2020480632781982,
+            3.1836159229278564
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.045240819454193115,
+            "max_abs": 3.0625,
+            "cosine": 0.9990322589874268
+          }
+        }
+      }
+    },
+    {
+      "key": "1536x4096x4096",
+      "M": 1536,
+      "K": 4096,
+      "N": 4096,
+      "calls_per_chunk": 576,
+      "flops_per_chunk": 29686813949952,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.23552000522613525,
+          "round_medians_ms": [
+            0.23552000522613525,
+            0.23552000522613525,
+            0.23654399812221527
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.27955201268196106,
+          "round_medians_ms": [
+            0.2734079957008362,
+            0.27955201268196106,
+            0.2826240062713623
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.23449599742889404,
+          "round_medians_ms": [
+            0.22937600314617157,
+            0.23449599742889404,
+            0.23552000522613525
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 0.3338240087032318,
+          "round_medians_ms": [
+            0.3829759955406189,
+            0.3338240087032318,
+            0.3338240087032318
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.2908160090446472,
+          "round_medians_ms": [
+            0.28467199206352234,
+            0.29183998703956604,
+            0.2908160090446472
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 0.92876797914505,
+          "round_medians_ms": [
+            0.9359359741210938,
+            0.92876797914505,
+            0.9277439713478088
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 2.1518431822187267e-05,
+            "max_abs": 0.0625,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.25088000297546387,
+          "round_medians_ms": [
+            0.25088000297546387,
+            0.24473600089550018,
+            0.25088000297546387
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.00944567658007145,
+            "max_abs": 0.3125,
+            "cosine": 0.9999556541442871
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.19660800695419312,
+          "round_medians_ms": [
+            0.1955839991569519,
+            0.19660800695419312,
+            0.19968000054359436
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.00944567658007145,
+            "max_abs": 0.3125,
+            "cosine": 0.9999556541442871
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.2682879865169525,
+          "round_medians_ms": [
+            0.2682879865169525,
+            0.26521599292755127,
+            0.2734079957008362
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.00944567658007145,
+            "max_abs": 0.3125,
+            "cosine": 0.9999556541442871
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.3256320059299469,
+          "round_medians_ms": [
+            0.3184640109539032,
+            0.3256320059299469,
+            0.3266560137271881
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.00944567658007145,
+            "max_abs": 0.3125,
+            "cosine": 0.9999556541442871
+          }
+        }
+      }
+    },
+    {
+      "key": "1536x4096x16384",
+      "M": 1536,
+      "K": 4096,
+      "N": 16384,
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 29686813949952,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.9134079813957214,
+          "round_medians_ms": [
+            0.9123839735984802,
+            0.9134079813957214,
+            0.9236479997634888
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 1.07315194606781,
+          "round_medians_ms": [
+            1.0762239694595337,
+            1.07315194606781,
+            1.0721280574798584
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.8304640054702759,
+          "round_medians_ms": [
+            0.8304640054702759,
+            0.8335360288619995,
+            0.8294399976730347
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 1.2031999826431274,
+          "round_medians_ms": [
+            1.1991039514541626,
+            1.2113920450210571,
+            1.2031999826431274
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.9768959879875183,
+          "round_medians_ms": [
+            0.9758719801902771,
+            0.9768959879875183,
+            0.9922559857368469
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 3.156991958618164,
+          "round_medians_ms": [
+            3.1252479553222656,
+            3.305471897125244,
+            3.156991958618164
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 8.723595783521887e-06,
+            "max_abs": 0.03125,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.6748160123825073,
+          "round_medians_ms": [
+            0.6748160123825073,
+            0.6748160123825073,
+            0.6768640279769897
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006694741081446409,
+            "max_abs": 0.3583984375,
+            "cosine": 0.9999779462814331
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.6737920045852661,
+          "round_medians_ms": [
+            0.6737920045852661,
+            0.681984007358551,
+            0.6727679967880249
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006694741081446409,
+            "max_abs": 0.3583984375,
+            "cosine": 0.9999779462814331
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.6737920045852661,
+          "round_medians_ms": [
+            0.6696959733963013,
+            0.6737920045852661,
+            0.6758400201797485
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006694741081446409,
+            "max_abs": 0.3583984375,
+            "cosine": 0.9999779462814331
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 1.087488055229187,
+          "round_medians_ms": [
+            1.0885119438171387,
+            1.077247977256775,
+            1.087488055229187
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.006694741081446409,
+            "max_abs": 0.3583984375,
+            "cosine": 0.9999779462814331
+          }
+        }
+      }
+    },
+    {
+      "key": "1536x16384x4096",
+      "M": 1536,
+      "K": 16384,
+      "N": 4096,
+      "calls_per_chunk": 144,
+      "flops_per_chunk": 29686813949952,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.869376003742218,
+          "round_medians_ms": [
+            0.8591359853744507,
+            0.869376003742218,
+            0.8796160221099854
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 1.0280959606170654,
+          "round_medians_ms": [
+            1.0219520330429077,
+            1.0280959606170654,
+            1.031167984008789
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.8611840009689331,
+          "round_medians_ms": [
+            0.8611840009689331,
+            0.8724480271339417,
+            0.8611840009689331
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.003832808928564191,
+            "max_abs": 0.0625,
+            "cosine": 0.9999926090240479
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 1.240064024925232,
+          "round_medians_ms": [
+            1.227776050567627,
+            1.2666879892349243,
+            1.240064024925232
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.003832808928564191,
+            "max_abs": 0.0625,
+            "cosine": 0.9999926090240479
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 1.04038405418396,
+          "round_medians_ms": [
+            1.0393600463867188,
+            1.04038405418396,
+            1.0414079427719116
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 3.4447360038757324,
+          "round_medians_ms": [
+            3.4447360038757324,
+            3.4068479537963867,
+            3.4600958824157715
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 6.113948620622978e-05,
+            "max_abs": 0.015625,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.711679995059967,
+          "round_medians_ms": [
+            0.7137280106544495,
+            0.711679995059967,
+            0.7065600156784058
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.1740536391735077,
+            "max_abs": 3.671875,
+            "cosine": 0.9859632849693298
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.7106559872627258,
+          "round_medians_ms": [
+            0.7086079716682434,
+            0.7106559872627258,
+            0.7178239822387695
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.1740536391735077,
+            "max_abs": 3.671875,
+            "cosine": 0.9859632849693298
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.7178239822387695,
+          "round_medians_ms": [
+            0.7086079716682434,
+            0.719871997833252,
+            0.7178239822387695
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.1740536391735077,
+            "max_abs": 3.671875,
+            "cosine": 0.9859632849693298
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 1.206272006034851,
+          "round_medians_ms": [
+            1.2349439859390259,
+            1.206272006034851,
+            1.206272006034851
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.1740536391735077,
+            "max_abs": 3.671875,
+            "cosine": 0.9859632849693298
+          }
+        }
+      }
+    },
+    {
+      "key": "1024x4096x4096",
+      "M": 1024,
+      "K": 4096,
+      "N": 4096,
+      "calls_per_chunk": 384,
+      "flops_per_chunk": 13194139533312,
+      "fp8_roundtrip_exact": true,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.23449599742889404,
+          "round_medians_ms": [
+            0.23552000522613525,
+            0.23449599742889404,
+            0.23449599742889404
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0000001192092896
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.27852800488471985,
+          "round_medians_ms": [
+            0.27852800488471985,
+            0.27852800488471985,
+            0.27852800488471985
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0000001192092896
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.16383999586105347,
+          "round_medians_ms": [
+            0.16383999586105347,
+            0.16383999586105347,
+            0.1669120043516159
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.002021550666540861,
+            "max_abs": 0.25,
+            "cosine": 0.9999979138374329
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 0.26316800713539124,
+          "round_medians_ms": [
+            0.25804799795150757,
+            0.2662400007247925,
+            0.26316800713539124
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.002021550666540861,
+            "max_abs": 0.25,
+            "cosine": 0.9999979138374329
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.19660800695419312,
+          "round_medians_ms": [
+            0.19763199985027313,
+            0.19660800695419312,
+            0.1955839991569519
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0000001192092896
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 0.5949440002441406,
+          "round_medians_ms": [
+            0.6000639796257019,
+            0.5867519974708557,
+            0.5949440002441406
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 1.7243903585040243e-06,
+            "max_abs": 0.00390625,
+            "cosine": 1.0000001192092896
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.23654399812221527,
+          "round_medians_ms": [
+            0.2396160066127777,
+            0.23654399812221527,
+            0.23347200453281403
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.022539885714650154,
+            "max_abs": 0.25,
+            "cosine": 0.9997483491897583
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.15564799308776855,
+          "round_medians_ms": [
+            0.158720001578331,
+            0.15360000729560852,
+            0.15564799308776855
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.022539885714650154,
+            "max_abs": 0.25,
+            "cosine": 0.9997483491897583
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.2539519965648651,
+          "round_medians_ms": [
+            0.2549760043621063,
+            0.25088000297546387,
+            0.2539519965648651
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.022539885714650154,
+            "max_abs": 0.25,
+            "cosine": 0.9997483491897583
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.2099200040102005,
+          "round_medians_ms": [
+            0.21196800470352173,
+            0.2099200040102005,
+            0.20787200331687927
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.022539885714650154,
+            "max_abs": 0.25,
+            "cosine": 0.9997483491897583
+          }
+        }
+      }
+    }
+  ]
+}

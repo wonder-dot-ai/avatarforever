@@ -4,6 +4,7 @@ Includes the efficient transposed-weight INT8 layout and compiled full INT8
 linear. Results are still microbenchmarks, not measured video FPS.
 """
 import json
+import argparse
 import random
 import statistics
 from pathlib import Path
@@ -24,7 +25,9 @@ def compiled_int8_linear(x,qw,sw,b):
 
 @torch.inference_mode()
 def main():
-    root=Path('outputs/a100-mm-study')
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root',type=Path,default=Path('outputs/a100-mm-study'))
+    root=parser.parse_args().root
     search=json.loads((root/'microbench.json').read_text())
     module=load(name='avatar_mm_lt',sources=[str(Path(__file__).with_name('mm_cublaslt.cpp'))],
         extra_include_paths=['/usr/local/cuda/include'],extra_ldflags=['-L/usr/local/cuda/lib64',

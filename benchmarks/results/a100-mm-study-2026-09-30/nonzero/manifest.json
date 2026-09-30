@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "benchmarks/capture_mm_workload.py": "347f7c1f60f3540be0b17ddb4c5341b520b89b0d55f0f50f99c250d6a297261c",
+    "benchmarks/benchmark_mm_candidates.py": "daa041908481c537d7585cf9f7d25b2a8bcea8daacfa357167749673bf388467",
+    "benchmarks/remeasure_mm_winners.py": "2456466fb839d71c9d3134e5909999a6a65bbf9b8dbda80d88c942f4601e4971",
+    "benchmarks/mm_cublaslt.cpp": "84063008a8821b608c5bf151e3feb79d13be953cd712ffb769cc040646d2228f"
+  },
+  "tensor_sha256": "565d2f6cdd108fe12b38089aabe6919e88926dd9204c9b54f2cb9096185c00c5",
+  "weight_nonzero": 16777216,
+  "input_rms": 0.04742006957530975,
+  "weight_fp8_roundtrip_relative_rms": 0.15249191224575043,
+  "output_fp8_roundtrip_relative_rms": 0.03313712030649185,
+  "census_matches_original": true
+}

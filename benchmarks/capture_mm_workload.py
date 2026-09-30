@@ -25,13 +25,14 @@ def linear(x, w, bias=None):
         m, k, n = x.numel() // x.shape[-1], x.shape[-1], w.shape[0]
         key = f'{m}x{k}x{n}'
         shapes[key] += 1
-        if key not in examples:
+        if key not in examples or examples[key].get('example_zero_weight', False):
             row = {'M': m, 'K': k, 'N': n, 'input_stride': list(x.stride()),
                    'weight_stride': list(w.stride()), 'dtype': str(x.dtype),
                    'bias': bias is not None}
             examples[key] = row
             # Real inputs/weights for the dominant video GEMMs, not synthetic quality claims.
             if m >= 1000 and k >= 2048 and n >= 2048:
+                row['example_zero_weight'] = not bool(torch.count_nonzero(w))
                 path = output / 'tensors' / (key + '.pt')
                 path.parent.mkdir(parents=True, exist_ok=True)
                 torch.save({'x': x.detach().reshape(m, k).cpu(), 'w': w.detach().cpu(),
@@ -55,7 +56,7 @@ def forward(*args, **kwargs):
                 for k, v in shapes.items()]
         rows.sort(key=lambda r: r['flops_per_chunk'], reverse=True)
         (output / 'workload.json').write_text(json.dumps({'forward_indices': [16,17,18,19],
-            'note': 'Real single-stage FP8-storage/BF16-compute workload. Tensor examples come from the first linear of each shape. Diagnostic timings invalid.',
+            'note': 'Real single-stage FP8-storage/BF16-compute workload. Prefer the first nonzero-weight linear of each shape. Diagnostic timings invalid.',
             'total_linear_flops': sum(r['flops_per_chunk'] for r in rows), 'shapes': rows}, indent=2)+'\n')
     return result
 

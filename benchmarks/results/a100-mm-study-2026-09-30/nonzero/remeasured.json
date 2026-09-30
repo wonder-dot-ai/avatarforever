@@ -1,0 +1,156 @@
+{
+  "method": "Three rounds, shuffled candidate order (seed 42), each with 21 cold-L2 GPU-event samples. 400 4096-square BF16 GEMMs preheat GPU before each batch, after lazy compilation. 64 MiB zero-fill precedes and is excluded from each timed operation. Weights already packed. Full INT8 includes dynamic activation quantization, MM, scaling and bias. Microbenchmark data, not video throughput.",
+  "results": [
+    {
+      "key": "4608x4096x4096",
+      "M": 4608,
+      "K": 4096,
+      "N": 4096,
+      "calls_per_chunk": 584,
+      "flops_per_chunk": 90297392431104,
+      "fp8_roundtrip_exact": false,
+      "candidates": {
+        "torch_bf16": {
+          "median_ms": 0.6809599995613098,
+          "round_medians_ms": [
+            0.6901760101318359,
+            0.6809599995613098,
+            0.6799359917640686
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "compiled_fp8_cast_linear": {
+          "median_ms": 0.7229440212249756,
+          "round_medians_ms": [
+            0.7321599721908569,
+            0.7229440212249756,
+            0.7157760262489319
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_bf16": {
+          "median_ms": 0.6154239773750305,
+          "round_medians_ms": [
+            0.6103039979934692,
+            0.6164479851722717,
+            0.6154239773750305
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "cublaslt_cast_plus_bf16": {
+          "median_ms": 0.7147520184516907,
+          "round_medians_ms": [
+            0.707584023475647,
+            0.7239680290222168,
+            0.7147520184516907
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_bf16": {
+          "median_ms": 0.681984007358551,
+          "round_medians_ms": [
+            0.681984007358551,
+            0.681984007358551,
+            0.681984007358551
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "triton_fused_fp8_bf16": {
+          "median_ms": 2.3756799697875977,
+          "round_medians_ms": [
+            2.37772798538208,
+            2.3244800567626953,
+            2.3756799697875977
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.0,
+            "max_abs": 0.0,
+            "cosine": 1.0
+          }
+        },
+        "torch_int8_full_transposed": {
+          "median_ms": 0.5457919836044312,
+          "round_medians_ms": [
+            0.5457919836044312,
+            0.5488640069961548,
+            0.5427200198173523
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          }
+        },
+        "compiled_int8_full_transposed": {
+          "median_ms": 0.5416960120201111,
+          "round_medians_ms": [
+            0.6154239773750305,
+            0.5416960120201111,
+            0.5416960120201111
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          }
+        },
+        "cublaslt_int8_full": {
+          "median_ms": 0.5478399991989136,
+          "round_medians_ms": [
+            0.5416960120201111,
+            0.5478399991989136,
+            0.5529599785804749
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          }
+        },
+        "triton_int8_full": {
+          "median_ms": 0.8550400137901306,
+          "round_medians_ms": [
+            0.8529919981956482,
+            0.8632320165634155,
+            0.8550400137901306
+          ],
+          "accuracy": {
+            "finite": true,
+            "relative_rms": 0.026601269841194153,
+            "max_abs": 0.015625,
+            "cosine": 0.9996524453163147
+          }
+        }
+      }
+    }
+  ]
+}
