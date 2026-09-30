@@ -1,0 +1,71 @@
+{
+  "protocol": "One full warmup; three unprofiled controls; one profiled request. Calls 16-19: four denoising steps of a steady AR chunk. Synchronization only before and after the window, never between forwards. CUDA event elapsed time includes GPU idle gaps, not just active kernels. Profiler disables stack/shape/memory recording. Generic latency.py DiT fields are intentionally unmeasured; use this file.",
+  "source_sha256": "0357d4fb7d31c137320d2172608bedef536a387672c180c12d7f31d06c3aeac4",
+  "windows": [
+    {
+      "request": 0,
+      "warmup": true,
+      "profiled": false,
+      "forward_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "window_cuda_event_ms": 2639.235107421875,
+      "window_wall_ms": 2639.311018000626
+    },
+    {
+      "request": 1,
+      "warmup": false,
+      "profiled": false,
+      "forward_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "window_cuda_event_ms": 2648.302490234375,
+      "window_wall_ms": 2648.3975120008836
+    },
+    {
+      "request": 2,
+      "warmup": false,
+      "profiled": false,
+      "forward_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "window_cuda_event_ms": 2648.058837890625,
+      "window_wall_ms": 2648.139760000049
+    },
+    {
+      "request": 3,
+      "warmup": false,
+      "profiled": false,
+      "forward_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "window_cuda_event_ms": 2650.522705078125,
+      "window_wall_ms": 2650.6039050000254
+    },
+    {
+      "request": 4,
+      "warmup": false,
+      "profiled": true,
+      "forward_indices": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "window_cuda_event_ms": 2696.84033203125,
+      "window_wall_ms": 2697.0269169996754
+    }
+  ]
+}

@@ -3,7 +3,8 @@
 Wrap the existing inference benchmark, replacing its synchronized Recorder.
 Request 0 warms the complete pipeline; requests 1-3 are unprofiled controls;
 request 4 captures calls 16-19 (zero based), one four-step steady AR chunk.
-The only synchronization in that window is its explicitly marked final drain.
+The harness adds synchronization only at window boundaries. Implicit model
+synchronization (for example, scalar reads) remains visible and unchanged.
 Use window-results.json as the timing record, not latency.py's generic summary.
 """
 from __future__ import annotations
@@ -74,7 +75,7 @@ class LaunchRecorder(latency.Recorder):
         (self.output / "window-results.json").write_text(json.dumps({
             "protocol": "One full warmup; three unprofiled controls; one profiled request. "
                         "Calls 16-19: four denoising steps of a steady AR chunk. "
-                        "Synchronization only before and after the window, never between forwards. "
+                        "Harness synchronization only at window boundaries; implicit model waits remain. "
                         "CUDA event elapsed time includes GPU idle gaps, not just active kernels. "
                         "Profiler disables stack/shape/memory recording. "
                         "Generic latency.py DiT fields are intentionally unmeasured; use this file.",

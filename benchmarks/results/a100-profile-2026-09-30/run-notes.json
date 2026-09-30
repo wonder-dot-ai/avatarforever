@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-30",
+  "executed_harness_commit": "a9b8e54",
+  "model_source_commit": "fff4c44",
+  "scope": "A100 40GB; one steady AR chunk (calls 16-19), four denoising steps plus AR updates and preparation before call 20; no model loading or VAE decode in trace.",
+  "comparison": "Eager versus ordinary strict regional torch.compile. FP8 storage / BF16 compute. Same input hashes and source hashes. Autotuning and CUDA graphs disabled.",
+  "validation": "Three unprofiled controls per mode; one capture per mode after one full warmup. 51 graphs unchanged across every compiled request, no graph breaks. All ten full requests produced 257 frames and finite final latents.",
+  "harness_metadata_correction": "Executed source described synchronization only at boundaries; that meant harness-added synchronization. Implicit model waits remain. Final source clarifies this wording without changing execution.",
+  "findings": {
+    "control_speedup": 1.2843240308234538,
+    "kernel_count_reduction_fraction": 0.3857367286544152,
+    "recorded_gpu_active_time_saved_ms": 574.7615654296874,
+    "recorded_gpu_gaps_saved_ms": 37.5823701171875,
+    "interpretation": "Launch overhead does not appear dominant in this window: profiled GPU gaps are 3.10% eager and 2.21% compiled. Most recorded time reduction is in GPU activity. Host launch API and synchronization durations overlap GPU execution, and are not additive exposed overhead. Active intervals are not an SM-utilization measurement. No causal attribution of every gap or tested CUDA-graph speedup."
+  },
+  "reproduce": [
+    "bash benchmarks/run_a100_profile.sh eager",
+    "bash benchmarks/run_a100_profile.sh compiled",
+    "python3 benchmarks/build_launch_profile_viewer.py --root outputs/a100-profile"
+  ],
+  "local_viewer": "outputs/a100-profile/index.html",
+  "raw_traces": [
+    "outputs/a100-profile/eager/trace.json.gz",
+    "outputs/a100-profile/compiled/trace.json.gz"
+  ],
+  "ui_verification": "HTML/JavaScript syntax, artifact links, trace accounting, compressed/raw SHA256 checked. Interactive browser verification was blocked by file:// navigation policy."
+}

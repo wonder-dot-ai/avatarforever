@@ -1,0 +1,502 @@
+{
+  "eager": {
+    "mode": "eager",
+    "control_window_ms": [
+      2648.302490234375,
+      2648.058837890625,
+      2650.522705078125
+    ],
+    "control_median_ms": 2648.302490234375,
+    "profiled_window_ms": 2696.84033203125,
+    "profiler_slowdown": 1.0183279070181215,
+    "gpu_span_ms": 2696.5434912109376,
+    "gpu_active_union_ms": 2612.9181513671874,
+    "gpu_idle_gaps_ms": 83.62533984375,
+    "gpu_idle_gap_percent": 3.1012049357378006,
+    "gpu_gaps_over_10us": 859,
+    "kernel_count": 54742,
+    "launch_api_count": 54742,
+    "launch_api_names": {
+      "cudaLaunchKernel": 51694,
+      "cuLaunchKernel": 1028,
+      "cudaLaunchKernelExC": 2020
+    },
+    "host_launch_api_union_ms": 848.17591796875,
+    "host_launch_api_median_us": 6.731,
+    "stream_sync_count": 24,
+    "stream_sync_host_wait_ms": 209.00914699999998,
+    "trace_sha256": "36326714cc49be209f9bfd4f86ec2dfdddbfab960e398de803f82d9a3f0cd093",
+    "profile_harness_sha256": "0357d4fb7d31c137320d2172608bedef536a387672c180c12d7f31d06c3aeac4",
+    "gpu_activity_categories": {
+      "kernel": 54742,
+      "gpu_memset": 48,
+      "gpu_memcpy": 58
+    },
+    "top_kernels": [
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x256_ldg8_relu_f2f_stages_64x3_tn",
+        "calls": 1644,
+        "total_us": 683198.0870000002
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_256x128_ldg8_relu_f2f_stages_64x3_tn",
+        "calls": 1440,
+        "total_us": 560834.6089999994
+      },
+      {
+        "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#12}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+        "calls": 10752,
+        "total_us": 433908.17600000446
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<128, 128, 64, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<128, 128, 64, 4, cutlass::bfloat16_t> >, false, false, false, false, true, true, false, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 210981.18600000005
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})",
+        "calls": 5760,
+        "total_us": 154390.71799999927
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<c10::BFloat16> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<c10::BFloat16> const&)::{lambda(int)#1})",
+        "calls": 3480,
+        "total_us": 141505.0660000008
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::vectorized_layer_norm_kernel<c10::BFloat16, float, true>(int, float, c10::BFloat16 const*, c10::BFloat16 const*, c10::BFloat16 const*, float*, float*, c10::BFloat16*)",
+        "calls": 4128,
+        "total_us": 80266.99899999976
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::addcmul_cuda_kernel(at::TensorIteratorBase&, c10::Scalar const&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16, c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::addcmul_cuda_kernel(at::TensorIteratorBase&, c10::Scalar const&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16, c10::BFloat16)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::addcmul_cuda_kernel(at::TensorIteratorBase&, c10::Scalar const&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16, c10::BFloat16)#1}>(at::TensorIteratorBase&, at::native::addcmul_cuda_kernel(at::TensorIteratorBase&, c10::Scalar const&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16, c10::BFloat16, c10::BFloat16)#1} const&)::{lambda(int)#1})",
+        "calls": 3072,
+        "total_us": 69593.87800000027
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul>, false>(int, at::native::CUDAFunctor_add<c10::BFloat16>, std::array<char*, 3ul>)",
+        "calls": 3460,
+        "total_us": 35732.47500000024
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy<at::native::(anonymous namespace)::OpaqueType<2u>, unsigned int, 4, 64, 64>(at::native::(anonymous namespace)::OpaqueType<2u>*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<2u>, unsigned int, 64, 64>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",
+        "calls": 1152,
+        "total_us": 33318.60900000004
+      },
+      {
+        "name": "void at::native::elementwise_kernel<128, 4, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctorOnSelf_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctorOnSelf_add<c10::BFloat16> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctorOnSelf_add<c10::BFloat16> >(at::TensorIteratorBase&, at::native::CUDAFunctorOnSelf_add<c10::BFloat16> const&)::{lambda(int)#1})",
+        "calls": 1160,
+        "total_us": 28698.897000000325
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>, false>(int, at::native::BinaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)",
+        "calls": 1164,
+        "total_us": 22873.08999999997
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#1}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>, false>(int, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#1}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)",
+        "calls": 384,
+        "total_us": 21515.835000000006
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_64x64_sliced1x2_ldg8_relu_f2f_stages_64x6_tn",
+        "calls": 1231,
+        "total_us": 21008.94599999998
+      },
+      {
+        "name": "void at::native::(anonymous namespace)::CatArrayBatchedCopy_vectorized<at::native::(anonymous namespace)::OpaqueType<2u>, unsigned int, 2, 128, 1, 16, 8>(char*, at::native::(anonymous namespace)::CatArrInputTensorMetadata<at::native::(anonymous namespace)::OpaqueType<2u>, unsigned int, 128, 1>, at::native::(anonymous namespace)::TensorSizeStride<unsigned int, 4u>, int, unsigned int)",
+        "calls": 584,
+        "total_us": 16834.813000000016
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>, false>(int, at::native::neg_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#9}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)",
+        "calls": 1536,
+        "total_us": 13363.441999999992
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_64x4_tn",
+        "calls": 1008,
+        "total_us": 11045.582000000037
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<64, 64, 256, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 64, 256, 4, cutlass::bfloat16_t> >, false, false, false, false, true, false, true, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 10393.748999999994
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_s16816gemm_bf16_64x64_64x6_tn_align8>(cutlass_80_tensorop_s16816gemm_bf16_64x64_64x6_tn_align8::Params)",
+        "calls": 865,
+        "total_us": 9516.481999999989
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, false, false, false, false, true, false, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 8588.003000000008
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>, false>(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)",
+        "calls": 3184,
+        "total_us": 8495.502999999982
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x64_ldg8_relu_f2f_stages_64x4_tn",
+        "calls": 152,
+        "total_us": 4943.287999999997
+      },
+      {
+        "name": "void cublasLt::splitKreduce_kernel<32, 16, int, __nv_bfloat16, __nv_bfloat16, float, __nv_bfloat16, false, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, true, true, false, false>(cublasLt::cublasSplitKParams<float>, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, float const*, float const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+        "calls": 1155,
+        "total_us": 4899.437999999983
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::sigmoid_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>, false>(int, at::native::sigmoid_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)",
+        "calls": 1156,
+        "total_us": 3690.536999999939
+      },
+      {
+        "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, __nv_bfloat16, float, __nv_bfloat16, false, __nv_bfloat16, __nv_bfloat16, __nv_bfloat16, true, true, false, false>(cublasLt::cublasSplitKParams<float>, float const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, float const*, float const*, __nv_bfloat16 const*, float const*, __nv_bfloat16*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+        "calls": 865,
+        "total_us": 2969.3879999999963
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::AUnaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>, false>(int, at::native::AUnaryFunctor<c10::BFloat16, c10::BFloat16, c10::BFloat16, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 2ul>)",
+        "calls": 1164,
+        "total_us": 2769.0459999999493
+      },
+      {
+        "name": "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<c10::BFloat16>, std::array<char*, 2ul>, false>(int, at::native::CUDAFunctorOnSelf_add<c10::BFloat16>, std::array<char*, 2ul>)",
+        "calls": 1160,
+        "total_us": 2449.717000000006
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_64x128_ldg8_relu_f2f_stages_64x4_tn",
+        "calls": 49,
+        "total_us": 2316.0140000000006
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x128_ldg8_relu_f2f_stages_64x3_tn",
+        "calls": 48,
+        "total_us": 1879.0180000000003
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_splitkv_combine_kernel<Flash_fwd_kernel_traits<64, 64, 256, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 64, 256, 4, cutlass::bfloat16_t> >, 8, 2, true>(pytorch_flash::Flash_fwd_params)",
+        "calls": 192,
+        "total_us": 1203.973
+      }
+    ],
+    "all_outputs_finite": true,
+    "last_dynamo_counters": {
+      "stats": {},
+      "graph_break": {},
+      "unimplemented": {}
+    },
+    "arguments": {
+      "checkpoint": "checkpoints/avatarforever-ltx-2.3-22b.safetensors",
+      "gemma_root": "checkpoints/gemma-3-12b-it-qat-q4_0-unquantized",
+      "audio": "outputs/a100-setup/jfk.flac",
+      "reference": "outputs/a100-setup/reference.png",
+      "quantization": "fp8-cast",
+      "fp8_activation_backend": "compiled",
+      "compile_transformer": "none",
+      "compile_video_decoder": false,
+      "save_latents": false,
+      "audio_latents": null,
+      "warmup_frames": null,
+      "frames": 257,
+      "width": 768,
+      "height": 512,
+      "fps": 25,
+      "seed": 42,
+      "runs": 4,
+      "warmup_runs": 1,
+      "cache": "on",
+      "fast_infer": false,
+      "output_dir": "outputs/a100-profile/eager"
+    },
+    "source_sha256": {
+      "inference.py": "5957363352def25b7e4cd6d70aa21ca791894697fb82b2ddda2a0b575e4977d5",
+      "benchmarks/latency.py": "b7c490b05335e0bf9dd5d6af18b6a02dfc3ee0aab4480febce1614cab06cb361",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py": "af6ebd36827e1e6356b215e172c9dbf63971d0431ba475a7d04557e9a15d7380",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py": "5d373f14904ceaf03f132e7073ade008c069e62568f3174464c0a9299768c4ae",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py": "47f8f6cc18772dbc65ce2d39ef91e406b7d97a209ef0d9832a0365e17b77670f",
+      "packages/ltx-core/src/ltx_core/model/transformer/compilation.py": "c4234f239d6190458668551815d1c919b8ea58f70a6e2102ad126a46acc08e73",
+      "packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py": "38a6d8479ddc4040fce496c553c441899079ee87c3153f917dcef2470ae17bbe",
+      "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py": "efcbb704f5194cef1a07402a8aa0d5e5817baa12c24f93232a641850a8293264",
+      "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py": "8af55d8ccb2785bd31bd23300853157da75dd4c39e145079909282d80538dce6"
+    },
+    "gpu": "NVIDIA A100-SXM4-40GB, 580.126.20, 40960 MiB, 400.00 W",
+    "versions": {
+      "torch": "2.14.0",
+      "torchaudio": "2.11.0",
+      "transformers": "4.55.4",
+      "safetensors": "0.8.0",
+      "av": "18.1.0"
+    },
+    "audio_sha256": "63a4b1e4c1dc655ac70961ffbf518acd249df237e5a0152faae9a4a836949715",
+    "reference_sha256": "98ea0eeab4d6fced997656c5bbad9cc73e2a553604537095b4f6913a29329db9",
+    "trace_categories": {
+      "user_annotation": 6,
+      "cpu_op": 293865,
+      "kernel": 54742,
+      "overhead": 2235,
+      "cuda_runtime": 60613,
+      "cuda_driver": 1028,
+      "gpu_memset": 48,
+      "gpu_memcpy": 58,
+      "gpu_user_annotation": 5,
+      "Trace": 1
+    }
+  },
+  "compiled": {
+    "mode": "compiled",
+    "control_window_ms": [
+      2058.737548828125,
+      2062.0205078125,
+      2063.1552734375
+    ],
+    "control_median_ms": 2062.0205078125,
+    "profiled_window_ms": 2084.936279296875,
+    "profiler_slowdown": 1.011113260705969,
+    "gpu_span_ms": 2084.1995556640627,
+    "gpu_active_union_ms": 2038.1565859375,
+    "gpu_idle_gaps_ms": 46.0429697265625,
+    "gpu_idle_gap_percent": 2.2091440141341168,
+    "gpu_gaps_over_10us": 271,
+    "kernel_count": 33626,
+    "launch_api_count": 33626,
+    "launch_api_names": {
+      "cuLaunchKernel": 24104,
+      "cudaLaunchKernel": 7502,
+      "cudaLaunchKernelExC": 2020
+    },
+    "host_launch_api_union_ms": 651.40583203125,
+    "host_launch_api_median_us": 6.361,
+    "stream_sync_count": 8,
+    "stream_sync_host_wait_ms": 247.480861,
+    "trace_sha256": "afdbfe55838af0c5195c2d77da155ace799232cf7d34688c970e8d31bf62c10a",
+    "profile_harness_sha256": "0357d4fb7d31c137320d2172608bedef536a387672c180c12d7f31d06c3aeac4",
+    "gpu_activity_categories": {
+      "kernel": 33626,
+      "gpu_memcpy": 36,
+      "gpu_memset": 48
+    },
+    "top_kernels": [
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x256_ldg8_relu_f2f_stages_64x3_tn",
+        "calls": 1644,
+        "total_us": 692766.8569999984
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_256x128_ldg8_relu_f2f_stages_64x3_tn",
+        "calls": 1440,
+        "total_us": 567831.1409999992
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<128, 128, 64, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<128, 128, 64, 4, cutlass::bfloat16_t> >, false, false, false, false, true, true, false, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 213225.4579999999
+      },
+      {
+        "name": "triton_poi_fused__to_copy_2",
+        "calls": 1920,
+        "total_us": 54126.33500000011
+      },
+      {
+        "name": "triton_poi_fused__to_copy_59",
+        "calls": 288,
+        "total_us": 44452.63200000001
+      },
+      {
+        "name": "triton_poi_fused__to_copy_20",
+        "calls": 1728,
+        "total_us": 25407.469000000026
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_64x64_sliced1x2_ldg8_relu_f2f_stages_64x6_tn",
+        "calls": 1231,
+        "total_us": 20487.14999999998
+      },
+      {
+        "name": "triton_poi_fused__to_copy_1",
+        "calls": 480,
+        "total_us": 18209.183
+      },
+      {
+        "name": "triton_poi_fused__to_copy_33",
+        "calls": 96,
+        "total_us": 14911.623
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_flash_attention_addcmul_slice_transpose_unsqueeze_view_12",
+        "calls": 144,
+        "total_us": 14309.219999999998
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_flash_attention_addcmul_slice_transpose_unsqueeze_view_6",
+        "calls": 192,
+        "total_us": 12180.34799999999
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_11",
+        "calls": 144,
+        "total_us": 11640.929999999995
+      },
+      {
+        "name": "ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_64x4_tn",
+        "calls": 1008,
+        "total_us": 11631.225000000042
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_24",
+        "calls": 48,
+        "total_us": 11544.962
+      },
+      {
+        "name": "triton_poi_fused__to_copy_39",
+        "calls": 576,
+        "total_us": 11195.490000000005
+      },
+      {
+        "name": "triton_poi_fused_gelu_view_35",
+        "calls": 48,
+        "total_us": 11117.083999999999
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_5",
+        "calls": 192,
+        "total_us": 10994.824
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_10",
+        "calls": 144,
+        "total_us": 10730.016000000001
+      },
+      {
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_s16816gemm_bf16_64x64_64x6_tn_align8>(cutlass_80_tensorop_s16816gemm_bf16_64x64_64x6_tn_align8::Params)",
+        "calls": 865,
+        "total_us": 10435.360000000015
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_40",
+        "calls": 144,
+        "total_us": 10182.615999999995
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_splitkv_kernel<Flash_fwd_kernel_traits<64, 64, 256, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 64, 256, 4, cutlass::bfloat16_t> >, false, false, false, false, true, false, true, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 10124.358999999997
+      },
+      {
+        "name": "triton_poi_fused_gelu_view_60",
+        "calls": 144,
+        "total_us": 9736.222000000003
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_16",
+        "calls": 144,
+        "total_us": 8983.444
+      },
+      {
+        "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<64, 128, 128, 4, false, false, cutlass::bfloat16_t, Flash_kernel_traits<64, 128, 128, 4, cutlass::bfloat16_t> >, false, false, false, false, false, true, false, false>(pytorch_flash::Flash_fwd_params)",
+        "calls": 384,
+        "total_us": 8705.944
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_49",
+        "calls": 144,
+        "total_us": 8557.402000000002
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_8",
+        "calls": 48,
+        "total_us": 8483.482999999998
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_4",
+        "calls": 192,
+        "total_us": 8283.930000000004
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_flash_attention_addcmul_slice_transpose_unsqueeze_view_53",
+        "calls": 144,
+        "total_us": 8043.410000000005
+      },
+      {
+        "name": "triton_poi_fused_cat_7",
+        "calls": 144,
+        "total_us": 8039.32
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__to_copy_add_mul_slice_unbind_unsqueeze_view_32",
+        "calls": 192,
+        "total_us": 7614.7719999999945
+      }
+    ],
+    "all_outputs_finite": true,
+    "last_dynamo_counters": {
+      "stats": {
+        "calls_captured": 16589,
+        "unique_graphs": 51
+      },
+      "graph_break": {},
+      "unimplemented": {}
+    },
+    "arguments": {
+      "checkpoint": "checkpoints/avatarforever-ltx-2.3-22b.safetensors",
+      "gemma_root": "checkpoints/gemma-3-12b-it-qat-q4_0-unquantized",
+      "audio": "outputs/a100-setup/jfk.flac",
+      "reference": "outputs/a100-setup/reference.png",
+      "quantization": "fp8-cast",
+      "fp8_activation_backend": "compiled",
+      "compile_transformer": "regional",
+      "compile_video_decoder": true,
+      "save_latents": false,
+      "audio_latents": null,
+      "warmup_frames": null,
+      "frames": 257,
+      "width": 768,
+      "height": 512,
+      "fps": 25,
+      "seed": 42,
+      "runs": 4,
+      "warmup_runs": 1,
+      "cache": "on",
+      "fast_infer": false,
+      "output_dir": "outputs/a100-profile/compiled"
+    },
+    "source_sha256": {
+      "inference.py": "5957363352def25b7e4cd6d70aa21ca791894697fb82b2ddda2a0b575e4977d5",
+      "benchmarks/latency.py": "b7c490b05335e0bf9dd5d6af18b6a02dfc3ee0aab4480febce1614cab06cb361",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py": "af6ebd36827e1e6356b215e172c9dbf63971d0431ba475a7d04557e9a15d7380",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py": "5d373f14904ceaf03f132e7073ade008c069e62568f3174464c0a9299768c4ae",
+      "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py": "47f8f6cc18772dbc65ce2d39ef91e406b7d97a209ef0d9832a0365e17b77670f",
+      "packages/ltx-core/src/ltx_core/model/transformer/compilation.py": "c4234f239d6190458668551815d1c919b8ea58f70a6e2102ad126a46acc08e73",
+      "packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py": "38a6d8479ddc4040fce496c553c441899079ee87c3153f917dcef2470ae17bbe",
+      "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py": "efcbb704f5194cef1a07402a8aa0d5e5817baa12c24f93232a641850a8293264",
+      "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py": "8af55d8ccb2785bd31bd23300853157da75dd4c39e145079909282d80538dce6"
+    },
+    "gpu": "NVIDIA A100-SXM4-40GB, 580.126.20, 40960 MiB, 400.00 W",
+    "versions": {
+      "torch": "2.14.0",
+      "torchaudio": "2.11.0",
+      "transformers": "4.55.4",
+      "safetensors": "0.8.0",
+      "av": "18.1.0"
+    },
+    "audio_sha256": "63a4b1e4c1dc655ac70961ffbf518acd249df237e5a0152faae9a4a836949715",
+    "reference_sha256": "98ea0eeab4d6fced997656c5bbad9cc73e2a553604537095b4f6913a29329db9",
+    "trace_categories": {
+      "user_annotation": 6,
+      "cpu_op": 52111,
+      "kernel": 33626,
+      "overhead": 1235,
+      "cuda_driver": 24104,
+      "cuda_runtime": 16367,
+      "gpu_memcpy": 36,
+      "gpu_memset": 48,
+      "gpu_user_annotation": 5,
+      "Trace": 1
+    }
+  },
+  "interpretation": "GPU idle gaps are not exclusively launch overhead. Profiler overhead is quantified against three unprofiled CUDA-event windows. Host API time overlaps GPU execution. No CUDA graph capture or claim of its expected speedup. The original window-results protocol says synchronization only at boundaries: this describes harness-added barriers; implicit model synchronization was retained."
+}
