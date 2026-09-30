@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 .venv/
+.venv-modal/
 venv/
 
 # Model checkpoints and generated media
@@ -40,4 +41,3 @@ data/
 .vscode/
 .DS_Store
 Thumbs.db
-
