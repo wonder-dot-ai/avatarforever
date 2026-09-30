@@ -1,8 +1,8 @@
 """On-demand Modal baseline. No deployed endpoint and at most one GPU container.
 
 From the repository root, after Modal login and creating the HF Secret:
-  .venv-modal/bin/modal run benchmarks/modal_benchmark.py --action prepare
-  .venv-modal/bin/modal run benchmarks/modal_benchmark.py --action baseline
+  .venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action prepare
+  .venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action baseline
 
 The baseline remains a single-request correctness/performance control. It does
 not claim to implement concurrent serving or streaming decoding.
@@ -18,6 +18,11 @@ import time
 import uuid
 
 import modal
+
+if modal.is_local():
+    from modal.config import config
+    if config.get('environment') != 'dev':
+        raise RuntimeError('This experiment uses the dev environment. Run modal with --env dev.')
 
 ROOT = Path(__file__).resolve().parents[1]
 REMOTE = Path('/workspace/avatarforever')

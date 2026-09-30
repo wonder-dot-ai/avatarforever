@@ -4,18 +4,18 @@
 
 `modal_benchmark.py` runs on-demand jobs; it does not deploy a serving endpoint.
 The experiment uses the `explore` workspace (`ac-8M7zh69xwqIgmGTbCOOKl7`),
-`huggingface-secret` with `HF_TOKEN`, and the `avatarforever-benchmarks` Volume.
+`dev` environment, `huggingface-secret` with `HF_TOKEN`, and the `avatarforever-benchmarks` Volume.
 The token must have access to the gated Gemma checkpoint. Never commit tokens.
 
 ```bash
 uv venv --python 3.11 .venv-modal
 uv pip install --python .venv-modal/bin/python modal==1.6.0
 .venv-modal/bin/modal token new
-.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action check-access
-.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action check-runtime
-.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action prepare
-.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action baseline
-.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action paired
+.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action check-access
+.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action check-runtime
+.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action prepare
+.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action baseline
+.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action paired
 ```
 
 Access checks, import checks, and weight downloads allocate no GPU. Inference
