@@ -1,5 +1,49 @@
 # H100 latency benchmark
 
+## Modal experiments
+
+`modal_benchmark.py` runs on-demand jobs; it does not deploy a serving endpoint.
+The experiment uses the `explore` workspace (`ac-8M7zh69xwqIgmGTbCOOKl7`),
+`huggingface-secret` with `HF_TOKEN`, and the `avatarforever-benchmarks` Volume.
+The token must have access to the gated Gemma checkpoint. Never commit tokens.
+
+```bash
+uv venv --python 3.11 .venv-modal
+uv pip install --python .venv-modal/bin/python modal==1.6.0
+.venv-modal/bin/modal token new
+.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action check-access
+.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action check-runtime
+.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action prepare
+.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action baseline
+.venv-modal/bin/modal run benchmarks/modal_benchmark.py --action paired
+```
+
+Access checks, import checks, and weight downloads allocate no GPU. Inference
+uses one H100 with no retries, a 30-minute execution timeout, and scale-down
+after two idle seconds. Each GPU call conservatively reserves startup plus
+execution timeout in `outputs/modal/h100-budget.json`; the entrypoint refuses
+reservations above the authorized five GPU-hours. This ledger does not account
+for unrelated team jobs or invocations that bypass this entrypoint. Do not
+reset it merely to bypass the experiment budget.
+
+Results, logs, manifests, latents, and videos persist under `runs/<run-id>` in
+the Volume and are downloaded to `outputs/modal/<run-id>` after a successful
+run. Failed-run artifacts remain in the Volume. Model download revisions and
+the container's installed package versions are recorded. Container builds are
+separate from inference timing.
+
+The paired experiment prepares two requests with seeds 42/43 and audio offsets
+0/15 seconds, using the same portrait and prompt. It compares alternating
+single-request chunks with a batch of two independent states, keeping one copy
+of the transformer and decoder resident and offloading the preparation models.
+It warms both modes, alternates measurement order, compares final latents, and
+decodes/saves both videos. It currently tests equal-length, synchronized
+requests and full-clip decoding; it is not a general concurrent serving API or
+a validation of streaming-decoder latency. The `--quantization` option also
+accepts `none` and `fp8-dynamic` for subsequent controlled experiments.
+
+## Earlier dedicated H100 measurements
+
 Avatar-Forever was cloned from `https://github.com/wonder-dot-ai/avatarforever.git`
 and run on the supplied H100 on 2026-09-28. The remote checkout and its environment
 are at `/home/ubuntu/work/avatarforever`. The checkpoint and Gemma weights are in

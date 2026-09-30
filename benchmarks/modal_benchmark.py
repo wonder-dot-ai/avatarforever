@@ -25,7 +25,9 @@ CACHE = Path('/cache')
 app = modal.App('avatarforever-benchmarks')
 volume = modal.Volume.from_name('avatarforever-benchmarks', create_if_missing=True)
 hf_secret = modal.Secret.from_name(os.environ.get('AVATAR_MODAL_HF_SECRET', 'huggingface-secret'))
-cpu_image = modal.Image.debian_slim(python_version='3.11').pip_install('huggingface-hub==0.36.2')
+cpu_image = (modal.Image.debian_slim(python_version='3.11')
+             .pip_install('huggingface-hub==0.36.2')
+             .env({'HF_XET_HIGH_PERFORMANCE': '1'}))
 
 # Match the previous H100 environment. TorchAudio was independently installed
 # there; retain that version and explicitly verify both imports during build.
@@ -51,14 +53,33 @@ for name in ('packages',):
                                       ignore=['**/__pycache__/**', '**/._*', '**/*.pyc'])
 for name in ('inference.py', 'util.py'):
     gpu_image = gpu_image.add_local_file(ROOT / name, str(REMOTE / name))
-for path in sorted((ROOT / 'benchmarks').glob('*.py')):
+for path in (ROOT / 'benchmarks' / name for name in ('latency.py', 'paired_inference.py')):
     gpu_image = gpu_image.add_local_file(path, str(REMOTE / 'benchmarks' / path.name))
 gpu_image = gpu_image.add_local_file(ROOT / 'data/jfk-american-university.ogg', '/inputs/speech.ogg')
 gpu_image = gpu_image.add_local_file(ROOT / 'outputs/stage-comparison/reference.png', '/inputs/reference.png')
 
 
+@app.function(image=cpu_image, secrets=[hf_secret], timeout=60, retries=0)
+def check_access() -> dict:
+    from huggingface_hub import hf_hub_download
+    path = hf_hub_download('google/gemma-3-12b-it-qat-q4_0-unquantized', 'config.json',
+                           token=os.environ['HF_TOKEN'])
+    return {'gemma_access': True, 'config_bytes': Path(path).stat().st_size}
+
+
+@app.function(image=gpu_image, cpu=2, memory=8192, timeout=120, retries=0)
+def check_runtime() -> dict:
+    # CPU-only import check: avoid spending GPU time on packaging mistakes.
+    for name in ('latency.py', 'paired_inference.py'):
+        result = subprocess.run([sys.executable, str(REMOTE / 'benchmarks' / name), '--help'],
+                                cwd=REMOTE, capture_output=True, text=True)
+        if result.returncode:
+            raise RuntimeError(f'{name} import failed:\n{result.stderr}')
+    return {'imports': 'passed', 'gpu_allocated': False}
+
+
 @app.function(image=cpu_image, secrets=[hf_secret], volumes={str(CACHE): volume},
-              timeout=3600, max_containers=1, retries=0)
+              cpu=8, memory=16384, timeout=3600, max_containers=1, retries=0)
 def prepare() -> dict:
     """Download weights without reserving a GPU; record resolved HF revisions."""
     from huggingface_hub import HfApi, hf_hub_download, snapshot_download
@@ -71,8 +92,14 @@ def prepare() -> dict:
     gemma_repo = 'google/gemma-3-12b-it-qat-q4_0-unquantized'
     checkpoint_revision = api.model_info(checkpoint_repo).sha
     gemma_revision = api.model_info(gemma_repo).sha
+    # Fail early for gated access, before the large public checkpoint transfer.
+    hf_hub_download(gemma_repo, 'config.json', revision=gemma_revision,
+                    token=token, cache_dir='/cache/hub')
+    print('Downloading AvatarForever checkpoint', checkpoint_revision, flush=True)
     checkpoint = hf_hub_download(checkpoint_repo, 'avatarforever-ltx-2.3-22b.safetensors',
                                  revision=checkpoint_revision, token=token, cache_dir='/cache/hub')
+    volume.commit()
+    print('Checkpoint complete; downloading Gemma', gemma_revision, flush=True)
     gemma = snapshot_download(gemma_repo, revision=gemma_revision, token=token, cache_dir='/cache/hub')
     record = {'checkpoint': checkpoint, 'gemma_root': gemma,
               'checkpoint_revision': checkpoint_revision, 'gemma_revision': gemma_revision}
@@ -127,7 +154,11 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
 @app.local_entrypoint()
 def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257,
          quantization: str = 'fp8-cast'):
-    if action == 'prepare':
+    if action == 'check-runtime':
+        print(json.dumps(check_runtime.remote(), indent=2))
+    elif action == 'check-access':
+        print(json.dumps(check_access.remote(), indent=2))
+    elif action == 'prepare':
         print(json.dumps(prepare.remote(), indent=2))
     elif action in ('baseline', 'paired'):
         if quantization not in ('none', 'fp8-cast', 'fp8-dynamic'):
@@ -172,4 +203,4 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
         print(json.dumps(result, indent=2))
         print(f'Local results: {target}')
     else:
-        raise ValueError('action must be prepare, baseline, or paired')
+        raise ValueError('action must be check-runtime, check-access, prepare, baseline, or paired')
