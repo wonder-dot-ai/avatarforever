@@ -84,19 +84,23 @@ def prepare() -> dict:
 @app.function(image=gpu_image, gpu='H100', cpu=8, memory=131072,
               volumes={str(CACHE): volume}, timeout=1800, startup_timeout=1800,
               max_containers=1, scaledown_window=2, retries=0)
-def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257) -> dict:
+def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
+             benchmark: str = 'baseline', quantization: str = 'fp8-cast') -> dict:
     """Run real inference, including VAE and MP4; persist even failed run logs."""
     weights = json.loads((CACHE / 'weights.json').read_text())
     output = CACHE / 'runs' / run_id
     output.mkdir(parents=True, exist_ok=False)
-    command = [sys.executable, str(REMOTE / 'benchmarks/latency.py'),
+    script = 'paired_inference.py' if benchmark == 'paired' else 'latency.py'
+    command = [sys.executable, str(REMOTE / 'benchmarks' / script),
                '--checkpoint', weights['checkpoint'], '--gemma-root', weights['gemma_root'],
                '--audio', '/inputs/speech.ogg', '--reference', '/inputs/reference.png',
-               '--quantization', 'fp8-cast', '--compile-transformer', compile_mode,
-               '--frames', str(frames), '--runs', '3', '--warmup-runs', '1',
-               '--cache', 'on', '--fast-infer', '--save-latents', '--output-dir', str(output)]
-    if compile_mode != 'none':
-        command.append('--compile-video-decoder')
+               '--quantization', quantization, '--frames', str(frames), '--runs', '3',
+               '--output-dir', str(output)]
+    if benchmark == 'baseline':
+        command += ['--compile-transformer', compile_mode, '--warmup-runs', '1',
+                    '--cache', 'on', '--fast-infer', '--save-latents']
+        if compile_mode != 'none':
+            command.append('--compile-video-decoder')
     (output / 'weights.json').write_text(json.dumps(weights, indent=2) + '\n')
     (output / 'command.json').write_text(json.dumps(command, indent=2) + '\n')
     freeze = subprocess.run([sys.executable, '-m', 'pip', 'freeze'], capture_output=True, text=True, check=True)
@@ -121,15 +125,18 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257) -> 
 
 
 @app.local_entrypoint()
-def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257):
+def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257,
+         quantization: str = 'fp8-cast'):
     if action == 'prepare':
         print(json.dumps(prepare.remote(), indent=2))
-    elif action == 'baseline':
+    elif action in ('baseline', 'paired'):
+        if quantization not in ('none', 'fp8-cast', 'fp8-dynamic'):
+            raise ValueError('Unsupported quantization')
         if compile_mode not in ('none', 'regional'):
             raise ValueError('compile_mode must be none or regional')
         if frames < 257 or (frames - 1) % 8:
             raise ValueError('Use at least 257 frames and an 8n+1 frame count')
-        run_id = f'h100-{compile_mode}-{uuid.uuid4().hex[:12]}'
+        run_id = f'h100-{action}-{quantization}-{compile_mode}-{uuid.uuid4().hex[:12]}'
         # Reserve both startup and execution limits, including failed calls.
         # This ledger covers launches through this entrypoint, not other team jobs.
         import fcntl
@@ -150,7 +157,7 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
             json.dump(data, file, indent=2)
             file.flush()
         print(f'RUN_ID={run_id}', flush=True)
-        result = baseline.remote(run_id, compile_mode, frames)
+        result = baseline.remote(run_id, compile_mode, frames, action, quantization)
         target = ROOT / 'outputs/modal' / run_id
         target.mkdir(parents=True, exist_ok=True)
         # Pull all artifacts, including actual videos, without keeping a GPU alive.
@@ -165,4 +172,4 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
         print(json.dumps(result, indent=2))
         print(f'Local results: {target}')
     else:
-        raise ValueError('action must be prepare or baseline')
+        raise ValueError('action must be prepare, baseline, or paired')
