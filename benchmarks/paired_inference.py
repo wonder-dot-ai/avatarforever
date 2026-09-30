@@ -10,7 +10,7 @@ first-pixel latency is NOT established by this benchmark.
 from __future__ import annotations
 
 import argparse
-from dataclasses import fields, replace
+from dataclasses import fields
 import hashlib
 import json
 from pathlib import Path
@@ -158,9 +158,13 @@ def main():
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--quantization', choices=['none', 'fp8-cast', 'fp8-dynamic'], default='fp8-cast')
     parser.add_argument('--fp8-activation-backend', default='compiled')
+    parser.add_argument('--preexpand-fp8', action='store_true',
+                        help='Expand stored FP8 linears once to BF16 before compilation; preserve rounded values.')
     parser.add_argument('--frames', type=int, default=257)
     parser.add_argument('--runs', type=int, default=3)
     args = parser.parse_args()
+    if args.preexpand_fp8 and args.quantization != 'fp8-cast':
+        parser.error('--preexpand-fp8 requires --quantization fp8-cast')
     args.output_dir.mkdir(parents=True, exist_ok=True)
     pipeline = ARA2VidDistilledPipeline(distilled_checkpoint_path=args.checkpoint,
         spatial_upsampler_path=None, gemma_root=args.gemma_root, loras=[],
@@ -175,6 +179,22 @@ def main():
     for name in ('text_encoder', 'embeddings_processor', 'audio_encoder', 'video_encoder'):
         getattr(pipeline._fast_modules, name).to('cpu')
     torch.cuda.empty_cache()
+    preexpand = {'enabled': args.preexpand_fp8, 'linears': 0, 'seconds': 0.0}
+    if args.preexpand_fp8:
+        torch.cuda.synchronize()
+        before = time.perf_counter()
+        for layer in requests[0]['transformer'].modules():
+            if isinstance(layer, torch.nn.Linear) and layer.weight.dtype == torch.float8_e4m3fn:
+                layer.weight.data = layer.weight.to(torch.bfloat16)
+                if layer.bias is not None:
+                    layer.bias.data = layer.bias.to(torch.bfloat16)
+                if hasattr(layer, 'original_forward'):
+                    layer.forward = layer.original_forward
+                preexpand['linears'] += 1
+        torch.cuda.synchronize()
+        preexpand['seconds'] = time.perf_counter() - before
+        assert preexpand['linears'] > 0
+        torch.cuda.empty_cache()
     paired = paired_sampler(requests)
     configs = {'alternating': [r['sampler'] for r in requests], 'batched': [paired]}
     records = []
@@ -183,6 +203,7 @@ def main():
     (output / 'manifest.json').write_text(json.dumps({
         'arguments': {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
         'torch': torch.__version__, 'gpu': torch.cuda.get_device_name(),
+        'preexpand': preexpand,
         'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'requests': [{'seed': r['seed'], 'audio_start_seconds': r['audio_start']} for r in requests],
         'scope': 'Two independent AR states, same reference/prompt, different seeds/audio. Equal lengths and synchronized arrivals. Full-clip VAE; no claim of streaming decode.'}, indent=2) + '\n')

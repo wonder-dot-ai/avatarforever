@@ -41,6 +41,11 @@ decodes/saves both videos. It currently tests equal-length, synchronized
 requests and full-clip decoding; it is not a general concurrent serving API or
 a validation of streaming-decoder latency. The `--quantization` option also
 accepts `none` and `fp8-dynamic` for subsequent controlled experiments.
+For the paired benchmark, `--quantization fp8-preexpanded` loads the same
+FP8-rounded weights as `fp8-cast`, then expands them to BF16 once after moving
+the preparation models to CPU. This preserves those weight values while
+trading VRAM for elimination of per-forward weight conversion. The one-time
+conversion duration and number of affected linears are recorded separately.
 
 ## Earlier dedicated H100 measurements
 

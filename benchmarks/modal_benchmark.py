@@ -141,8 +141,11 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
     command = [sys.executable, str(REMOTE / 'benchmarks' / script),
                '--checkpoint', weights['checkpoint'], '--gemma-root', weights['gemma_root'],
                '--audio', '/inputs/speech.ogg', '--reference', '/inputs/reference.png',
-               '--quantization', quantization, '--frames', str(frames), '--runs', '3',
+               '--quantization', 'fp8-cast' if quantization == 'fp8-preexpanded' else quantization,
+               '--frames', str(frames), '--runs', '3',
                '--output-dir', str(output)]
+    if quantization == 'fp8-preexpanded':
+        command.append('--preexpand-fp8')
     if benchmark == 'baseline':
         command += ['--compile-transformer', compile_mode, '--warmup-runs', '1',
                     '--cache', 'on', '--fast-infer', '--save-latents']
@@ -181,8 +184,10 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
     elif action == 'prepare':
         print(json.dumps(prepare.remote(), indent=2))
     elif action in ('baseline', 'paired'):
-        if quantization not in ('none', 'fp8-cast', 'fp8-dynamic'):
+        if quantization not in ('none', 'fp8-cast', 'fp8-dynamic', 'fp8-preexpanded'):
             raise ValueError('Unsupported quantization')
+        if quantization == 'fp8-preexpanded' and action != 'paired':
+            raise ValueError('Preexpanded weights are currently supported by the paired benchmark only')
         if compile_mode not in ('none', 'regional'):
             raise ValueError('compile_mode must be none or regional')
         if frames < 257 or (frames - 1) % 8:
