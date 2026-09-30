@@ -61,10 +61,25 @@ gpu_image = gpu_image.add_local_file(ROOT / 'outputs/stage-comparison/reference.
 
 @app.function(image=cpu_image, secrets=[hf_secret], timeout=60, retries=0)
 def check_access() -> dict:
-    from huggingface_hub import hf_hub_download
-    path = hf_hub_download('google/gemma-3-12b-it-qat-q4_0-unquantized', 'config.json',
-                           token=os.environ['HF_TOKEN'])
-    return {'gemma_access': True, 'config_bytes': Path(path).stat().st_size}
+    from huggingface_hub import HfApi, hf_hub_download
+    token = os.environ['HF_TOKEN']
+    result = {'token_has_surrounding_whitespace': token != token.strip()}
+    try:
+        HfApi(token=token).whoami()
+        result['token_valid'] = True
+    except Exception as exc:
+        response = getattr(exc, 'response', None)
+        result.update(token_valid=False, authentication_status=getattr(response, 'status_code', None))
+        return result
+    try:
+        path = hf_hub_download('google/gemma-3-12b-it-qat-q4_0-unquantized', 'config.json',
+                               token=token, force_download=True)
+        result.update(gemma_access=True, config_bytes=Path(path).stat().st_size)
+    except Exception as exc:
+        response = getattr(exc, 'response', None)
+        result.update(gemma_access=False, download_status=getattr(response, 'status_code', None),
+                      exception_type=type(exc).__name__)
+    return result
 
 
 @app.function(image=gpu_image, cpu=2, memory=8192, timeout=120, retries=0)
