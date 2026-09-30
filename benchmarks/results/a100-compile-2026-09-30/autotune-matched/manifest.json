@@ -1,0 +1,73 @@
+{
+  "arguments": {
+    "checkpoint": "checkpoints/avatarforever-ltx-2.3-22b.safetensors",
+    "gemma_root": "checkpoints/gemma-3-12b-it-qat-q4_0-unquantized",
+    "audio": "outputs/a100-setup/jfk.flac",
+    "reference": "outputs/a100-setup/reference.png",
+    "quantization": "fp8-cast",
+    "fp8_activation_backend": "compiled",
+    "compile_transformer": "regional",
+    "compile_video_decoder": true,
+    "save_latents": true,
+    "audio_latents": null,
+    "warmup_frames": null,
+    "frames": 257,
+    "width": 768,
+    "height": 512,
+    "fps": 25,
+    "seed": 42,
+    "runs": 3,
+    "warmup_runs": 1,
+    "cache": "on",
+    "fast_infer": false,
+    "output_dir": "outputs/a100-compile/autotune-matched"
+  },
+  "compiler_cache_directory": "/home/ubuntu/work/avatarforever/outputs/a100-compile/inductor",
+  "compiler_settings": {
+    "fullgraph": true,
+    "dynamic": false,
+    "emulate_precision_casts": true,
+    "note": "Only applies to opted-in transformer/decoder regions."
+  },
+  "source_sha256": {
+    "inference.py": "5957363352def25b7e4cd6d70aa21ca791894697fb82b2ddda2a0b575e4977d5",
+    "benchmarks/latency.py": "b7c490b05335e0bf9dd5d6af18b6a02dfc3ee0aab4480febce1614cab06cb361",
+    "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py": "af6ebd36827e1e6356b215e172c9dbf63971d0431ba475a7d04557e9a15d7380",
+    "packages/ltx-core/src/ltx_core/quantization/fp8_quantizer.py": "5d373f14904ceaf03f132e7073ade008c069e62568f3174464c0a9299768c4ae",
+    "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py": "47f8f6cc18772dbc65ce2d39ef91e406b7d97a209ef0d9832a0365e17b77670f",
+    "packages/ltx-core/src/ltx_core/model/transformer/compilation.py": "c4234f239d6190458668551815d1c919b8ea58f70a6e2102ad126a46acc08e73",
+    "packages/ltx-pipelines/src/ltx_pipelines/utils/model_ledger.py": "38a6d8479ddc4040fce496c553c441899079ee87c3153f917dcef2470ae17bbe",
+    "packages/ltx-pipelines/src/ltx_pipelines/a2vid_distilled.py": "efcbb704f5194cef1a07402a8aa0d5e5817baa12c24f93232a641850a8293264",
+    "packages/ltx-pipelines/src/ltx_pipelines/ar_a2vid_distilled_pipeline.py": "8af55d8ccb2785bd31bd23300853157da75dd4c39e145079909282d80538dce6"
+  },
+  "commit": "647422ac406edf23b7a133944d10a9009dc375fd",
+  "working_tree": "?? benchmarks/run_a100_compile.sh",
+  "python": "3.11.16 (main, Sep 29 2026, 14:59:26) [Clang 22.1.3 ]",
+  "platform": "Linux-6.8.0-1046-nvidia-x86_64-with-glibc2.35",
+  "versions": {
+    "torch": "2.14.0",
+    "torchaudio": "2.11.0",
+    "transformers": "4.55.4",
+    "safetensors": "0.8.0",
+    "av": "18.1.0"
+  },
+  "cuda": "13.0",
+  "torch_cpu_threads": 8,
+  "sdpa_backends_enabled": {
+    "flash": true,
+    "memory_efficient": true,
+    "math": true
+  },
+  "checkpoint_bytes": 46183958894,
+  "audio_sha256": "63a4b1e4c1dc655ac70961ffbf518acd249df237e5a0152faae9a4a836949715",
+  "reference_sha256": "98ea0eeab4d6fced997656c5bbad9cc73e2a553604537095b4f6913a29329db9",
+  "gpu": "NVIDIA A100-SXM4-40GB, 580.126.20, 40960 MiB, 400.00 W",
+  "timing_method": "Synchronized wall clock. End-to-end starts before pipeline call and ends after MP4 mux. Imports and downloads excluded. Model loading included unless already resident. VAE timing measures generator next() calls. Nested timings overlap. No simulated inference.",
+  "sigmas": [
+    1.0,
+    0.98125,
+    0.909375,
+    0.421875,
+    0.0
+  ]
+}

@@ -1,0 +1,25 @@
+AUTOTUNE convolution(1x128x251x88x128, 128x128x3x3x3)
+strides: [361889792, 2827264, 11264, 128, 1], [3456, 27, 9, 3, 1]
+dtypes: torch.bfloat16, torch.bfloat16
+  convolution 13.5803 ms 100.0% 
+  triton_convolution3d_14825 55.3492 ms 24.5% ALLOW_TF32=False, BLOCK_K=16, BLOCK_M=256, BLOCK_N=64, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=2, num_warps=4
+  triton_convolution3d_14830 63.9683 ms 21.2% ALLOW_TF32=False, BLOCK_K=32, BLOCK_M=256, BLOCK_N=64, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=2, num_warps=4
+  triton_convolution3d_14827 107.7688 ms 12.6% ALLOW_TF32=False, BLOCK_K=32, BLOCK_M=128, BLOCK_N=128, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=2, num_warps=4
+  triton_convolution3d_14835 107.9347 ms 12.6% ALLOW_TF32=False, BLOCK_K=64, BLOCK_M=128, BLOCK_N=128, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=2, num_warps=4
+  triton_convolution3d_14831 107.9470 ms 12.6% ALLOW_TF32=False, BLOCK_K=64, BLOCK_M=128, BLOCK_N=128, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=3, num_warps=4
+  triton_convolution3d_14826 121.0061 ms 11.2% ALLOW_TF32=False, BLOCK_K=16, BLOCK_M=1024, BLOCK_N=16, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=1, num_warps=4
+  triton_convolution3d_14833 122.0106 ms 11.1% ALLOW_TF32=False, BLOCK_K=64, BLOCK_M=128, BLOCK_N=64, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=4, num_warps=4
+  triton_convolution3d_14836 140.1057 ms 9.7% ALLOW_TF32=False, BLOCK_K=128, BLOCK_M=128, BLOCK_N=128, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=2, num_warps=4
+  triton_convolution3d_14837 140.1221 ms 9.7% ALLOW_TF32=False, BLOCK_K=128, BLOCK_M=128, BLOCK_N=128, GROUPS=1, KERNEL_D=3, KERNEL_H=3, KERNEL_W=3, PADDING_D=0, PADDING_H=1, PADDING_W=1, STRIDE_D=1, STRIDE_H=1, STRIDE_W=1, UNROLL=False, num_stages=3, num_warps=4
+SingleProcess AUTOTUNE benchmarking takes 28.9622 seconds and 18.0887 seconds precompiling for 17 choices
+Traceback (most recent call last):
+  File "/home/ubuntu/work/avatarforever/benchmarks/latency.py", line 330, in <module>
+    main()
+  File "/home/ubuntu/work/avatarforever/benchmarks/latency.py", line 263, in main
+    encode_video(
+  File "/home/ubuntu/work/avatarforever/packages/ltx-pipelines/src/ltx_pipelines/utils/media_io.py", line 206, in encode_video
+    first_chunk = next(video)
+                  ^^^^^^^^^^^
+  File "/home/ubuntu/work/avatarforever/benchmarks/latency.py", line 252, in timed_video
+    chunk = next(iterator)
+            ^^^^^^^^^^^^^^

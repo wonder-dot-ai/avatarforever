@@ -1,0 +1,113 @@
+{
+  "date": "2026-09-30",
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "protocol": "768x512, 257 frames at 25 FPS, seed 42, FP8 weight storage/BF16 compute, one-stage four-step AR, ForeverCache, one full warmup then three measured requests per mode.",
+  "loading": "fast_infer=False; prompt modules are released before DiT, and DiT before video decoding. Each request reloads models. Sampling + decoding FPS excludes loading, prompt/audio processing and MP4 muxing. This is not streaming playback.",
+  "compiled_scope": [
+    "all 48 AV transformer blocks",
+    "video/audio input preparation",
+    "transformer output projections",
+    "entire VAE decoder forward per tile"
+  ],
+  "remaining_eager": [
+    "Gemma/prompt processing",
+    "audio and reference encoders",
+    "Python AR and cache dispatch",
+    "latent update loop",
+    "video tiling/stitching and media IO"
+  ],
+  "compiler_settings": {
+    "fullgraph": true,
+    "dynamic": false,
+    "emulate_precision_casts": true,
+    "autotune_variant": "TORCHINDUCTOR_MAX_AUTOTUNE=1, TORCHINDUCTOR_MAX_AUTOTUNE_CONV_BACKENDS=ATEN; no CUDA graph capture"
+  },
+  "modes": {
+    "eager-matched": {
+      "median": {
+        "end_to_end_seconds": 48.38538568000013,
+        "end_to_end_fps": 5.311521162602404,
+        "first_pixels_seconds": 46.03004746800002,
+        "dit_forward_seconds": 21.612458357999913,
+        "ar_sampling_seconds": 21.666665400000056,
+        "vae_decode_seconds": 1.9485497190000842,
+        "ar_plus_vae_fps": 10.882814266350891,
+        "encode_other_seconds": 2.3547736669997903,
+        "peak_allocated_gib": 23.61558723449707
+      },
+      "warmup_request_seconds": 53.17683869799998,
+      "graphs_after_warmup": {
+        "stats": {},
+        "graph_break": {},
+        "unimplemented": {}
+      },
+      "largest_measured_peak_reserved_gib": 25.37890625
+    },
+    "regional-offloaded": {
+      "median": {
+        "end_to_end_seconds": 47.29522933399994,
+        "end_to_end_fps": 5.433951872504104,
+        "first_pixels_seconds": 44.91538837799999,
+        "dit_forward_seconds": 16.5845774360007,
+        "ar_sampling_seconds": 16.638292858000113,
+        "vae_decode_seconds": 1.6556143589998555,
+        "ar_plus_vae_fps": 14.048393104408978,
+        "encode_other_seconds": 2.3792762250002397,
+        "peak_allocated_gib": 24.39253568649292
+      },
+      "warmup_request_seconds": 600.5173333780001,
+      "graphs_after_warmup": {
+        "stats": {
+          "calls_captured": 16589,
+          "unique_graphs": 51
+        },
+        "graph_break": {},
+        "unimplemented": {}
+      },
+      "largest_measured_peak_reserved_gib": 25.25
+    },
+    "autotune-matched": {
+      "median": {
+        "end_to_end_seconds": 47.68107863100022,
+        "end_to_end_fps": 5.389978737454767,
+        "first_pixels_seconds": 45.33249643499994,
+        "dit_forward_seconds": 16.14450992799948,
+        "ar_sampling_seconds": 16.198648285999752,
+        "vae_decode_seconds": 1.657442386999719,
+        "ar_plus_vae_fps": 14.387279326361059,
+        "encode_other_seconds": 2.3599041249999573,
+        "peak_allocated_gib": 24.39253568649292
+      },
+      "warmup_request_seconds": 655.7424813060002,
+      "graphs_after_warmup": {
+        "stats": {
+          "calls_captured": 16589,
+          "unique_graphs": 51
+        },
+        "graph_break": {},
+        "unimplemented": {}
+      },
+      "largest_measured_peak_reserved_gib": 25.25
+    }
+  },
+  "sampling_decoding_speedup_vs_eager": 1.3220182734208554,
+  "autotune_speedup_vs_regular_compile": 1.0241227747140507,
+  "additional_speedup_needed_for_25_fps": 1.7376461131323007,
+  "best_sampling_decoding_mode": "autotune-matched",
+  "lowest_whole_request_latency_mode": "regional-offloaded",
+  "recommendation": "Ordinary regional compilation is the simpler default and provides most of the improvement. Autotuning is optional for the additional 2.4% sampling/decoding throughput. Neither reaches 25 FPS; model residency would remove repeated loading, but further transformer optimization is still needed for sustained realtime.",
+  "warmup_caveat": "Regional first request took 600.52 s with new compiler cache on this machine. Autotune warmup took 655.74 s after reusing kernels from an interrupted tuning attempt; it is not a clean cold-start comparison.",
+  "unrestricted_autotune": {
+    "status": "interrupted during decoder search",
+    "reason": "For a representative 3D convolution, ATen/cuDNN took 13.58 ms while Triton candidates took 55.35-140.12 ms, with tens of seconds of search overhead. Restricted to ATen convs and completed a fresh benchmark; no performance claim is made for the interrupted run."
+  },
+  "quality": "All measured outputs are finite. Both compiled modes decode all 257 frames with identical source audio. Sampled frames look consistent; outputs are not bit-identical. Eight fixed-input transformer calls and one decoder tile were compared to eager; see quality/*.json. No new 20-minute quality test was run.",
+  "inference_source_changes": "None required; strict compilation worked without graph-break fixes. Only benchmark launcher and viewer were changed.",
+  "reproduce": [
+    "bash benchmarks/run_a100_compile.sh eager",
+    "bash benchmarks/run_a100_compile.sh regional",
+    "bash benchmarks/run_a100_compile.sh autotune"
+  ],
+  "launcher_sha256": "d45717e036057bc1fb9000a20f71a636eaf6d00d9a5d4036f4c73b91e1a044e5",
+  "local_viewer": "outputs/a100-compile/index.html"
+}

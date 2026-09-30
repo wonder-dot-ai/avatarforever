@@ -1,0 +1,5 @@
+mode=autotune
+TORCHINDUCTOR_MAX_AUTOTUNE=1
+TORCHINDUCTOR_MAX_AUTOTUNE_CONV_BACKENDS=ATEN
+TORCHINDUCTOR_CACHE_DIR=/home/ubuntu/work/avatarforever/outputs/a100-compile/inductor
+Sequential model loading; one full warmup and three measured requests.
