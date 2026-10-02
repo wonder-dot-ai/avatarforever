@@ -60,7 +60,7 @@ for name in ('inference.py', 'util.py'):
     gpu_image = gpu_image.add_local_file(ROOT / name, str(REMOTE / name))
 for path in (ROOT / 'benchmarks' / name for name in (
         'latency.py', 'paired_inference.py', 'test_batch_sigma.py', 'h100_kernel_study.py',
-        'h100_kernel_replacements.py', 'mm_cublaslt.cpp')):
+        'h100_kernel_replacements.py', 'h100_fp8_kernels.py', 'mm_cublaslt.cpp')):
     gpu_image = gpu_image.add_local_file(path, str(REMOTE / 'benchmarks' / path.name))
 gpu_image = gpu_image.add_local_file(ROOT / 'data/jfk-american-university.ogg', '/inputs/speech.ogg')
 gpu_image = gpu_image.add_local_file(ROOT / 'outputs/stage-comparison/reference.png', '/inputs/reference.png')
@@ -92,7 +92,7 @@ def check_access() -> dict:
 @app.function(image=gpu_image, cpu=2, memory=8192, timeout=120, retries=0)
 def check_runtime() -> dict:
     # CPU-only import check: avoid spending GPU time on packaging mistakes.
-    for name in ('latency.py', 'paired_inference.py', 'h100_kernel_study.py'):
+    for name in ('latency.py', 'paired_inference.py', 'h100_kernel_study.py', 'h100_fp8_kernels.py'):
         result = subprocess.run([sys.executable, str(REMOTE / 'benchmarks' / name), '--help'],
                                 cwd=REMOTE, capture_output=True, text=True)
         if result.returncode:
@@ -174,7 +174,8 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
     weights = json.loads((CACHE / 'weights.json').read_text())
     output = CACHE / 'runs' / run_id
     output.mkdir(parents=True, exist_ok=False)
-    script = {'paired': 'paired_inference.py', 'kernels': 'h100_kernel_study.py', 'baseline': 'latency.py'}[benchmark]
+    script = {'paired': 'paired_inference.py', 'kernels': 'h100_kernel_study.py',
+              'fp8-kernels': 'h100_fp8_kernels.py', 'baseline': 'latency.py'}[benchmark]
     command = [sys.executable, str(REMOTE / 'benchmarks' / script),
                '--checkpoint', weights['checkpoint'], '--gemma-root', weights['gemma_root'],
                '--audio', '/inputs/speech.ogg', '--reference', '/inputs/reference.png',
@@ -230,7 +231,9 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
         print(json.dumps(check_access.remote(), indent=2))
     elif action == 'prepare':
         print(json.dumps(prepare.remote(), indent=2))
-    elif action in ('baseline', 'paired', 'kernels'):
+    elif action in ('baseline', 'paired', 'kernels', 'fp8-kernels'):
+        if action == 'fp8-kernels' and quantization != 'fp8-dynamic':
+            raise ValueError('The FP8 kernel study requires --quantization fp8-dynamic')
         if action == 'kernels' and quantization != 'none':
             raise ValueError('The H100 kernel study requires original BF16 weights (--quantization none)')
         if quantization not in ('none', 'fp8-cast', 'fp8-dynamic', 'fp8-preexpanded'):
@@ -277,4 +280,4 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
         print(json.dumps(result, indent=2))
         print(f'Local results: {target}')
     else:
-        raise ValueError('action must be check-runtime, check-access, prepare, baseline, paired, or kernels')
+        raise ValueError('action must be check-runtime, check-access, prepare, baseline, paired, kernels, or fp8-kernels')
