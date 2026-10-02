@@ -169,7 +169,8 @@ def prepare() -> dict:
               volumes={str(CACHE): volume}, timeout=1800, startup_timeout=1800,
               max_containers=1, scaledown_window=2, retries=0)
 def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
-             benchmark: str = 'baseline', quantization: str = 'fp8-cast', kernel_reference_run: str = '') -> dict:
+             benchmark: str = 'baseline', quantization: str = 'fp8-cast', kernel_reference_run: str = '',
+             fp8_modes: str = '', fp8_frozen_only: bool = False) -> dict:
     """Run real inference, including VAE and MP4; persist even failed run logs."""
     weights = json.loads((CACHE / 'weights.json').read_text())
     output = CACHE / 'runs' / run_id
@@ -184,6 +185,10 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
                '--output-dir', str(output)]
     if quantization == 'fp8-preexpanded':
         command.append('--preexpand-fp8')
+    if fp8_modes:
+        command += ['--fp8-modes',*fp8_modes.split(',')]
+    if fp8_frozen_only:
+        command.append('--frozen-only')
     if kernel_reference_run:
         if benchmark != 'kernels' or Path(kernel_reference_run).name != kernel_reference_run or not kernel_reference_run.startswith('h100-kernels-'):
             raise ValueError('Expected a kernel study run ID')
@@ -218,7 +223,10 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
 
 @app.local_entrypoint()
 def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257,
-         quantization: str = 'fp8-cast', reference_run: str = '', candidate_run: str = '', kernel_reference_run: str = ''):
+         quantization: str = 'fp8-cast', reference_run: str = '', candidate_run: str = '', kernel_reference_run: str = '',
+         fp8_modes: str = '', fp8_frozen_only: bool = False):
+    if (fp8_modes or fp8_frozen_only) and action != 'fp8-kernels':
+        raise ValueError('FP8 screening options require --action fp8-kernels')
     if action == 'compare':
         result = compare_latents.remote(reference_run, candidate_run)
         target = ROOT / 'outputs/modal' / candidate_run
@@ -265,7 +273,8 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
             json.dump(data, file, indent=2)
             file.flush()
         print(f'RUN_ID={run_id}', flush=True)
-        result = baseline.remote(run_id, compile_mode, frames, action, quantization, kernel_reference_run)
+        result = baseline.remote(run_id, compile_mode, frames, action, quantization, kernel_reference_run,
+                                 fp8_modes, fp8_frozen_only)
         target = ROOT / 'outputs/modal' / run_id
         target.mkdir(parents=True, exist_ok=True)
         # Pull all artifacts, including actual videos, without keeping a GPU alive.

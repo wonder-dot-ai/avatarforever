@@ -72,7 +72,11 @@ class KernelFP8Linear(nn.Module):
     def forward(self,x):
         flat=x.reshape(-1,self.in_features).contiguous()
         rows=flat.shape[0]
-        padding=(-rows)%16
+        # H100 cuBLASLt rejects the audio FF-down projection at M=16,
+        # K=8192,N=2048 with row scales and fast accumulation. The steady
+        # M=64 path is supported. Zero-pad short tails to that proven size;
+        # trim outputs after GEMM, without changing any input/weight scales.
+        padding=max(64,((rows+15)//16)*16)-rows
         if padding:
             flat=torch.nn.functional.pad(flat,(0,0,0,padding))
         q,scale=fused_quantize(flat) if self.scaling=='tensor' else quantize_rows(flat)
@@ -119,17 +123,21 @@ def main():
     p.add_argument('--frames',type=int,default=257)
     p.add_argument('--runs',type=int,default=3)
     p.add_argument('--quantization',choices=['fp8-dynamic'],default='fp8-dynamic')
+    p.add_argument('--fp8-modes',nargs='+',choices=['fp8_tensor','fp8_row','fp8_row_fast','fp8_tensor_fast'],
+                   default=['fp8_tensor','fp8_row','fp8_row_fast','fp8_tensor_fast'])
+    p.add_argument('--frozen-only',action='store_true',help='Screen additional kernels without repeating full video generation.')
     args=p.parse_args()
     out=args.output_dir
     out.mkdir(parents=True,exist_ok=True)
     report={'protocol':__doc__,'torch':torch.__version__,'triton':triton.__version__,
             'gpu':torch.cuda.get_device_name(),'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
             'gpu_info':subprocess.run(['nvidia-smi','--query-gpu=name,driver_version,memory.total,power.limit','--format=csv,noheader'],capture_output=True,text=True).stdout.strip(),
-            'frozen':{},'full':{},'preflight':{},'target_pair_seconds':1.28,
+            'frozen':{},'full':{},'preflight':{},'target_pair_seconds':1.28,'frozen_only':args.frozen_only,
             'notes':'FP8 weights quantized once; dynamic activation quantization INCLUDED. BF16 attention/output. Fused bias when supported; preflight records any separate BF16 bias add fallback. No static activation calibration; no CUDA Graph capture.'}
     def save():
         (out/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
-    modes=[('fp8_tensor','tensor',False),('fp8_row','row',False),('fp8_row_fast','row',True)]
+    modes=[('fp8_tensor','tensor',False),('fp8_row','row',False),('fp8_row_fast','row',True),('fp8_tensor_fast','tensor',True)]
+    modes=[mode for mode in modes if mode[0] in args.fp8_modes]
     torch.manual_seed(123)
     x=torch.randn(128,256,device='cuda',dtype=torch.bfloat16)
     w=torch.randn(512,256,device='cuda',dtype=torch.bfloat16)
@@ -158,6 +166,23 @@ def main():
     if not available:
         raise RuntimeError('No supported FP8 candidates')
     del x,w,bias,ref,layer
+    # Exercise the exact small audio shape that failed during full-clip warmup,
+    # including strict compilation, before paying for loading the full model.
+    report['small_audio_regression']={}
+    for name,scaling,fast in available:
+        x=torch.randn(14,8192,device='cuda',dtype=torch.bfloat16)
+        w=torch.randn(2048,8192,device='cuda',dtype=torch.bfloat16)*.01
+        b=torch.randn(2048,device='cuda',dtype=torch.bfloat16)*.01
+        layer=KernelFP8Linear(w,b,scaling,fast)
+        compiled=torch.compile(layer,fullgraph=True,dynamic=False,options={'emulate_precision_casts':True})
+        check=accuracy(compiled(x),torch.nn.functional.linear(x,w,b))
+        assert check['finite'] and check['relative_rms']<.1,check
+        report['small_audio_regression'][name]=check
+        del x,w,b,layer,compiled
+    print('SMALL_AUDIO_REGRESSION',json.dumps(report['small_audio_regression']),flush=True)
+    save()
+    torch._dynamo.reset()
+    torch.cuda.empty_cache()
     limit='recompile_limit' if hasattr(torch._dynamo.config,'recompile_limit') else 'cache_size_limit'
     setattr(torch._dynamo.config,limit,max(getattr(torch._dynamo.config,limit),96))
     pipeline=ARA2VidDistilledPipeline(distilled_checkpoint_path=args.checkpoint,spatial_upsampler_path=None,
@@ -246,7 +271,7 @@ def main():
                 video_chunks_number=get_video_chunks_number(args.frames,tiling),crf=12,preset='fast')
         return cpu_latents
     baseline=measure_frozen('bf16')
-    baseline_full=full('bf16')
+    baseline_full=None if args.frozen_only else full('bf16')
     originals={}
     model=requests[0]['transformer']
     for name,scaling,fast in available:
@@ -256,14 +281,15 @@ def main():
         measure_frozen(name,baseline)
     best=min(available,key=lambda mode:statistics.median(report['frozen'][mode[0]]['chunk_ms']))
     report['selected_fp8']=best[0]
-    torch._dynamo.reset()
-    install(model,originals,best[1],best[2])
-    winner=full(best[0])
     report['full_latent_comparison']=[]
-    for before,after in zip(baseline_full,winner):
-        row=accuracy(after,before)
-        row['per_latent_frame_relative_rms']=[accuracy(after[:,:,i],before[:,:,i])['relative_rms'] for i in range(after.shape[2])]
-        report['full_latent_comparison'].append(row)
+    if not args.frozen_only:
+        torch._dynamo.reset()
+        install(model,originals,best[1],best[2])
+        winner=full(best[0])
+        for before,after in zip(baseline_full,winner):
+            row=accuracy(after,before)
+            row['per_latent_frame_relative_rms']=[accuracy(after[:,:,i],before[:,:,i])['relative_rms'] for i in range(after.shape[2])]
+            report['full_latent_comparison'].append(row)
     # Restore BF16 weights and remeasure the fixed chunk to expose time/clock drift.
     torch._dynamo.reset()
     for name,original in originals.items():
@@ -274,6 +300,8 @@ def main():
     report['dynamo']={k:dict(torch._dynamo.utils.counters[k]) for k in ('stats','graph_break','unimplemented')}
     report['complete']=True
     save()
+    if args.frozen_only:
+        (out/'results.jsonl').write_text(json.dumps({'complete':True,'frozen_only':True})+'\n')
 
 
 if __name__=='__main__':
