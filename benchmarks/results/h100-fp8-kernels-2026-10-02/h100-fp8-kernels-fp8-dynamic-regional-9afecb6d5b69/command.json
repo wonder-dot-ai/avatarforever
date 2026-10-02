@@ -1,0 +1,23 @@
+[
+  "/usr/local/bin/python",
+  "/workspace/avatarforever/benchmarks/h100_fp8_kernels.py",
+  "--checkpoint",
+  "/cache/hub/models--LetsThink--AvatarForever/snapshots/622ea82482c09e7fb2d8e29cb7ff1d009c820f05/avatarforever-ltx-2.3-22b.safetensors",
+  "--gemma-root",
+  "/cache/hub/models--google--gemma-3-12b-it-qat-q4_0-unquantized/snapshots/68f7ee4fbd59087436ada77ed2d62f373fdd4482",
+  "--audio",
+  "/inputs/speech.ogg",
+  "--reference",
+  "/inputs/reference.png",
+  "--quantization",
+  "fp8-dynamic",
+  "--frames",
+  "257",
+  "--runs",
+  "3",
+  "--output-dir",
+  "/cache/runs/h100-fp8-kernels-fp8-dynamic-regional-9afecb6d5b69",
+  "--fp8-modes",
+  "fp8_tensor_fast",
+  "--frozen-only"
+]

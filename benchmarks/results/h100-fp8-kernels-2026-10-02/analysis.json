@@ -1,0 +1,186 @@
+{
+  "run": "h100-fp8-kernels-fp8-dynamic-regional-24a659e5899b",
+  "selected_fp8": "fp8_row_fast",
+  "frozen": {
+    "bf16": {
+      "median_ms": 1369.2155700000085,
+      "max_ms": 1370.4950780000047,
+      "reduction_percent": 0.19366596785974632,
+      "peak_allocated_gib": 51.57117938995361,
+      "current_chunk_accuracy": null
+    },
+    "fp8_row_fast": {
+      "median_ms": 1076.6766670000152,
+      "max_ms": 1078.583180999999,
+      "reduction_percent": 21.517726334930376,
+      "peak_allocated_gib": 34.34596347808838,
+      "current_chunk_accuracy": {
+        "finite": true,
+        "relative_rms": 0.1844160407781601,
+        "max_abs": 4.3203125
+      }
+    },
+    "bf16_after": {
+      "median_ms": 1375.4038069999979,
+      "max_ms": 1378.9828250000937,
+      "reduction_percent": -0.2574136595001608,
+      "peak_allocated_gib": 51.57850360870361,
+      "current_chunk_accuracy": {
+        "finite": true,
+        "relative_rms": 0.0,
+        "max_abs": 0.0
+      }
+    }
+  },
+  "full": {
+    "bf16": {
+      "steady_pair_chunk_median_seconds": 1.3751316329999668,
+      "steady_pair_with_average_decode_seconds": 1.538236141389076,
+      "per_request_fps_estimate": 20.803047814949263,
+      "peak_allocated_gib": 44.69170141220093
+    },
+    "fp8_row_fast": {
+      "steady_pair_chunk_median_seconds": 1.079073517500035,
+      "steady_pair_with_average_decode_seconds": 1.2410976639280376,
+      "per_request_fps_estimate": 25.783627614543196,
+      "peak_allocated_gib": 27.457292079925537
+    }
+  },
+  "full_generation_reduction_percent": 21.529438229419227,
+  "pair_deadline_seconds": 1.28,
+  "remaining_after_amortized_decode_seconds": 0.03890233607196247,
+  "frozen_pooled_bf16_ms": 1371.8724200000024,
+  "full_latent_comparison": [
+    {
+      "finite": true,
+      "relative_rms": 0.590430736541748,
+      "max_abs": 9.3125,
+      "per_latent_frame_relative_rms": [
+        0.0,
+        0.09276669472455978,
+        0.1568545699119568,
+        0.17220333218574524,
+        0.2692370116710663,
+        0.29311880469322205,
+        0.24101786315441132,
+        0.258389413356781,
+        0.44857800006866455,
+        0.5260043144226074,
+        0.496859610080719,
+        0.45154446363449097,
+        0.4599478542804718,
+        0.5092630386352539,
+        0.5392981171607971,
+        0.5224751234054565,
+        0.5367937684059143,
+        0.5536546111106873,
+        0.5588822364807129,
+        0.5643981099128723,
+        0.5955147743225098,
+        0.6202560067176819,
+        0.6746326684951782,
+        0.7219933271408081,
+        0.867932140827179,
+        0.9785342812538147,
+        0.8482741713523865,
+        0.8610110282897949,
+        0.8516659736633301,
+        0.8547675013542175,
+        0.8695745468139648,
+        0.650682806968689,
+        0.746737539768219
+      ]
+    },
+    {
+      "finite": true,
+      "relative_rms": 0.7746607661247253,
+      "max_abs": 8.765625,
+      "per_latent_frame_relative_rms": [
+        0.0,
+        0.14091438055038452,
+        0.24204061925411224,
+        0.2258378118276596,
+        0.3241210877895355,
+        0.5137385725975037,
+        0.4661509394645691,
+        0.3362635672092438,
+        0.3215845823287964,
+        0.582429051399231,
+        0.7516902685165405,
+        0.7697755694389343,
+        0.7290666699409485,
+        0.8698029518127441,
+        0.8698806166648865,
+        0.8459230661392212,
+        0.8996778726577759,
+        0.9129317402839661,
+        0.8560709357261658,
+        0.8325381875038147,
+        0.7903369069099426,
+        0.9643998146057129,
+        0.9826138019561768,
+        1.0888322591781616,
+        1.0234320163726807,
+        0.9169823527336121,
+        0.9402428269386292,
+        0.9631489515304565,
+        0.9890912771224976,
+        0.9822364449501038,
+        0.990689218044281,
+        0.9779717922210693,
+        0.9538845419883728
+      ]
+    }
+  ],
+  "scope": "Two synchronized requests, 768x512, 25 FPS, four steps, regional compile, ForeverCache; activation quantization included. Full-clip VAE average, not streaming decode; excludes audio encoding and transport.",
+  "initial_sweep": {
+    "run": "h100-fp8-kernels-fp8-dynamic-regional-ea856ef2d7c5",
+    "complete": false,
+    "bf16_control_ms": 1369.3558970000054,
+    "candidates": {
+      "fp8_tensor": {
+        "median_ms": 1196.793222999986,
+        "reduction_percent": 12.601740305648146,
+        "current_chunk_accuracy": {
+          "finite": true,
+          "relative_rms": 0.19421932101249695,
+          "max_abs": 4.7578125
+        }
+      },
+      "fp8_row": {
+        "median_ms": 1173.288681000031,
+        "reduction_percent": 14.318207299469766,
+        "current_chunk_accuracy": {
+          "finite": true,
+          "relative_rms": 0.16292168200016022,
+          "max_abs": 3.6484375
+        }
+      },
+      "fp8_row_fast": {
+        "median_ms": 1077.4411010000904,
+        "reduction_percent": 21.31767180755887,
+        "current_chunk_accuracy": {
+          "finite": true,
+          "relative_rms": 0.18846313655376434,
+          "max_abs": 4.328125
+        }
+      }
+    },
+    "limitation": "Fixed chunks completed; full FP8 warmup failed at a small audio GEMM (M=16,K=8192,N=2048). The repaired full run pads short inputs to 64 rows, trims outputs and validates the exact shape under compilation."
+  },
+  "additional_screening": {
+    "run": "h100-fp8-kernels-fp8-dynamic-regional-9afecb6d5b69",
+    "pooled_bf16_ms": 1366.6743705000072,
+    "candidates": {
+      "fp8_tensor_fast": {
+        "median_ms": 1164.595047000006,
+        "reduction_percent": 14.786208614277962,
+        "current_chunk_accuracy": {
+          "finite": true,
+          "relative_rms": 0.11431515216827393,
+          "max_abs": 2.16015625
+        }
+      }
+    }
+  }
+}

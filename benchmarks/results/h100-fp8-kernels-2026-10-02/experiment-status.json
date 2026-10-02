@@ -1,0 +1,19 @@
+{
+  "initial_sweep": {
+    "run": "h100-fp8-kernels-fp8-dynamic-regional-ea856ef2d7c5",
+    "complete": false,
+    "status": "failed during full FP8 warmup; fixed-chunk measurements valid",
+    "error": "CUBLAS_STATUS_NOT_SUPPORTED at M=16,K=8192,N=2048; short input now padded to 64 rows"
+  },
+  "tensor_fast_screen": {
+    "run": "h100-fp8-kernels-fp8-dynamic-regional-9afecb6d5b69",
+    "complete": true
+  },
+  "repaired_full_comparison": {
+    "run": "h100-fp8-kernels-fp8-dynamic-regional-24a659e5899b",
+    "complete": true
+  },
+  "all_gpu_apps_stopped": true,
+  "conservative_total_h100_hours": 2.9975,
+  "scope": "Short clips only; full-clip VAE amortization, audio encoding/streaming decode/transport excluded. No realtime-service or long-video-quality claim."
+}

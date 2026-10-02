@@ -1,0 +1,26 @@
+{
+  "html_local_links_checked": 13,
+  "traces": [
+    {
+      "file": "bf16-trace.json.gz",
+      "kernel_events": 21076,
+      "sha256": "301a6ecc44f052eccd49c870505f28c067a23ff65898bfb9d06cf3570d09e1e3"
+    },
+    {
+      "file": "screening-fp8_tensor_fast-trace.json.gz",
+      "kernel_events": 43828,
+      "sha256": "716db1767039f0bbb7c68dafac80a9e7d5d9c22c9eb27184ec3d413450907764"
+    },
+    {
+      "file": "bf16_after-trace.json.gz",
+      "kernel_events": 21076,
+      "sha256": "d8519e6736a0ff7bff52c3af7f2cd590c3ebce095c17241a7a33244b1e408bdf"
+    },
+    {
+      "file": "fp8_row_fast-trace.json.gz",
+      "kernel_events": 27844,
+      "sha256": "0a652db608d7656f02fc0574f6e05c4ec6f4ce9671dc1ffc89034c9e5467e58a"
+    }
+  ],
+  "contact_sheet": "outputs/h100-fp8-kernels/contact-sheet.png"
+}

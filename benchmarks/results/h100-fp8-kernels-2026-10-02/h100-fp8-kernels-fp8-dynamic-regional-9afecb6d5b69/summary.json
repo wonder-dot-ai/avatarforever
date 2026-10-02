@@ -1,0 +1,74 @@
+{
+  "protocol": "Native FP8 GEMM versus BF16 on matched H100 batch-two AR inference.\n\nFrozen-chunk timings include activation quantization. A full 257-frame BF16\ncontrol and the fastest FP8 candidate also run with measured full-clip decoding.\nAttention, steps, resolution, cache and conditioning remain unchanged.\n",
+  "torch": "2.14.0+cu130",
+  "triton": "3.8.0",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "source_sha256": "155f430564686a5d20860b14b2ef7edca07c2c95a6e6d10595c82bbdd5a5cb07",
+  "gpu_info": "NVIDIA H100 80GB HBM3, 580.95.05, 81559 MiB, 700.00 W",
+  "frozen": {
+    "bf16": {
+      "chunk_ms": [
+        1369.7081640000022,
+        1357.3375349999992,
+        1369.6506820000138,
+        1363.618678999984,
+        1365.1899730000139
+      ],
+      "peak_allocated_gib": 51.57117938995361
+    },
+    "fp8_tensor_fast": {
+      "chunk_ms": [
+        1162.4214560000041,
+        1171.5172540000083,
+        1164.606383000006,
+        1164.595047000006,
+        1160.6462100000101
+      ],
+      "peak_allocated_gib": 34.71762990951538,
+      "current_chunk_accuracy": {
+        "finite": true,
+        "relative_rms": 0.11431515216827393,
+        "max_abs": 2.16015625
+      }
+    },
+    "bf16_after": {
+      "chunk_ms": [
+        1369.3872470000201,
+        1357.2901950000187,
+        1370.8932160000131,
+        1364.499832999968,
+        1368.1587680000007
+      ],
+      "peak_allocated_gib": 51.57850360870361,
+      "current_chunk_accuracy": {
+        "finite": true,
+        "relative_rms": 0.0,
+        "max_abs": 0.0
+      }
+    }
+  },
+  "full": {},
+  "preflight": {
+    "fp8_tensor_fast": {
+      "finite": true,
+      "relative_rms": 0.03736836835741997,
+      "max_abs": 3.0,
+      "fused_bias": true
+    }
+  },
+  "target_pair_seconds": 1.28,
+  "frozen_only": true,
+  "notes": "FP8 weights quantized once; dynamic activation quantization INCLUDED. BF16 attention/output. Fused bias when supported; preflight records any separate BF16 bias add fallback. No static activation calibration; no CUDA Graph capture.",
+  "converted_linears": 1344,
+  "selected_fp8": "fp8_tensor_fast",
+  "full_latent_comparison": [],
+  "dynamo": {
+    "stats": {
+      "calls_captured": 6915,
+      "unique_graphs": 27
+    },
+    "graph_break": {},
+    "unimplemented": {}
+  },
+  "complete": true
+}

@@ -1,5 +1,70 @@
 # H100 latency benchmark
 
+## Native FP8 kernel results — 2026-10-02
+
+Native FP8 GEMM with dynamic **per-row activation scaling**, per-output-channel
+weight scaling and fast accumulation reduces generation time by **21.53%**.
+It does not meet the requested 25–30% generation reduction for serving headroom.
+Both configurations use original BF16 checkpoint values as the source, with
+FP8 weights converted once outside timing; activation quantization is timed.
+Attention, biases and output activations remain BF16; resolution, steps and
+cache settings stay unchanged. Regional compilation remains fullgraph.
+
+| Mode | Pair generation / chunk | Pair + amortized VAE | Estimated FPS / request | Generation peak |
+| --- | ---: | ---: | ---: | ---: |
+| BF16 | 1.375 s | 1.538 s | 20.80 | 44.69 GiB |
+| FP8 row scaling + fast accumulation | **1.079 s** | **1.241 s** | **25.78** | **27.46 GiB** |
+
+Three measured 257-frame runs per configuration after warmup, batch two,
+768×512 at 25 FPS, four denoising steps and ForeverCache. Each steady chunk
+produces 32 frames per request. Only **38.9 ms** remains against the shared
+1.280-second playback deadline after amortized full-clip VAE decoding.
+Audio encoding, streaming-decoder overhead, delivery and jitter are excluded:
+this is **not proof of two-request realtime serving**. The 25–30% generation
+target corresponds to approximately 1.031–0.963 seconds for this BF16 control.
+
+The initial fixed-chunk sweep measured 1,369 ms BF16, 1,197 ms tensor-scaled FP8,
+1,173 ms row-scaled FP8, and 1,077 ms row-scaled FP8 with fast accumulation.
+Additional tensor-scaled FP8 with fast accumulation measured 1,165 ms against
+its own 1,367 ms BF16 control (14.79% reduction). Each fixed-chunk test uses
+five repetitions; the successful full run also restores BF16 afterward and
+verifies bit-identical fixed-chunk output. The repaired row-fast fixed chunk
+measures 1,077 ms and differs from BF16 by 18.44% latent RMS. Full-clip latent
+RMS differences are 59.04% and 77.47%; these are not perceptual quality scores.
+Sampled frames retain coherent faces/backgrounds but motion and expressions
+differ. Long-video stability and lip-sync quality are not established.
+
+**Backend repair:** the first full-clip FP8 warmup failed on a short audio
+FF-down GEMM, real M=14 padded to 16, K=8192, N=2048. cuBLASLt returned
+`CUBLAS_STATUS_NOT_SUPPORTED`. The benchmark now zero-pads short inputs to
+at least 64 rows, a shape supported in the regular chunk, then trims outputs.
+A compiled regression of the exact problematic dimensions passes before
+model loading. The repaired full run completes with zero graph breaks and
+finite latents; all four comparison videos have 257 frames, 25 FPS, 768×512,
+and audio. No fallback to BF16 GEMM hides the unsupported FP8 shape.
+
+1344 selected transformer linears use native `torch._scaled_mm`; other model
+components remain unchanged. Tensor-wise activation quantization uses three
+Triton launches; row-wise maximum, scale and cast are fused into one launch.
+All tested backends support fused BF16 bias. No static activation calibration
+or explicit CUDA Graph capture is used. Production inference defaults are
+unchanged; these are opt-in benchmark modules.
+
+Local clips, synchronized comparison players and profiler traces:
+`outputs/h100-fp8-kernels/index.html`. Committed
+[results and accounting](results/h100-fp8-kernels-2026-10-02/) distinguish the
+failed initial full-clip warmup from successful fixed-chunk and repaired
+full-video results. All apps stopped; cumulative conservative accounting,
+including failures and earlier experiments, is **2.998 H100-hours / 5**.
+
+```bash
+# Reproduce the successful full-video comparison.
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action fp8-kernels --quantization fp8-dynamic --fp8-modes fp8_row_fast
+# Screen another mode without repeating full-clip generation.
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action fp8-kernels --quantization fp8-dynamic --fp8-modes fp8_tensor_fast --fp8-frozen-only
+.venv-modal/bin/python benchmarks/build_h100_fp8_report.py --run outputs/modal/h100-fp8-kernels-fp8-dynamic-regional-24a659e5899b --screening-run outputs/modal/h100-fp8-kernels-fp8-dynamic-regional-9afecb6d5b69 --sweep-run outputs/modal/h100-fp8-kernels-fp8-dynamic-regional-ea856ef2d7c5
+```
+
 ## BF16 kernel replacement results — 2026-10-02
 
 Replacing kernels did **not** meet the requested 25–30% generation-time reduction.
@@ -38,7 +103,7 @@ This pass does not rule out native FP8, architectural changes or untested kernel
 but the tested BF16 kernel swaps provide no evidence for a 25–30% improvement.
 Local report and downloadable profiler traces: `outputs/h100-kernels/index.html`.
 Committed [measurements and budget evidence](results/h100-kernels-2026-10-02/).
-Both new GPU apps stopped. Cumulative conservative accounting is now
+Both new GPU apps stopped. Cumulative conservative accounting at this stage was
 **2.324 H100-hours** of the authorized five-hour cap, including earlier trials.
 
 ```bash

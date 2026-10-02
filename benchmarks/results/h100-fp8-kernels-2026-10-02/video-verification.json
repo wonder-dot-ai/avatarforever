@@ -1,0 +1,34 @@
+[
+  {
+    "file": "bf16-0.mp4",
+    "frames": 257,
+    "fps": 25,
+    "width": 768,
+    "height": 512,
+    "audio_streams": 1
+  },
+  {
+    "file": "fp8_row_fast-0.mp4",
+    "frames": 257,
+    "fps": 25,
+    "width": 768,
+    "height": 512,
+    "audio_streams": 1
+  },
+  {
+    "file": "bf16-1.mp4",
+    "frames": 257,
+    "fps": 25,
+    "width": 768,
+    "height": 512,
+    "audio_streams": 1
+  },
+  {
+    "file": "fp8_row_fast-1.mp4",
+    "frames": 257,
+    "fps": 25,
+    "width": 768,
+    "height": 512,
+    "audio_streams": 1
+  }
+]
