@@ -98,6 +98,33 @@ def check_runtime() -> dict:
     return {'imports': 'passed', 'gpu_allocated': False}
 
 
+@app.function(image=gpu_image, cpu=2, memory=8192, volumes={str(CACHE): volume}, timeout=300, retries=0)
+def compare_latents(reference_run: str, candidate_run: str) -> dict:
+    import torch
+    for name in (reference_run, candidate_run):
+        if Path(name).name != name or not name.startswith('h100-'):
+            raise ValueError('Expected a benchmark run ID')
+    reference = CACHE / 'runs' / reference_run
+    candidate = CACHE / 'runs' / candidate_run
+    rows = []
+    for index in range(2):
+        source = reference / f'alternating-{index}.pt'
+        if not source.exists():
+            if index:
+                continue  # A single-request control covers request zero only.
+            source = next(reference.glob('cache-on-measured-*-latent.pt'))
+        ref = torch.load(source, map_location='cpu', weights_only=True).float()
+        for mode in ('alternating', 'batched'):
+            result = torch.load(candidate / f'{mode}-{index}.pt', map_location='cpu', weights_only=True).float()
+            assert result.shape == ref.shape
+            rows.append({'request': index, 'mode': mode, 'finite': bool(torch.isfinite(result).all()),
+                         'exact': bool(torch.equal(result, ref)),
+                         'relative_rms': float((result-ref).square().mean().sqrt()/ref.square().mean().sqrt()),
+                         'max_abs': float((result-ref).abs().max())})
+    return {'reference_run': reference_run, 'candidate_run': candidate_run, 'comparisons': rows,
+            'note': 'Numerical latent comparison, not a perceptual quality score.'}
+
+
 @app.function(image=cpu_image, secrets=[hf_secret], volumes={str(CACHE): volume},
               cpu=8, memory=16384, timeout=3600, max_containers=1, retries=0)
 def prepare() -> dict:
@@ -176,8 +203,14 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
 
 @app.local_entrypoint()
 def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257,
-         quantization: str = 'fp8-cast'):
-    if action == 'check-runtime':
+         quantization: str = 'fp8-cast', reference_run: str = '', candidate_run: str = ''):
+    if action == 'compare':
+        result = compare_latents.remote(reference_run, candidate_run)
+        target = ROOT / 'outputs/modal' / candidate_run
+        target.mkdir(parents=True, exist_ok=True)
+        (target / f'comparison-with-{reference_run}.json').write_text(json.dumps(result, indent=2) + '\n')
+        print(json.dumps(result, indent=2))
+    elif action == 'check-runtime':
         print(json.dumps(check_runtime.remote(), indent=2))
     elif action == 'check-access':
         print(json.dumps(check_access.remote(), indent=2))

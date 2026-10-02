@@ -15,6 +15,7 @@ import hashlib
 import json
 from pathlib import Path
 import statistics
+import subprocess
 import sys
 import time
 
@@ -202,9 +203,20 @@ def main():
     output = args.output_dir
     (output / 'manifest.json').write_text(json.dumps({
         'arguments': {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
-        'torch': torch.__version__, 'gpu': torch.cuda.get_device_name(),
+        'torch': torch.__version__, 'cuda': torch.version.cuda, 'gpu': torch.cuda.get_device_name(),
+        'gpu_info': subprocess.run(['nvidia-smi', '--query-gpu=name,driver_version,memory.total,power.limit',
+                                    '--format=csv,noheader'], capture_output=True, text=True).stdout.strip(),
         'preexpand': preexpand,
         'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'core_source_sha256': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
+            'packages/ltx-core/src/ltx_core/model/transformer/compilation.py',
+            'packages/ltx-core/src/ltx_core/model/transformer/model.py',
+            'packages/ltx-core/src/ltx_core/model/transformer/transformer.py',
+            'packages/ltx-core/src/ltx_core/quantization/fp8_cast.py',
+            'packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py',
+            'packages/ltx-pipelines/src/ltx_pipelines/utils/autoregressive.py')},
+        'audio_sha256': hashlib.sha256(Path(args.audio).read_bytes()).hexdigest(),
+        'reference_sha256': hashlib.sha256(args.reference.read_bytes()).hexdigest(),
         'requests': [{'seed': r['seed'], 'audio_start_seconds': r['audio_start']} for r in requests],
         'scope': 'Two independent AR states, same reference/prompt, different seeds/audio. Equal lengths and synchronized arrivals. Full-clip VAE; no claim of streaming decode.'}, indent=2) + '\n')
     # Warm every shape in each mode before collecting any timed comparison.
