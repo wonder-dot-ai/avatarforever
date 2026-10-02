@@ -44,10 +44,19 @@ struct Plan {
       integer?(void*)&bi:(void*)&beta,reinterpret_cast<void*>(y),d,reinterpret_cast<void*>(y),d,&algos.at(index).algo,
       work,work_bytes,reinterpret_cast<cudaStream_t>(stream)));
   }
+  void run_bias(int index,uintptr_t w,uintptr_t x,uintptr_t bias,uintptr_t y,uintptr_t stream) {
+    // Benchmark-only, single CUDA stream: share one plan per shape, not per
+    // weight tensor. Updating the pointer avoids hundreds of 64 MiB workspaces.
+    if(bias) {
+      void* ptr=reinterpret_cast<void*>(bias);
+      ck(cublasLtMatmulDescSetAttribute(op,CUBLASLT_MATMUL_DESC_BIAS_POINTER,&ptr,sizeof(ptr)));
+    }
+    run(index,w,x,y,stream);
+  }
   ~Plan() {cudaFree(work); cublasLtMatrixLayoutDestroy(a);cublasLtMatrixLayoutDestroy(b);
     cublasLtMatrixLayoutDestroy(d);cublasLtMatmulDescDestroy(op);cublasLtDestroy(h);}
 };
 PYBIND11_MODULE(TORCH_EXTENSION_NAME,m) {
   pybind11::class_<Plan>(m,"Plan").def(pybind11::init<int,int,int,uintptr_t,bool>())
-    .def("count",&Plan::count).def("run",&Plan::run);
+    .def("count",&Plan::count).def("run",&Plan::run).def("run_bias",&Plan::run_bias);
 }

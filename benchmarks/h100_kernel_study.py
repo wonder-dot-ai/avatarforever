@@ -65,6 +65,70 @@ def copy_strided(x, device):
     return y
 
 
+def apply_study(args, chunk, frozen, report, save):
+    """Measure real replacements in the compiled sampler, with a final control."""
+    import h100_kernel_replacements as replacement
+    source = json.loads(args.candidate_from.read_text())
+    assert source.get('complete') and source['gpu'] == torch.cuda.get_device_name()
+    choices = replacement.choose(source)
+    report['candidate_source'] = str(args.candidate_from)
+    report['selected_mm_kernels'] = choices
+    report['integrated'] = {}
+    def measure():
+        torch.cuda.synchronize()
+        before = time.perf_counter()
+        result = chunk()
+        torch.cuda.synchronize()
+        return (time.perf_counter()-before)*1000, result
+    print('Warm baseline for integrated comparison',flush=True)
+    chunk()
+    chunk()
+    times=[]
+    for _ in range(5):
+        ms, control = measure()
+        times.append(ms)
+    report['baseline_chunk_ms'] = times
+    control_latent = control[0].latent.detach().clone()
+    changed = (control_latent != frozen['video_state'].latent).any(dim=-1)
+    assert changed.any()
+    print('INTEGRATED_BASELINE',times,flush=True)
+    save()
+    # All captured attention shapes already select cuDNN by default; forcing
+    # Flash SDPA was slower in the source study, so preserve default attention.
+    for name in ('tuned_mm',):
+        print('Warm integrated replacement',name,flush=True)
+        torch._dynamo.reset()
+        with replacement.replacements(choices):
+            chunk()
+            chunk()
+            replacement.HITS.clear()
+            times=[]
+            for _ in range(5):
+                ms, result = measure()
+                times.append(ms)
+            row = dict(chunk_ms=times, calls_across_five_chunks=dict(replacement.HITS),
+                       changed_video_tokens=int(changed.sum()),
+                       current_chunk_accuracy=accuracy(result[0].latent[changed],control_latent[changed]),
+                       all_video_accuracy=accuracy(result[0].latent,control_latent))
+            report['integrated'][name] = row
+            print('INTEGRATED_RESULT',name,json.dumps(row),flush=True)
+            save()
+            with profile(activities=[ProfilerActivity.CPU,ProfilerActivity.CUDA]) as prof:
+                with record_function('FROZEN_BATCH_TWO_REPLACEMENT_CHUNK'):
+                    chunk()
+                    torch.cuda.synchronize()
+            prof.export_chrome_trace(str(args.output_dir / (name+'-trace.json')))
+    torch._dynamo.reset()
+    chunk()
+    chunk()
+    report['baseline_after_ms'] = [measure()[0] for _ in range(5)]
+    print('INTEGRATED_BASELINE_AFTER',report['baseline_after_ms'],flush=True)
+    report['dynamo'] = {k:dict(torch._dynamo.utils.counters[k]) for k in ('stats','graph_break','unimplemented')}
+    report['complete'] = True
+    save()
+    (args.output_dir / 'results.jsonl').write_text(json.dumps({'complete':True})+'\n')
+
+
 @torch.inference_mode()
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -75,6 +139,7 @@ def main():
     p.add_argument('--frames', type=int, default=257)
     p.add_argument('--runs', type=int, default=5)
     p.add_argument('--quantization', choices=['none'], default='none')
+    p.add_argument('--candidate-from', type=Path)
     args = p.parse_args()
     out = args.output_dir
     out.mkdir(parents=True, exist_ok=True)
@@ -103,6 +168,10 @@ def main():
     def chunk():
         state = dict(frozen, video_state=frozen['video_state'].clone(), audio_state=frozen['audio_state'].clone())
         return autoregressive_euler_denoising_loop(**state, start_chunk_idx=4, end_chunk_idx=5)
+
+    if args.candidate_from is not None:
+        apply_study(args,chunk,frozen,report,save)
+        return
 
     # Real operator signatures and one representative nonzero-weight example.
     linear_original, attention_original = F.linear, F.scaled_dot_product_attention

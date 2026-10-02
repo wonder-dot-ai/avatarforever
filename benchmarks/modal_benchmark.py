@@ -59,7 +59,8 @@ for name in ('packages',):
 for name in ('inference.py', 'util.py'):
     gpu_image = gpu_image.add_local_file(ROOT / name, str(REMOTE / name))
 for path in (ROOT / 'benchmarks' / name for name in (
-        'latency.py', 'paired_inference.py', 'test_batch_sigma.py', 'h100_kernel_study.py', 'mm_cublaslt.cpp')):
+        'latency.py', 'paired_inference.py', 'test_batch_sigma.py', 'h100_kernel_study.py',
+        'h100_kernel_replacements.py', 'mm_cublaslt.cpp')):
     gpu_image = gpu_image.add_local_file(path, str(REMOTE / 'benchmarks' / path.name))
 gpu_image = gpu_image.add_local_file(ROOT / 'data/jfk-american-university.ogg', '/inputs/speech.ogg')
 gpu_image = gpu_image.add_local_file(ROOT / 'outputs/stage-comparison/reference.png', '/inputs/reference.png')
@@ -168,7 +169,7 @@ def prepare() -> dict:
               volumes={str(CACHE): volume}, timeout=1800, startup_timeout=1800,
               max_containers=1, scaledown_window=2, retries=0)
 def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
-             benchmark: str = 'baseline', quantization: str = 'fp8-cast') -> dict:
+             benchmark: str = 'baseline', quantization: str = 'fp8-cast', kernel_reference_run: str = '') -> dict:
     """Run real inference, including VAE and MP4; persist even failed run logs."""
     weights = json.loads((CACHE / 'weights.json').read_text())
     output = CACHE / 'runs' / run_id
@@ -182,6 +183,10 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
                '--output-dir', str(output)]
     if quantization == 'fp8-preexpanded':
         command.append('--preexpand-fp8')
+    if kernel_reference_run:
+        if benchmark != 'kernels' or Path(kernel_reference_run).name != kernel_reference_run or not kernel_reference_run.startswith('h100-kernels-'):
+            raise ValueError('Expected a kernel study run ID')
+        command += ['--candidate-from',str(CACHE / 'runs' / kernel_reference_run / 'summary.json')]
     if benchmark == 'baseline':
         command += ['--compile-transformer', compile_mode, '--warmup-runs', '1',
                     '--cache', 'on', '--fast-infer', '--save-latents']
@@ -212,7 +217,7 @@ def baseline(run_id: str, compile_mode: str = 'regional', frames: int = 257,
 
 @app.local_entrypoint()
 def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 257,
-         quantization: str = 'fp8-cast', reference_run: str = '', candidate_run: str = ''):
+         quantization: str = 'fp8-cast', reference_run: str = '', candidate_run: str = '', kernel_reference_run: str = ''):
     if action == 'compare':
         result = compare_latents.remote(reference_run, candidate_run)
         target = ROOT / 'outputs/modal' / candidate_run
@@ -257,7 +262,7 @@ def main(action: str = 'prepare', compile_mode: str = 'regional', frames: int = 
             json.dump(data, file, indent=2)
             file.flush()
         print(f'RUN_ID={run_id}', flush=True)
-        result = baseline.remote(run_id, compile_mode, frames, action, quantization)
+        result = baseline.remote(run_id, compile_mode, frames, action, quantization, kernel_reference_run)
         target = ROOT / 'outputs/modal' / run_id
         target.mkdir(parents=True, exist_ok=True)
         # Pull all artifacts, including actual videos, without keeping a GPU alive.
