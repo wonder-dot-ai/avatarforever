@@ -1,0 +1,46 @@
+✓ Initialized. View run at 
+https://modal.com/apps/explore/dev/ap-FL31TJxAjZFMvcJ1YBWG8c
+✓ Created objects.
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/benchmarks/modal_benchmark.py
+├── ✓ Uploaded 
+│   /Users/sebinkim/work/avatarforever/outputs/stage-comparison/reference.png
+├── ✓ Uploaded 
+│   /Users/sebinkim/work/avatarforever/data/jfk-american-university.ogg
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/benchmarks/test_batch_sigma.py
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/benchmarks/paired_inference.py
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/benchmarks/latency.py
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/util.py
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/inference.py
+├── ✓ Uploaded /Users/sebinkim/work/avatarforever/packages
+├── ✓ Created Function check_access.
+├── ✓ Created Function prepare.
+├── ✓ Created Function check_runtime.
+├── ✓ Created Function compare_latents.
+└── ✓ Created Function baseline.
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 13.0.0
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+WARNING: The NVIDIA Driver was not detected.  GPU functionality will not be available.
+   Use the NVIDIA Container Toolkit to start this container with GPU support; see
+   https://docs.nvidia.com/datacenter/cloud-native/ .
+
+{
+  "imports": "passed",
+  "batch_regression": "./usr/local/lib/python3.11/site-packages/torch/_dynamo/variables/functions.py:2762: UserWarning: Dynamo detected a call to a `functools.lru_cache`-wrapped function at 'rope.py:192'. Dynamo ignores the cache wrapper and directly traces the wrapped function. Silent incorrectness is only a *potential* risk, not something we have observed. Enable TORCH_LOGS=+dynamo for a DEBUG stack trace.\n\nThis call originates from:\n  File \"/workspace/avatarforever/packages/ltx-core/src/ltx_core/model/transformer/rope.py\", line 192, in precompute_freqs_cis\n    indices = freq_grid_generator(theta, indices_grid.shape[1], dim)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n  torch._dynamo.utils.warn_once(msg)\n...\n----------------------------------------------------------------------\nRan 4 tests in 4.976s\n\nOK",
+  "gpu_allocated": false
+}
+Stopping app - local entrypoint completed.
+✓ App completed. View run at 
+https://modal.com/apps/explore/dev/ap-FL31TJxAjZFMvcJ1YBWG8c

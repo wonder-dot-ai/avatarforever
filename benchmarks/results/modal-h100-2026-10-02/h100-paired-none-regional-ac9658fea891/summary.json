@@ -1,0 +1,186 @@
+{
+  "records": [
+    {
+      "pair_chunk_seconds": [
+        0.8214935940000032,
+        1.1404102259999718,
+        1.4534396950000428,
+        1.4515659329999835,
+        1.4553082150000591,
+        1.458455511000011,
+        1.4577570729999252,
+        1.450389739000002,
+        0.9328917040000988
+      ],
+      "steady_pair_chunk_median_seconds": 1.454373955000051,
+      "steady_pair_chunk_max_seconds": 1.458455511000011,
+      "generation_seconds": 11.621711690000097,
+      "peak_allocated_gib": 40.489426136016846,
+      "peak_reserved_gib": 61.046875,
+      "mode": "alternating",
+      "repeat": 0,
+      "decode_seconds": [
+        0.6570224349999307,
+        0.6509829029999992
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.6172384328833107,
+      "per_request_fps_estimate": 19.786816433089868
+    },
+    {
+      "pair_chunk_seconds": [
+        0.7468429269999888,
+        1.0599375979999195,
+        1.3882049529998994,
+        1.3905918530000463,
+        1.3863128100000495,
+        1.3854235370000652,
+        1.3910141589999512,
+        1.391991695999991,
+        0.8424790100000337
+      ],
+      "steady_pair_chunk_median_seconds": 1.3893984029999729,
+      "steady_pair_chunk_max_seconds": 1.391991695999991,
+      "generation_seconds": 10.982798542999944,
+      "peak_allocated_gib": 44.66201877593994,
+      "peak_reserved_gib": 61.046875,
+      "mode": "batched",
+      "repeat": 0,
+      "decode_seconds": [
+        0.6615380760000562,
+        0.657688515000018
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.5536600797003712,
+      "per_request_fps_estimate": 20.596525854079555
+    },
+    {
+      "pair_chunk_seconds": [
+        0.7462627460000704,
+        1.0618663189999324,
+        1.388127682000004,
+        1.3852473229999305,
+        1.3855206550000503,
+        1.3922833159999755,
+        1.380346192999923,
+        1.3849504099999876,
+        0.8513034950000247
+      ],
+      "steady_pair_chunk_median_seconds": 1.3853839889999904,
+      "steady_pair_chunk_max_seconds": 1.3922833159999755,
+      "generation_seconds": 10.975908138999898,
+      "peak_allocated_gib": 44.66446018218994,
+      "peak_reserved_gib": 61.046875,
+      "mode": "batched",
+      "repeat": 1,
+      "decode_seconds": [
+        0.6627055280000604,
+        0.6564743610000505
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.549639850665374,
+      "per_request_fps_estimate": 20.64995939944372
+    },
+    {
+      "pair_chunk_seconds": [
+        0.828202827000041,
+        1.1474480709999852,
+        1.464025238999966,
+        1.4631457480001018,
+        1.4653968520000262,
+        1.4580669910000097,
+        1.4605752859999939,
+        1.4594816569999693,
+        0.9361615929999516
+      ],
+      "steady_pair_chunk_median_seconds": 1.4618605170000478,
+      "steady_pair_chunk_max_seconds": 1.4653968520000262,
+      "generation_seconds": 11.682504264000045,
+      "peak_allocated_gib": 40.514816761016846,
+      "peak_reserved_gib": 61.046875,
+      "mode": "alternating",
+      "repeat": 1,
+      "decode_seconds": [
+        0.6581384209999896,
+        0.6556017849999307
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.6254390640506216,
+      "per_request_fps_estimate": 19.686988400694307
+    },
+    {
+      "pair_chunk_seconds": [
+        0.8304261929999939,
+        1.1431253279999964,
+        1.4645264439999437,
+        1.4589578709999387,
+        1.464573411999936,
+        1.46185431899994,
+        1.4592352129999426,
+        1.4646262930000375,
+        0.9379831329999888
+      ],
+      "steady_pair_chunk_median_seconds": 1.4631903814999419,
+      "steady_pair_chunk_max_seconds": 1.4646262930000375,
+      "generation_seconds": 11.685308205999718,
+      "peak_allocated_gib": 40.512375354766846,
+      "peak_reserved_gib": 61.046875,
+      "mode": "alternating",
+      "repeat": 2,
+      "decode_seconds": [
+        0.6544778109999925,
+        0.6585940009999831
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.6266857043948804,
+      "per_request_fps_estimate": 19.67190091702678
+    },
+    {
+      "pair_chunk_seconds": [
+        0.7505073910000419,
+        1.0652655360000836,
+        1.395107363999955,
+        1.3892646110000442,
+        1.3985308740000164,
+        1.387792672000046,
+        1.389474199999995,
+        1.384210737000103,
+        0.8551096990000815
+      ],
+      "steady_pair_chunk_median_seconds": 1.3893694055000196,
+      "steady_pair_chunk_max_seconds": 1.3985308740000164,
+      "generation_seconds": 11.015263084000367,
+      "peak_allocated_gib": 44.66201877593994,
+      "peak_reserved_gib": 61.046875,
+      "mode": "batched",
+      "repeat": 2,
+      "decode_seconds": [
+        0.6631627929999695,
+        0.6592229850000422
+      ],
+      "finite": true,
+      "steady_pair_with_average_decode_seconds": 1.5540244440058577,
+      "per_request_fps_estimate": 20.59169669011936
+    }
+  ],
+  "batched_vs_alternating_latent_error": [
+    {
+      "relative_rms": 0.5417643189430237,
+      "max_abs": 7.875
+    },
+    {
+      "relative_rms": 0.8272669911384583,
+      "max_abs": 8.9609375
+    }
+  ],
+  "target_pair_seconds": 1.28,
+  "decoder_note": "Full-clip decoding average; streaming not measured.",
+  "dynamo": {
+    "stats": {
+      "calls_captured": 26034,
+      "unique_graphs": 94
+    },
+    "graph_break": {},
+    "unimplemented": {}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-02",
+  "workspace": "explore",
+  "environment": "dev",
+  "headline": "Original BF16 fits on H100, but neither completed configuration sustains two 25 FPS streams.",
+  "completed_runs": [
+    "h100-baseline-fp8-cast-regional-776bfa6d2a86",
+    "h100-paired-none-regional-ac9658fea891",
+    "h100-paired-fp8-cast-regional-ca138fc4ed88"
+  ],
+  "incomplete_runs": {
+    "h100-paired-fp8-dynamic-regional-a689e6f3e325": "Canceled during decoder warmup after local session interruption; no measured FPS or quality conclusion."
+  },
+  "gpu_hours_upper_bound": 2.151111111111111,
+  "all_gpu_benchmark_apps_stopped": true,
+  "notes": [
+    "Original BF16: 1.388 s median pair generation, 1.554 s with amortized decoding, approximately 20.60 FPS per request; peak generation allocation 44.66 GiB.",
+    "FP8 storage / BF16 compute: 1.459 s median pair generation, 1.624 s with amortized decoding, approximately 19.70 FPS per request; peak generation allocation 27.43 GiB.",
+    "Removing FP8 storage improves batched throughput by about 4.5%, but generation alone still exceeds the 1.28 s deadline. This is not a completed realtime serving implementation.",
+    "Output equivalence is not established. BF16 batched vs alternating latent relative RMS differences are 54.2% and 82.7%. Sampled frames show changed motion; batched request 1 partly exits the frame near 5.12 s.",
+    "Even the alternating FP8 harness differs from the original single-request control: 43.6% whole-video latent relative RMS. The first conditioned latent is identical and differences grow afterwards; the exact cause has not been isolated. These numbers are not perceptual quality scores.",
+    "Four small CPU regression tests passed, including per-request sigma, strict graph capture, gated attention, and cache populate/reuse with both RoPE layouts. Completed full GPU runs recorded no graph breaks or non-finite outputs.",
+    "Both precisions use the same paired harness, inputs, checkpoint, dimensions and scheduling. The single-request control is a separate pipeline measurement, not proof of identical output.",
+    "Native FP8 matrix multiplication was interrupted during decoder warmup. Warmup timings are excluded; no native FP8 result is claimed.",
+    "Decoder numbers amortize full-clip decoding. Text/image/audio preparation, encoding and network delivery are outside paired chunk timing. Short 10.28-second clips do not establish long-session stability.",
+    "All GPU benchmark apps are stopped. Conservative accounting, including failures and interruptions: 2.151 H100-hours of the authorized 5. This is an upper bound from app lifetimes plus margins, not a billing reading."
+  ]
+}

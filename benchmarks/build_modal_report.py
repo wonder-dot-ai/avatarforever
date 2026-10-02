@@ -60,6 +60,8 @@ if not baseline_rows and not pair_rows:
     raise SystemExit('No completed inference measurements found; refusing to create a results page.')
 (root / 'comparison.json').write_text(json.dumps({'paired': records, 'deadline_seconds': 1.28,
     'decoder_caveat': 'Full-clip decoder throughput, not a streaming decoder deadline test.'}, indent=2) + '\n')
+status_path = root / 'experiment-status.json'
+status = json.loads(status_path.read_text()) if status_path.exists() else {}
 page = '''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AvatarForever on Modal H100</title><style>
 body{font:16px system-ui;background:#0c1420;color:#e6edf5;max-width:1250px;margin:40px auto;padding:0 24px}
@@ -69,6 +71,7 @@ td:first-child,th:first-child{text-align:left}small{display:block;font-size:10px
 .scroll{overflow-x:auto}.videos{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0}video{width:100%}figcaption{padding:10px}
 @media(max-width:700px){.videos{grid-template-columns:1fr}}
 </style><h1>AvatarForever on Modal H100</h1><p>768×512 · 25 FPS per request · Four denoising steps · ForeverCache · dev environment</p>
+<!--EXPERIMENT_STATUS-->
 <section><h2>Two requests: 1.28-second deadline</h2><p>Each regular AR chunk contains four latent frames / 32 video frames per request.
 The two requests must both produce their next chunk in 1.28 seconds. Timings below are measured on synchronized requests with distinct
 audio offsets and seeds. Text/image/audio preparation is outside the paired chunk timing. The decoder contribution is allocated from
@@ -77,6 +80,11 @@ Each mode has one full warmup and three measured 257-frame runs; the first two c
 steady generation statistics. This is a short-clip throughput test, not a long-duration stability test.</p><div class="scroll"><table><tr><th>Mode</th><th>Generation median (s)</th>
 <th>Generation max (s)</th><th>Median + average decode (s)</th><th>Estimated FPS / request</th><th>Generation peak VRAM (GiB)</th></tr>'''
 page += ''.join(pair_rows) + '</table></div></section>'
+page = page.replace('<!--EXPERIMENT_STATUS-->', '<p><strong>' + html.escape(status.get('headline', '')) + '</strong></p>')
+if status:
+    notes = ''.join(f'<li>{html.escape(note)}</li>' for note in status.get('notes', []))
+    page += ('<section><h2>Interpretation and limitations</h2><ul>' + notes + '</ul>'
+             '<p><a href="experiment-status.json">Experiment status and accounting</a></p></section>')
 if baseline_rows:
     page += '<section><h2>Single-request control</h2><table><tr><th>Run</th><th>AR + VAE FPS</th><th>Full-clip decoder</th></tr>'
     page += ''.join(baseline_rows) + '</table></section>'

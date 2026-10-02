@@ -1,0 +1,46 @@
+{
+  "arguments": {
+    "checkpoint": "/cache/hub/models--LetsThink--AvatarForever/snapshots/622ea82482c09e7fb2d8e29cb7ff1d009c820f05/avatarforever-ltx-2.3-22b.safetensors",
+    "gemma_root": "/cache/hub/models--google--gemma-3-12b-it-qat-q4_0-unquantized/snapshots/68f7ee4fbd59087436ada77ed2d62f373fdd4482",
+    "audio": "/inputs/speech.ogg",
+    "reference": "/inputs/reference.png",
+    "output_dir": "/cache/runs/h100-paired-fp8-cast-regional-ca138fc4ed88",
+    "quantization": "fp8-cast",
+    "fp8_activation_backend": "compiled",
+    "preexpand_fp8": false,
+    "frames": 257,
+    "runs": 3
+  },
+  "torch": "2.14.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "gpu_info": "NVIDIA H100 80GB HBM3, 580.95.05, 81559 MiB, 700.00 W",
+  "preexpand": {
+    "enabled": false,
+    "linears": 0,
+    "seconds": 0.0
+  },
+  "compile_variant_limit": 96,
+  "source_sha256": "20c57ab8ceb3a9c3bd12feeeed794bf75fa4ef332e6707da387844a55120ef5f",
+  "core_source_sha256": {
+    "packages/ltx-core/src/ltx_core/model/transformer/compilation.py": "c4234f239d6190458668551815d1c919b8ea58f70a6e2102ad126a46acc08e73",
+    "packages/ltx-core/src/ltx_core/model/transformer/model.py": "d2becb1289925703a9f0bcab7c6291097e21ac83adf1e1da070a77525d49f26f",
+    "packages/ltx-core/src/ltx_core/model/transformer/transformer.py": "9e4040d4feed85d11a705c6decb682c57aa9ac9f78c940d369c1dd39793e5389",
+    "packages/ltx-core/src/ltx_core/quantization/fp8_cast.py": "47f8f6cc18772dbc65ce2d39ef91e406b7d97a209ef0d9832a0365e17b77670f",
+    "packages/ltx-core/src/ltx_core/quantization/fp8_dynamic.py": "af6ebd36827e1e6356b215e172c9dbf63971d0431ba475a7d04557e9a15d7380",
+    "packages/ltx-pipelines/src/ltx_pipelines/utils/autoregressive.py": "d95a954838594947e9d6ebf496fda60cdcafad1bbf43e4a05ab9af2d65af0d34"
+  },
+  "audio_sha256": "5bbf9630fe28f4cdfc77afacbda0176379c0186660d98a19e6492ed6967ae89e",
+  "reference_sha256": "98ea0eeab4d6fced997656c5bbad9cc73e2a553604537095b4f6913a29329db9",
+  "requests": [
+    {
+      "seed": 42,
+      "audio_start_seconds": 0.0
+    },
+    {
+      "seed": 43,
+      "audio_start_seconds": 15.0
+    }
+  ],
+  "scope": "Two independent AR states, same reference/prompt, different seeds/audio. Equal lengths and synchronized arrivals. Full-clip VAE; no claim of streaming decode."
+}

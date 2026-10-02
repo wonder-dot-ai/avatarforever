@@ -1,0 +1,50 @@
+{
+  "paired": [
+    {
+      "run": "h100-paired-fp8-cast-regional-ca138fc4ed88",
+      "quantization": "FP8 storage / BF16 compute",
+      "mode": "alternating",
+      "steady_generation_median_seconds": 1.6205996140000138,
+      "steady_generation_max_seconds": 1.6249083070000552,
+      "steady_pair_with_average_decode_seconds": 1.78529977748638,
+      "peak_allocated_gib": 23.3252854347229,
+      "all_finite": true,
+      "estimated_fps_per_request": 17.924160638755318
+    },
+    {
+      "run": "h100-paired-fp8-cast-regional-ca138fc4ed88",
+      "quantization": "FP8 storage / BF16 compute",
+      "mode": "batched",
+      "steady_generation_median_seconds": 1.4591260840000473,
+      "steady_generation_max_seconds": 1.4678431760000876,
+      "steady_pair_with_average_decode_seconds": 1.6243477022840318,
+      "peak_allocated_gib": 27.429638862609863,
+      "all_finite": true,
+      "estimated_fps_per_request": 19.700215634253727
+    },
+    {
+      "run": "h100-paired-none-regional-ac9658fea891",
+      "quantization": "Original BF16 weights / BF16 compute",
+      "mode": "alternating",
+      "steady_generation_median_seconds": 1.459358434999956,
+      "steady_generation_max_seconds": 1.4653968520000262,
+      "steady_pair_with_average_decode_seconds": 1.6254390640506216,
+      "peak_allocated_gib": 40.514816761016846,
+      "all_finite": true,
+      "estimated_fps_per_request": 19.686988400694307
+    },
+    {
+      "run": "h100-paired-none-regional-ac9658fea891",
+      "quantization": "Original BF16 weights / BF16 compute",
+      "mode": "batched",
+      "steady_generation_median_seconds": 1.3881663174999517,
+      "steady_generation_max_seconds": 1.3985308740000164,
+      "steady_pair_with_average_decode_seconds": 1.5536600797003712,
+      "peak_allocated_gib": 44.66446018218994,
+      "all_finite": true,
+      "estimated_fps_per_request": 20.596525854079555
+    }
+  ],
+  "deadline_seconds": 1.28,
+  "decoder_caveat": "Full-clip decoder throughput, not a streaming decoder deadline test."
+}

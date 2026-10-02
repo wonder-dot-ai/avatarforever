@@ -1,0 +1,90 @@
+{
+  "reservations": [
+    {
+      "run_id": "h100-baseline-fp8-cast-regional-776bfa6d2a86",
+      "reserved_seconds": 966,
+      "created_at_unix": 1790763416.943564,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-JEwhBR2PKj2ZdzgIpbrynD",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-cast-regional-58472aa3d4b2",
+      "reserved_seconds": 843,
+      "created_at_unix": 1790906645.4227,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-z1sWMcy8HHoHDXOWfGA8to",
+      "created_at": "2026-10-02 11:04:03+09:00",
+      "stopped_at": "2026-10-02 11:17:06+09:00",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-preexpanded-regional-62466744e3ff",
+      "reserved_seconds": 458,
+      "created_at_unix": 1790907096.387296,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-DyHTEbhUDW34ewehG13Ijs",
+      "created_at": "2026-10-02 11:11:35+09:00",
+      "stopped_at": "2026-10-02 11:18:12+09:00",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-none-regional-1f826b44f3b0",
+      "reserved_seconds": 354,
+      "created_at_unix": 1790907198.370569,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-OuNrl77ZOA3vbyOwiTz9dh",
+      "created_at": "2026-10-02 11:13:17+09:00",
+      "stopped_at": "2026-10-02 11:18:10+09:00",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-none-regional-7d312d6bea61",
+      "reserved_seconds": 852,
+      "created_at_unix": 1790907682.799531,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-kgl5rSJr9ihb0kd6nw5Ca1",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-cast-regional-c0598fa615bf",
+      "reserved_seconds": 772,
+      "created_at_unix": 1790907689.609997,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-hwY2mbzZxPITBuy9qz8AP8",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-dynamic-regional-553d0cb63e9b",
+      "reserved_seconds": 524,
+      "created_at_unix": 1790908016.812109,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-YdBhZ33X80sbMj6G5ctq4U",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-none-regional-ac9658fea891",
+      "reserved_seconds": 844,
+      "created_at_unix": 1790908573.82067,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-TO3rk1D0Oy8WHf1MNAzoBt",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-cast-regional-ca138fc4ed88",
+      "reserved_seconds": 1065,
+      "created_at_unix": 1790908577.729722,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-jWL7VfVlIiNePEh8ZISn4v",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    },
+    {
+      "run_id": "h100-paired-fp8-dynamic-regional-a689e6f3e325",
+      "reserved_seconds": 1066,
+      "created_at_unix": 1790908587.7397592,
+      "original_max_reserved_seconds": 3602,
+      "app_id": "ap-M3lbchN36sn61rheb2wI3k",
+      "accounting_basis": "Minimum of original hard timeout cap and stopped app wall lifetime plus 60s; evidence app-lifecycle-budget-evidence.json."
+    }
+  ]
+}

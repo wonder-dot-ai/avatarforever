@@ -1,0 +1,82 @@
+[
+  {
+    "file": "outputs/modal/h100-paired-none-regional-ac9658fea891/alternating-0.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-none-regional-ac9658fea891/batched-0.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-none-regional-ac9658fea891/alternating-1.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-none-regional-ac9658fea891/batched-1.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-fp8-cast-regional-ca138fc4ed88/alternating-0.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-fp8-cast-regional-ca138fc4ed88/batched-0.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-fp8-cast-regional-ca138fc4ed88/alternating-1.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  },
+  {
+    "file": "outputs/modal/h100-paired-fp8-cast-regional-ca138fc4ed88/batched-1.mp4",
+    "frames": 257,
+    "fps": "25",
+    "resolution": [
+      768,
+      512
+    ],
+    "audio_streams": 1
+  }
+]

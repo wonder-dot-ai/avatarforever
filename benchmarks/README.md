@@ -1,5 +1,47 @@
 # H100 latency benchmark
 
+## Modal results — 2026-10-02
+
+Original BF16 fits on an H100 80GB after offloading preparation models, but the
+completed configurations do **not** sustain two 25 FPS streams at 768×512.
+Each regular chunk produces 32 frames per request, giving both requests a
+shared 1.28-second deadline. Three warmed runs per mode, each 257 frames:
+
+| Weights / compute | Scheduling | Pair generation median / max | Pair + amortized VAE | Estimated FPS / request | Generation peak |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Original BF16 / BF16 | Alternating | 1.459 / 1.465 s | 1.625 s | 19.69 | 40.51 GiB |
+| Original BF16 / BF16 | Batch 2 | 1.388 / 1.399 s | 1.554 s | **20.60** | 44.66 GiB |
+| FP8 storage / BF16 | Alternating | 1.621 / 1.625 s | 1.785 s | 17.92 | 23.33 GiB |
+| FP8 storage / BF16 | Batch 2 | 1.459 / 1.468 s | 1.624 s | 19.70 | 27.43 GiB |
+
+Keeping original BF16 weights improves batched throughput by about 4.5% over
+FP8 storage. Generation alone still exceeds the deadline. VAE figures amortize
+full-clip decoding; preparation, encoding, delivery and streaming decoder latency
+are not included. These short clips do not establish long-session stability.
+
+**Quality equivalence is not established.** BF16 batching changes motion and
+the second request partly exits the frame near 5.12 seconds. Batched versus
+alternating latent relative RMS differences are 54.2% and 82.7%. The alternating
+FP8 harness also differs from the original single-request control (43.6% relative
+RMS). The conditioned first latent matches, with differences growing later;
+the cause has not been isolated. These are numerical differences, not perceptual
+quality scores. Four CPU regression tests pass for timestep broadcasting,
+strict graph capture, gated attention and cached-history independence across
+both RoPE layouts. Both completed GPU comparisons report zero graph breaks and
+finite latents; all eight videos were verified as 257 frames, 25 FPS, 768×512,
+with an audio stream.
+
+The additional native FP8 matrix multiplication trial was canceled during
+decoder warmup after the local session interruption. It has no measured result
+and is excluded from the table. All GPU apps are stopped. Conservative total
+accounting includes failed and interrupted trials: **2.151 H100-hours**, below
+the authorized five-hour cap; this is an app-lifetime upper bound, not billing.
+
+Videos and an HTML viewer are local in `outputs/modal/index.html`. Committed
+evidence is in [the result directory](results/modal-h100-2026-10-02/), including
+[status and limitations](results/modal-h100-2026-10-02/experiment-status.json),
+per-run raw timings, environment manifests, latent comparisons and budget evidence.
+
 ## Modal experiments
 
 `modal_benchmark.py` runs on-demand jobs; it does not deploy a serving endpoint.
@@ -14,8 +56,8 @@ uv pip install --python .venv-modal/bin/python modal==1.6.0
 .venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action check-access
 .venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action check-runtime
 .venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action prepare
-.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action baseline
-.venv-modal/bin/modal run --env dev benchmarks/modal_benchmark.py --action paired
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action baseline --quantization fp8-cast
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action paired --quantization none
 ```
 
 Access checks, import checks, and weight downloads allocate no GPU. Inference
@@ -25,6 +67,10 @@ execution timeout in `outputs/modal/h100-budget.json`; the entrypoint refuses
 reservations above the authorized five GPU-hours. This ledger does not account
 for unrelated team jobs or invocations that bypass this entrypoint. Do not
 reset it merely to bypass the experiment budget.
+Stopped reservations can be reconciled against recorded Modal app lifecycle
+timestamps, using the smaller of the original hard cap and app lifetime plus a
+60-second margin. This includes failed runs and all startup time; it is a
+conservative GPU-time bound, not a billing-meter reading.
 
 Results, logs, manifests, latents, and videos persist under `runs/<run-id>` in
 the Volume and are downloaded to `outputs/modal/<run-id>` after a successful
@@ -46,6 +92,19 @@ FP8-rounded weights as `fp8-cast`, then expands them to BF16 once after moving
 the preparation models to CPU. This preserves those weight values while
 trading VRAM for elimination of per-forward weight conversion. The one-time
 conversion duration and number of affected linears are recorded separately.
+
+Batching requires a scalar diffusion sigma to be expanded to the `(B,)` contract
+before prompt/cross-modal timestep preparation. `check-runtime` includes a CPU
+regression using a small real audio/video transformer, comparing batched results
+with independent samples and checking strict graph capture. The paired benchmark
+also runs a full-size eager batch smoke check before warming compiled paths.
+Its 96-variant allowance accommodates both batch sizes and AR/audio/cache shapes;
+`fullgraph=True` stays enabled, with no eager fallback. The ordinary single-request
+compiler setting remains unchanged.
+
+After runs complete, use `--action compare --reference-run <id> --candidate-run <id>`
+for CPU-only latent comparisons, then `python benchmarks/build_modal_report.py`
+to build the local `outputs/modal/index.html` video and timing viewer.
 
 ## Earlier dedicated H100 measurements
 
