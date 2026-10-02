@@ -58,7 +58,7 @@ for name in ('packages',):
                                       ignore=['**/__pycache__/**', '**/._*', '**/*.pyc'])
 for name in ('inference.py', 'util.py'):
     gpu_image = gpu_image.add_local_file(ROOT / name, str(REMOTE / name))
-for path in (ROOT / 'benchmarks' / name for name in ('latency.py', 'paired_inference.py')):
+for path in (ROOT / 'benchmarks' / name for name in ('latency.py', 'paired_inference.py', 'test_batch_sigma.py')):
     gpu_image = gpu_image.add_local_file(path, str(REMOTE / 'benchmarks' / path.name))
 gpu_image = gpu_image.add_local_file(ROOT / 'data/jfk-american-university.ogg', '/inputs/speech.ogg')
 gpu_image = gpu_image.add_local_file(ROOT / 'outputs/stage-comparison/reference.png', '/inputs/reference.png')
@@ -95,7 +95,11 @@ def check_runtime() -> dict:
                                 cwd=REMOTE, capture_output=True, text=True)
         if result.returncode:
             raise RuntimeError(f'{name} import failed:\n{result.stderr}')
-    return {'imports': 'passed', 'gpu_allocated': False}
+    result = subprocess.run([sys.executable, str(REMOTE / 'benchmarks/test_batch_sigma.py')],
+                            cwd=REMOTE, capture_output=True, text=True)
+    if result.returncode:
+        raise RuntimeError(f'Batch regression failed:\n{result.stderr}')
+    return {'imports': 'passed', 'batch_regression': result.stderr.strip(), 'gpu_allocated': False}
 
 
 @app.function(image=gpu_image, cpu=2, memory=8192, volumes={str(CACHE): volume}, timeout=300, retries=0)

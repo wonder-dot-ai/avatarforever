@@ -12,6 +12,9 @@ for path in sorted(root.glob('h100-*/summary.json')):
     summary = json.loads(path.read_text())
     manifest = json.loads((folder / 'manifest.json').read_text())
     quantization = manifest['arguments']['quantization']
+    quantization = {'none': 'Original BF16 weights / BF16 compute',
+                    'fp8-cast': 'FP8 storage / BF16 compute',
+                    'fp8-dynamic': 'Dynamic FP8 matrix multiplication'}.get(quantization, quantization)
     if manifest['arguments'].get('preexpand_fp8'):
         quantization = 'FP8 values preexpanded to BF16'
     label = html.escape(folder.name)
@@ -34,11 +37,13 @@ for path in sorted(root.glob('h100-*/summary.json')):
                        r['steady_pair_with_average_decode_seconds'] for r in selected),
                    'peak_allocated_gib': max(r['peak_allocated_gib'] for r in selected),
                    'all_finite': all(r['finite'] for r in selected)}
+            row['estimated_fps_per_request'] = 32 / row['steady_pair_with_average_decode_seconds']
             records.append(row)
             pair_rows.append(f'<tr><td>{html.escape(quantization)} / {mode}<small>{link}</small></td>'
                              f'<td>{row["steady_generation_median_seconds"]:.3f}</td>'
                              f'<td>{row["steady_generation_max_seconds"]:.3f}</td>'
                              f'<td>{row["steady_pair_with_average_decode_seconds"]:.3f}</td>'
+                             f'<td>{row["estimated_fps_per_request"]:.2f}</td>'
                              f'<td>{row["peak_allocated_gib"]:.2f}</td></tr>')
         errors = summary['batched_vs_alternating_latent_error']
         errors_text = ', '.join(f'request {i}: {r["relative_rms"]*100:.3f}% RMS' for i, r in enumerate(errors))
@@ -66,9 +71,11 @@ td:first-child,th:first-child{text-align:left}small{display:block;font-size:10px
 </style><h1>AvatarForever on Modal H100</h1><p>768×512 · 25 FPS per request · Four denoising steps · ForeverCache · dev environment</p>
 <section><h2>Two requests: 1.28-second deadline</h2><p>Each regular AR chunk contains four latent frames / 32 video frames per request.
 The two requests must both produce their next chunk in 1.28 seconds. Timings below are measured on synchronized requests with distinct
-audio offsets and seeds. The decoder contribution is allocated from full-clip decoding; these measurements do not establish streaming
-first-pixel latency or service-level deadline guarantees.</p><div class="scroll"><table><tr><th>Mode</th><th>Generation median (s)</th>
-<th>Generation max (s)</th><th>Median + average decode (s)</th><th>Generation peak VRAM (GiB)</th></tr>'''
+audio offsets and seeds. Text/image/audio preparation is outside the paired chunk timing. The decoder contribution is allocated from
+full-clip decoding; these measurements do not establish streaming first-pixel latency or service-level deadline guarantees.
+Each mode has one full warmup and three measured 257-frame runs; the first two chunks and final partial chunk are excluded from
+steady generation statistics. This is a short-clip throughput test, not a long-duration stability test.</p><div class="scroll"><table><tr><th>Mode</th><th>Generation median (s)</th>
+<th>Generation max (s)</th><th>Median + average decode (s)</th><th>Estimated FPS / request</th><th>Generation peak VRAM (GiB)</th></tr>'''
 page += ''.join(pair_rows) + '</table></div></section>'
 if baseline_rows:
     page += '<section><h2>Single-request control</h2><table><tr><th>Run</th><th>AR + VAE FPS</th><th>Full-clip decoder</th></tr>'

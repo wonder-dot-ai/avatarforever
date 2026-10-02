@@ -219,14 +219,26 @@ def main():
         'reference_sha256': hashlib.sha256(args.reference.read_bytes()).hexdigest(),
         'requests': [{'seed': r['seed'], 'audio_start_seconds': r['audio_start']} for r in requests],
         'scope': 'Two independent AR states, same reference/prompt, different seeds/audio. Equal lengths and synchronized arrivals. Full-clip VAE; no claim of streaming decode.'}, indent=2) + '\n')
-    # Warm every shape in each mode before collecting any timed comparison.
-    for mode, samplers in configs.items():
+    # Catch batch incompatibilities before paying the full compilation cost.
+    print('SMOKE eager batch of two', flush=True)
+    with torch.compiler.set_stance('force_eager'):
+        smoke = dict(paired, video_state=paired['video_state'].clone(), audio_state=paired['audio_state'].clone())
+        smoke_video, smoke_audio = autoregressive_euler_denoising_loop(
+            **smoke, start_chunk_idx=0, end_chunk_idx=1)
+        assert torch.isfinite(smoke_video.latent).all() and torch.isfinite(smoke_audio.latent).all()
+    del smoke, smoke_video, smoke_audio
+    # Warm both generation modes before the expensive decoder compilation.
+    warm_latents = []
+    for mode in ('batched', 'alternating'):
         print('WARMUP', mode, flush=True)
-        states, _ = generate(samplers)
-        for latent in unpack(states, pipeline, args.frames):
-            for _ in decode_video(latent, pipeline._fast_modules.video_decoder, tiling):
-                pass
+        states, _ = generate(configs[mode])
+        warm_latents.extend(unpack(states, pipeline, args.frames))
         del states
+    print('WARMUP decoder', flush=True)
+    for latent in warm_latents:
+        for _ in decode_video(latent, pipeline._fast_modules.video_decoder, tiling):
+            pass
+    del warm_latents, latent
     for repeat in range(args.runs):
         for mode in (('alternating', 'batched') if repeat % 2 == 0 else ('batched', 'alternating')):
             states, record = generate(configs[mode])
