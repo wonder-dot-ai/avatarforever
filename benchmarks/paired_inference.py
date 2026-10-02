@@ -167,6 +167,10 @@ def main():
     if args.preexpand_fp8 and args.quantization != 'fp8-cast':
         parser.error('--preexpand-fp8 requires --quantization fp8-cast')
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    # Both B=1 and B=2, with audio-length/cache variants, exceed the 32-variant
+    # single-request allowance. Keep fullgraph compilation and no eager fallback.
+    limit_key = 'recompile_limit' if hasattr(torch._dynamo.config, 'recompile_limit') else 'cache_size_limit'
+    setattr(torch._dynamo.config, limit_key, max(getattr(torch._dynamo.config, limit_key), 96))
     pipeline = ARA2VidDistilledPipeline(distilled_checkpoint_path=args.checkpoint,
         spatial_upsampler_path=None, gemma_root=args.gemma_root, loras=[],
         quantization=build_quantization_policy(args), transformer_compile='regional', compile_video_decoder=True)
@@ -207,6 +211,7 @@ def main():
         'gpu_info': subprocess.run(['nvidia-smi', '--query-gpu=name,driver_version,memory.total,power.limit',
                                     '--format=csv,noheader'], capture_output=True, text=True).stdout.strip(),
         'preexpand': preexpand,
+        'compile_variant_limit': getattr(torch._dynamo.config, limit_key),
         'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'core_source_sha256': {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
             'packages/ltx-core/src/ltx_core/model/transformer/compilation.py',
