@@ -124,7 +124,11 @@ def compare_latents(reference_run: str, candidate_run: str) -> dict:
             rows.append({'request': index, 'mode': mode, 'finite': bool(torch.isfinite(result).all()),
                          'exact': bool(torch.equal(result, ref)),
                          'relative_rms': float((result-ref).square().mean().sqrt()/ref.square().mean().sqrt()),
-                         'max_abs': float((result-ref).abs().max())})
+                         'max_abs': float((result-ref).abs().max()),
+                         'per_latent_frame_relative_rms': [
+                             float((result[:,:,i]-ref[:,:,i]).square().mean().sqrt()
+                                   / ref[:,:,i].square().mean().sqrt().clamp_min(1e-12))
+                             for i in range(ref.shape[2])]})
     return {'reference_run': reference_run, 'candidate_run': candidate_run, 'comparisons': rows,
             'note': 'Numerical latent comparison, not a perceptual quality score.'}
 

@@ -5,6 +5,8 @@ import unittest
 import torch
 
 from ltx_core.model.transformer.model import LTXModel
+from ltx_core.model.transformer.ar_feature_cache import ARFeatureCache
+from ltx_core.model.transformer.rope import LTXRopeType
 from ltx_core.types import LatentState
 from ltx_pipelines.utils.helpers import modality_from_latent_state
 
@@ -17,6 +19,7 @@ class BatchSigmaTest(unittest.TestCase):
             num_layers=1, cross_attention_dim=64, audio_num_attention_heads=2,
             audio_attention_head_dim=32, audio_in_channels=8, audio_out_channels=8,
             audio_cross_attention_dim=64, cross_attention_adaln=True,
+            apply_gated_attention=True,
         ).eval()
         with torch.no_grad():
             for parameter in self.model.parameters():
@@ -60,6 +63,33 @@ class BatchSigmaTest(unittest.TestCase):
     def test_reject_mismatched_batch(self):
         with self.assertRaisesRegex(ValueError, 'one value per sample'):
             self.modality(3, torch.tensor([0.25, 0.5, 0.75]))
+
+    @torch.inference_mode()
+    def test_cached_history_matches_independent_requests(self):
+        # Exercise both positional-embedding layouts and populate/reuse, which
+        # ordinary uncached batch tests do not cover.
+        for rope_type in LTXRopeType:
+            self.model.rope_type = rope_type
+            for prep in (self.model.video_args_preprocessor, self.model.audio_args_preprocessor):
+                prep.simple_preprocessor.rope_type = rope_type
+            for block in self.model.transformer_blocks:
+                for module in block.modules():
+                    if hasattr(module, 'rope_type'):
+                        module.rope_type = rope_type
+            video, audio = self.modality(3, torch.tensor(.75)), self.modality(1, torch.tensor(.75))
+            caches = [ARFeatureCache() for _ in range(3)]
+            for phase in ('populate', 'reuse'):
+                def attach(modality, cache, row=None):
+                    values = {name: getattr(modality, name)[row:row+1] for name in
+                              ('latent', 'sigma', 'timesteps', 'positions', 'context')} if row is not None else {}
+                    return replace(modality, **values, ar_feature_cache=cache, ar_current_slice=slice(1, 3))
+                together = self.model(attach(video, caches[0]), attach(audio, caches[0]), None)
+                for index in range(2):
+                    separate = self.model(attach(video, caches[index+1], index),
+                                          attach(audio, caches[index+1], index), None)
+                    for batched, single in zip(together, separate):
+                        torch.testing.assert_close(batched[index:index+1], single, atol=1e-5, rtol=1e-4,
+                                                   msg=f'{rope_type} {phase} request {index}')
 
 
 if __name__ == '__main__':
