@@ -418,11 +418,21 @@ def modality_from_latent_state(
     Constructs a Modality object with the latent state's data, timesteps derived
     from the denoise mask and sigma, positions, and the provided context.
     """
+    batch_size = state.latent.shape[0]
+    if sigma.numel() == 1:
+        batch_sigma = sigma.reshape(1).expand(batch_size)
+    elif sigma.ndim == 1 and sigma.shape[0] == batch_size:
+        batch_sigma = sigma
+    else:
+        raise ValueError("sigma must be a scalar or a vector with one value per sample")
+    # Modality requires a (B,) sigma for prompt and cross-modal AdaLN. Apply
+    # each sample's sigma along the batch axis when constructing token timesteps.
+    mask_sigma = batch_sigma.reshape(batch_size, *([1] * (state.denoise_mask.ndim - 1)))
     return Modality(
         enabled=enabled,
         latent=state.latent,
-        sigma=sigma,
-        timesteps=timesteps_from_mask(state.denoise_mask, sigma),
+        sigma=batch_sigma,
+        timesteps=timesteps_from_mask(state.denoise_mask, mask_sigma),
         positions=state.positions,
         context=context,
         context_mask=None,
