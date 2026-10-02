@@ -1,5 +1,52 @@
 # H100 latency benchmark
 
+## BF16 kernel replacement results — 2026-10-02
+
+Replacing kernels did **not** meet the requested 25–30% generation-time reduction.
+On a frozen, real batch-two AR chunk, the pooled baseline median was **1,347.17 ms**;
+tuned cuBLASLt replacements measured **1,335.77 ms**, a **0.85% reduction**.
+The 25–30% targets are **1,010–943 ms**, leaving additional time before the shared
+1,280 ms playback deadline for audio encoding and video decoding.
+
+The matrix study captures twelve shape families covering **98.23% of linear
+FLOPs**. It searches up to 32 cuBLASLt algorithms per shape and four persistent
+Triton configurations, retaining original BF16 inputs/weights and bias. Only two
+shape families beat every control by at least 3%; installing those replacements
+in the compiled sampler changes 632 linear calls per chunk. The tested chunk is
+bit-for-bit identical to the baseline. Both GPU runs report zero graph breaks.
+
+Default SDPA already chooses cuDNN Hopper attention. Calls-weighted isolated
+attention times are 159.33 ms default, 159.16 ms forced cuDNN, 268.09 ms forced
+Flash SDPA, and 543.99 ms memory-efficient SDPA. This is not a benchmark of the
+separately installed FlashAttention-3 package. The baseline GPU trace contains
+865.73 ms of GEMM, 161.23 ms attention, 281.18 ms other kernels, 3.50 ms copies /
+memsets, and 50.18 ms gaps. Gaps are not exclusively launch overhead.
+
+Protocol: 768×512, four denoising steps, original BF16, regional compilation with
+precision casts preserved, ForeverCache, two seeds/audio offsets. Generate the
+prefix eagerly, then replay chunk index 4 from identical cloned states. The
+integrated test measures five warmed chunks before replacement, five with tuned
+kernels, and five after restoring the baseline. Baseline medians before/after
+are 1,348.18 / 1,346.16 ms. All timings exclude compilation, audio/VAE processing
+and profiling. Microbenchmarks flush 64 MiB from L2 before timing, search on seven
+samples, and independently retest winners on fifteen. They use one captured
+nonzero-weight representative per shape and do not measure serving throughput.
+The numerical check covers one chunk, not long-video perceptual stability.
+
+The adapters are opt-in benchmark code; production model behavior is unchanged.
+This pass does not rule out native FP8, architectural changes or untested kernels,
+but the tested BF16 kernel swaps provide no evidence for a 25–30% improvement.
+Local report and downloadable profiler traces: `outputs/h100-kernels/index.html`.
+Committed [measurements and budget evidence](results/h100-kernels-2026-10-02/).
+Both new GPU apps stopped. Cumulative conservative accounting is now
+**2.324 H100-hours** of the authorized five-hour cap, including earlier trials.
+
+```bash
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action kernels --quantization none
+.venv-modal/bin/modal run --detach --env dev benchmarks/modal_benchmark.py --action kernels --quantization none --kernel-reference-run h100-kernels-none-regional-59df0c9d6a71
+.venv-modal/bin/python benchmarks/build_h100_kernel_report.py --study outputs/modal/h100-kernels-none-regional-59df0c9d6a71 --integrated outputs/modal/h100-kernels-none-regional-859e33ead6b8
+```
+
 ## Modal results — 2026-10-02
 
 Original BF16 fits on an H100 80GB after offloading preparation models, but the
@@ -34,7 +81,7 @@ with an audio stream.
 The additional native FP8 matrix multiplication trial was canceled during
 decoder warmup after the local session interruption. It has no measured result
 and is excluded from the table. All GPU apps are stopped. Conservative total
-accounting includes failed and interrupted trials: **2.151 H100-hours**, below
+accounting at this stage included failed and interrupted trials: **2.151 H100-hours**, below
 the authorized five-hour cap; this is an app-lifetime upper bound, not billing.
 
 Videos and an HTML viewer are local in `outputs/modal/index.html`. Committed

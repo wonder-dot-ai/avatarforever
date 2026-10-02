@@ -1,0 +1,74 @@
+{
+  "h100-paired-fp8-dynamic-regional-a689e6f3e325": {
+    "app_id": "ap-M3lbchN36sn61rheb2wI3k",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790908580.829229,
+    "stopped_at": 1790909585.903155
+  },
+  "h100-paired-fp8-cast-regional-58472aa3d4b2": {
+    "app_id": "ap-z1sWMcy8HHoHDXOWfGA8to",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790906643.843406,
+    "stopped_at": 1790907426.764196
+  },
+  "h100-baseline-fp8-cast-regional-776bfa6d2a86": {
+    "app_id": "ap-JEwhBR2PKj2ZdzgIpbrynD",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790763413.618263,
+    "stopped_at": 1790764318.975064
+  },
+  "h100-paired-fp8-preexpanded-regional-62466744e3ff": {
+    "app_id": "ap-DyHTEbhUDW34ewehG13Ijs",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790907095.175716,
+    "stopped_at": 1790907492.592165
+  },
+  "h100-paired-none-regional-ac9658fea891": {
+    "app_id": "ap-TO3rk1D0Oy8WHf1MNAzoBt",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790908572.806939,
+    "stopped_at": 1790909356.503523
+  },
+  "h100-paired-fp8-cast-regional-c0598fa615bf": {
+    "app_id": "ap-hwY2mbzZxPITBuy9qz8AP8",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790907688.595096,
+    "stopped_at": 1790908400.58507
+  },
+  "h100-paired-fp8-cast-regional-ca138fc4ed88": {
+    "app_id": "ap-jWL7VfVlIiNePEh8ZISn4v",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790908576.612449,
+    "stopped_at": 1790909581.170482
+  },
+  "h100-paired-none-regional-7d312d6bea61": {
+    "app_id": "ap-kgl5rSJr9ihb0kd6nw5Ca1",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790907681.142516,
+    "stopped_at": 1790908472.180944
+  },
+  "h100-paired-none-regional-1f826b44f3b0": {
+    "app_id": "ap-OuNrl77ZOA3vbyOwiTz9dh",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790907197.320795,
+    "stopped_at": 1790907490.876319
+  },
+  "h100-paired-fp8-dynamic-regional-553d0cb63e9b": {
+    "app_id": "ap-YdBhZ33X80sbMj6G5ctq4U",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790908015.348436,
+    "stopped_at": 1790908478.6791
+  },
+  "h100-kernels-none-regional-59df0c9d6a71": {
+    "app_id": "ap-4MkmlsgrIRMfTwyzcIsK3a",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790913148.310459,
+    "stopped_at": 1790913396.830218
+  },
+  "h100-kernels-none-regional-859e33ead6b8": {
+    "app_id": "ap-j26tXW9bXzm7byixPIeoYx",
+    "state": "APP_STATE_STOPPED",
+    "created_at": 1790913483.17661,
+    "stopped_at": 1790913737.59355
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "protocol": "BF16 kernel study on a frozen, real batch-two AR chunk (no quality shortcuts).\n\nCapture is untimed. Warmed full-chunk controls and a Chrome GPU trace establish\nthe denominator; isolated kernel times are estimates, not serving throughput.\n",
+  "torch": "2.14.0+cu130",
+  "triton": "3.8.0",
+  "gpu": "NVIDIA H100 80GB HBM3",
+  "source_sha256": "735e2b4e137d26833b8e9cbae3505dc91b29d7e369c3221b62ba005e596db386",
+  "chunk_index": 4,
+  "batch_size": 2,
+  "video_frames_per_request": 32,
+  "deadline_ms": 1280,
+  "linears": [],
+  "attention": [],
+  "candidate_source": "/cache/runs/h100-kernels-none-regional-59df0c9d6a71/summary.json",
+  "selected_mm_kernels": {
+    "9216x4096x4096-bias1": {
+      "name": "cublaslt_tuned",
+      "index": 1
+    },
+    "9216x2048x4096-bias1": {
+      "name": "cublaslt_tuned",
+      "index": 1
+    }
+  },
+  "integrated": {
+    "tuned_mm": {
+      "chunk_ms": [
+        1337.3968360000106,
+        1327.8680939999958,
+        1335.7702769999946,
+        1339.3069669999988,
+        1334.7376809999787
+      ],
+      "calls_across_five_chunks": {
+        "9216x4096x4096-bias1": 2920,
+        "9216x2048x4096-bias1": 240
+      },
+      "changed_video_tokens": 3072,
+      "current_chunk_accuracy": {
+        "finite": true,
+        "relative_rms": 0.0,
+        "max_abs": 0.0
+      },
+      "all_video_accuracy": {
+        "finite": true,
+        "relative_rms": 0.0,
+        "max_abs": 0.0
+      }
+    }
+  },
+  "baseline_chunk_ms": [
+    1340.1314199999915,
+    1357.8750180000015,
+    1348.1831210000053,
+    1342.5941710000018,
+    1349.370926000006
+  ],
+  "baseline_after_ms": [
+    1358.6929430000225,
+    1339.649135000002,
+    1353.7345209999785,
+    1346.161029000001,
+    1345.217773999991
+  ],
+  "dynamo": {
+    "stats": {
+      "calls_captured": 6039,
+      "unique_graphs": 27
+    },
+    "graph_break": {},
+    "unimplemented": {}
+  },
+  "complete": true
+}

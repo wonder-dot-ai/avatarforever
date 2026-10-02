@@ -1,0 +1,86 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                              FROZEN_BATCH_TWO_AR_CHUNK         0.00%       0.000us         0.00%       0.000us       0.000us        1.362s       103.82%        1.362s        1.362s             1  
+                                            aten::addmm         7.24%      98.913ms        24.35%     332.541ms      50.051us     869.517ms        66.29%     869.517ms     130.873us          6644  
+    nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us     508.492ms        38.77%     508.492ms     580.470us           876  
+    nvjet_sm90_tst_256x128_64x4_1x2_h_bz_coopA_bias_TNT         0.00%       0.000us         0.00%       0.000us       0.000us     215.743ms        16.45%     215.743ms     131.551us          1640  
+                         aten::_cudnn_attention_forward         3.72%      50.860ms         8.60%     117.465ms     101.966us     162.397ms        12.38%     162.397ms     140.969us          1152  
+cudnn_generated_fort_native_sdpa_sm90_flash_fprop_wg...         0.00%       0.000us         0.00%       0.000us       0.000us     141.831ms        10.81%     141.831ms     369.350us           384  
+    nvjet_sm90_tst_192x192_64x4_1x2_h_bz_coopB_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us      91.814ms         7.00%      91.814ms     212.533us           432  
+cudnn_generated_fort_native_sdpa_sm90_flash_fprop_wg...         0.00%       0.000us         0.00%       0.000us       0.000us      19.398ms         1.48%      19.398ms      25.258us           768  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.10%       1.348ms         0.17%       2.292ms      15.916us      17.596ms         1.34%      17.596ms     122.191us           144  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.00%       0.000us         0.00%       0.000us       0.000us      17.596ms         1.34%      17.596ms     122.191us           144  
+    nvjet_sm90_tst_128x192_64x5_2x1_v_bz_coopB_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us      10.860ms         0.83%      10.860ms      75.419us           144  
+           nvjet_sm90_tst_48x64_64x15_2x1_v_bz_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us      10.833ms         0.83%      10.833ms       9.777us          1108  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.09%       1.256ms         0.16%       2.172ms      15.083us      10.370ms         0.79%      10.370ms      72.013us           144  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.00%       0.000us         0.00%       0.000us       0.000us      10.370ms         0.79%      10.370ms      72.013us           144  
+                          triton_poi_fused_gelu_view_31         0.02%     313.426us         0.05%     634.839us      13.226us      10.216ms         0.78%      10.216ms     212.831us            48  
+                          triton_poi_fused_gelu_view_31         0.00%       0.000us         0.00%       0.000us       0.000us      10.216ms         0.78%      10.216ms     212.831us            48  
+                          triton_poi_fused_gelu_view_52         0.08%       1.044ms         0.40%       5.507ms      38.241us      10.109ms         0.77%      10.109ms      70.201us           144  
+                          triton_poi_fused_gelu_view_52         0.00%       0.000us         0.00%       0.000us       0.000us      10.109ms         0.77%      10.109ms      70.201us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.06%     800.445us         0.08%       1.116ms      23.260us      10.050ms         0.77%      10.050ms     209.377us            48  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us      10.050ms         0.77%      10.050ms     209.377us            48  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.11%       1.514ms         0.19%       2.595ms      18.022us       9.774ms         0.75%       9.774ms      67.872us           144  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.00%       0.000us         0.00%       0.000us       0.000us       9.774ms         0.75%       9.774ms      67.872us           144  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.06%     827.672us         0.78%      10.702ms     222.953us       9.154ms         0.70%       9.154ms     190.705us            48  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.00%       0.000us         0.00%       0.000us       0.000us       9.154ms         0.70%       9.154ms     190.705us            48  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.10%       1.361ms         0.16%       2.249ms      15.619us       9.139ms         0.70%       9.139ms      63.465us           144  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.00%       0.000us         0.00%       0.000us       0.000us       9.139ms         0.70%       9.139ms      63.465us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.15%       2.052ms         0.22%       2.982ms      20.711us       8.930ms         0.68%       8.930ms      62.014us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       8.930ms         0.68%       8.930ms      62.014us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.10%       1.327ms         0.25%       3.380ms      23.475us       8.325ms         0.63%       8.325ms      57.810us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       8.325ms         0.63%       8.325ms      57.810us           144  
+                                     triton_for_fused_6         0.19%       2.577ms         0.33%       4.480ms      15.554us       8.040ms         0.61%       8.040ms      27.918us           288  
+                                     triton_for_fused_6         0.00%       0.000us         0.00%       0.000us       0.000us       8.040ms         0.61%       8.040ms      27.918us           288  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.11%       1.464ms         0.18%       2.398ms      16.654us       7.873ms         0.60%       7.873ms      54.676us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       7.873ms         0.60%       7.873ms      54.676us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.14%       1.903ms         0.21%       2.872ms      19.945us       7.355ms         0.56%       7.355ms      51.079us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       7.355ms         0.56%       7.355ms      51.079us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.06%     770.934us         0.08%       1.113ms      23.192us       7.301ms         0.56%       7.301ms     152.095us            48  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       7.301ms         0.56%       7.301ms     152.095us            48  
+triton_poi_fused_mul_sigmoid_transpose_unsqueeze_vie...         0.08%       1.051ms         0.13%       1.807ms      18.825us       7.028ms         0.54%       7.028ms      73.205us            96  
+triton_poi_fused_mul_sigmoid_transpose_unsqueeze_vie...         0.00%       0.000us         0.00%       0.000us       0.000us       7.028ms         0.54%       7.028ms      73.205us            96  
+                                 triton_poi_fused_cat_5         0.09%       1.221ms         0.16%       2.190ms      15.210us       6.800ms         0.52%       6.800ms      47.222us           144  
+                                 triton_poi_fused_cat_5         0.00%       0.000us         0.00%       0.000us       0.000us       6.800ms         0.52%       6.800ms      47.222us           144  
+           nvjet_sm90_tst_24x64_64x16_4x1_v_bz_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us       6.614ms         0.50%       6.614ms       7.655us           864  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.07%     887.788us         0.09%       1.235ms      25.733us       6.440ms         0.49%       6.440ms     134.165us            48  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.00%       0.000us         0.00%       0.000us       0.000us       6.440ms         0.49%       6.440ms     134.165us            48  
+    nvjet_sm90_tst_32x64_64x16_1x4_h_bz_splitK_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us       6.267ms         0.48%       6.267ms      14.508us           432  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.04%     577.552us         0.07%     907.430us      18.905us       6.239ms         0.48%       6.239ms     129.983us            48  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       6.239ms         0.48%       6.239ms     129.983us            48  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.20%       2.688ms         0.31%       4.277ms      17.820us       6.237ms         0.48%       6.237ms      25.989us           240  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.00%       0.000us         0.00%       0.000us       0.000us       6.237ms         0.48%       6.237ms      25.989us           240  
+triton_poi_fused_add_mul_slice_unbind_unsqueeze_view...         0.05%     649.898us         0.07%     992.795us      20.683us       5.896ms         0.45%       5.896ms     122.826us            48  
+triton_poi_fused_add_mul_slice_unbind_unsqueeze_view...         0.00%       0.000us         0.00%       0.000us       0.000us       5.896ms         0.45%       5.896ms     122.826us            48  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.12%       1.694ms         0.39%       5.382ms      37.376us       5.370ms         0.41%       5.370ms      37.294us           144  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.00%       0.000us         0.00%       0.000us       0.000us       5.370ms         0.41%       5.370ms      37.294us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.24%       3.317ms         3.12%      42.656ms     222.169us       5.279ms         0.40%       5.279ms      27.496us           192  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       5.279ms         0.40%       5.279ms      27.496us           192  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.10%       1.322ms         0.18%       2.449ms      17.007us       4.983ms         0.38%       4.983ms      34.606us           144  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.00%       0.000us         0.00%       0.000us       0.000us       4.983ms         0.38%       4.983ms      34.606us           144  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.04%     499.139us         0.06%     813.763us      16.953us       4.809ms         0.37%       4.809ms     100.187us            48  
+triton_red_fused__fused_rms_norm_add_mul_slice_unbin...         0.00%       0.000us         0.00%       0.000us       0.000us       4.809ms         0.37%       4.809ms     100.187us            48  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.05%     622.238us         0.07%     950.867us      19.810us       4.735ms         0.36%       4.735ms      98.641us            48  
+triton_poi_fused__fused_rms_norm__scaled_dot_product...         0.00%       0.000us         0.00%       0.000us       0.000us       4.735ms         0.36%       4.735ms      98.641us            48  
+          nvjet_sm90_tst_32x128_64x10_1x4_h_bz_bias_TNN         0.00%       0.000us         0.00%       0.000us       0.000us       4.711ms         0.36%       4.711ms      32.718us           144  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.07%     906.875us         0.35%       4.776ms      99.492us       4.689ms         0.36%       4.689ms      97.693us            48  
+triton_poi_fused__fused_rms_norm_addcmul_mul_neg_sli...         0.00%       0.000us         0.00%       0.000us       0.000us       4.689ms         0.36%       4.689ms      97.693us            48  
+triton_poi_fused_add_cat_mul_slice_unbind_unsqueeze_...         0.07%       1.003ms         0.15%       2.002ms      13.903us       4.682ms         0.36%       4.682ms      32.516us           144  
+triton_poi_fused_add_cat_mul_slice_unbind_unsqueeze_...         0.00%       0.000us         0.00%       0.000us       0.000us       4.682ms         0.36%       4.682ms      32.516us           144  
+triton_poi_fused_add_mul_slice_unbind_unsqueeze_view...         0.12%       1.594ms         0.18%       2.522ms      17.517us       4.373ms         0.33%       4.373ms      30.368us           144  
+triton_poi_fused_add_mul_slice_unbind_unsqueeze_view...         0.00%       0.000us         0.00%       0.000us       0.000us       4.373ms         0.33%       4.373ms      30.368us           144  
+                                    triton_for_fused_44         0.19%       2.639ms         0.33%       4.531ms      15.734us       4.276ms         0.33%       4.276ms      14.849us           288  
+                                    triton_for_fused_44         0.00%       0.000us         0.00%       0.000us       0.000us       4.276ms         0.33%       4.276ms      14.849us           288  
+                triton_red_fused__fused_rms_norm_view_7         0.09%       1.188ms         0.16%       2.137ms      14.839us       4.066ms         0.31%       4.066ms      28.237us           144  
+                triton_red_fused__fused_rms_norm_view_7         0.00%       0.000us         0.00%       0.000us       0.000us       4.066ms         0.31%       4.066ms      28.237us           144  
+triton_poi_fused_mul_sigmoid_transpose_unsqueeze_vie...         0.16%       2.150ms         0.30%       4.089ms      14.197us       3.958ms         0.30%       3.958ms      13.743us           288  
+triton_poi_fused_mul_sigmoid_transpose_unsqueeze_vie...         0.00%       0.000us         0.00%       0.000us       0.000us       3.958ms         0.30%       3.958ms      13.743us           288  
+            nvjet_sm90_tst_64x8_64x16_1x4_h_bz_bias_TNT         0.00%       0.000us         0.00%       0.000us       0.000us       3.628ms         0.28%       3.628ms       6.299us           576  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.20%       2.791ms         0.32%       4.334ms      18.058us       3.541ms         0.27%       3.541ms      14.753us           240  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.00%       0.000us         0.00%       0.000us       0.000us       3.541ms         0.27%       3.541ms      14.753us           240  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us       3.415ms         0.26%       3.415ms       1.024us          3336  
+triton_poi_fused__fused_rms_norm_mul_transpose_unsqu...         0.05%     679.918us         0.08%       1.026ms      21.365us       3.194ms         0.24%       3.194ms      66.539us            48  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 1.366s
+Self CUDA time total: 1.312s

@@ -1,0 +1,299 @@
+{
+  "study_run": "h100-kernels-none-regional-59df0c9d6a71",
+  "integrated_run": "h100-kernels-none-regional-859e33ead6b8",
+  "baseline_before_ms": 1348.1831210000053,
+  "baseline_after_ms": 1346.161029000001,
+  "baseline_pooled_ms": 1347.1720750000031,
+  "tuned_ms": 1335.7702769999946,
+  "reduction_percent": 0.8463505302400587,
+  "target_25_percent_ms": 1010.3790562500023,
+  "target_30_percent_ms": 943.0204525000021,
+  "linear_flop_coverage": 0.9823367558450831,
+  "profile": {
+    "span_ms": 1361.7466450042725,
+    "active_union_ms": 1311.5626236953735,
+    "idle_ms": 50.18402130889893,
+    "idle_percent": 3.6852685845054145,
+    "categories_ms": {
+      "Copy / memset": 3.49936399999998,
+      "Other kernels": 281.18301300000036,
+      "Matrix multiplication": 865.7342360000011,
+      "Attention": 161.22883099999967
+    },
+    "kernel_count": 21076,
+    "top_kernels": [
+      {
+        "name": "nvjet_sm90_tst_192x192_64x4_2x1_v_bz_coopB_bias_TNN",
+        "ms": 508.49205299999943,
+        "calls": 876
+      },
+      {
+        "name": "nvjet_sm90_tst_256x128_64x4_1x2_h_bz_coopA_bias_TNT",
+        "ms": 215.74327299999996,
+        "calls": 1640
+      },
+      {
+        "name": "cudnn_generated_fort_native_sdpa_sm90_flash_fprop_wgmma_f16_knob_1_64x128x128_4x1x1_cga1x1x1_kernel0_0",
+        "ms": 141.83058099999988,
+        "calls": 384
+      },
+      {
+        "name": "nvjet_sm90_tst_192x192_64x4_1x2_h_bz_coopB_bias_TNN",
+        "ms": 91.81445000000002,
+        "calls": 432
+      },
+      {
+        "name": "cudnn_generated_fort_native_sdpa_sm90_flash_fprop_wgmma_f16_knob_1_64x128x64_4x1x1_cga1x1x1_kernel0_0",
+        "ms": 19.398249999999987,
+        "calls": 768
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_10",
+        "ms": 17.595532999999996,
+        "calls": 144
+      },
+      {
+        "name": "nvjet_sm90_tst_128x192_64x5_2x1_v_bz_coopB_bias_TNN",
+        "ms": 10.860385999999998,
+        "calls": 144
+      },
+      {
+        "name": "nvjet_sm90_tst_48x64_64x15_2x1_v_bz_bias_TNN",
+        "ms": 10.833168999999984,
+        "calls": 1108
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_9",
+        "ms": 10.369944,
+        "calls": 144
+      },
+      {
+        "name": "triton_poi_fused_gelu_view_31",
+        "ms": 10.215881999999997,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused_gelu_view_52",
+        "ms": 10.108964999999996,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_21",
+        "ms": 10.050086000000002,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_8",
+        "ms": 9.7736,
+        "calls": 144
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_17",
+        "ms": 9.153856999999999,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_48",
+        "ms": 9.138977999999994,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_35",
+        "ms": 8.929948000000001,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_43",
+        "ms": 8.324671,
+        "calls": 144
+      },
+      {
+        "name": "triton_for_fused_6",
+        "ms": 8.040490999999987,
+        "calls": 288
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_14",
+        "ms": 7.873277999999998,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_42",
+        "ms": 7.355395999999999,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_19",
+        "ms": 7.300574999999999,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused_mul_sigmoid_transpose_unsqueeze_view_18",
+        "ms": 7.027710999999999,
+        "calls": 96
+      },
+      {
+        "name": "triton_poi_fused_cat_5",
+        "ms": 6.800034999999998,
+        "calls": 144
+      },
+      {
+        "name": "nvjet_sm90_tst_24x64_64x16_4x1_v_bz_bias_TNN",
+        "ms": 6.613892000000012,
+        "calls": 864
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_16",
+        "ms": 6.439905000000003,
+        "calls": 48
+      },
+      {
+        "name": "nvjet_sm90_tst_32x64_64x16_1x4_h_bz_splitK_bias_TNN",
+        "ms": 6.267367000000011,
+        "calls": 432
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_30",
+        "ms": 6.239198999999999,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_4",
+        "ms": 6.237442000000003,
+        "calls": 240
+      },
+      {
+        "name": "triton_poi_fused_add_mul_slice_unbind_unsqueeze_view_32",
+        "ms": 5.895650999999999,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_46",
+        "ms": 5.3703720000000015,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_0",
+        "ms": 5.279161999999997,
+        "calls": 192
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_47",
+        "ms": 4.983263999999996,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_add_mul_slice_unbind_unsqueeze_view_13",
+        "ms": 4.808960999999999,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_25",
+        "ms": 4.734757000000001,
+        "calls": 48
+      },
+      {
+        "name": "nvjet_sm90_tst_32x128_64x10_1x4_h_bz_bias_TNN",
+        "ms": 4.711427000000002,
+        "calls": 144
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_15",
+        "ms": 4.689283,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused_add_cat_mul_slice_unbind_unsqueeze_view_40",
+        "ms": 4.682371000000003,
+        "calls": 144
+      },
+      {
+        "name": "triton_poi_fused_add_mul_slice_unbind_unsqueeze_view_53",
+        "ms": 4.372930999999996,
+        "calls": 144
+      },
+      {
+        "name": "triton_for_fused_44",
+        "ms": 4.276487999999993,
+        "calls": 288
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_view_7",
+        "ms": 4.066084999999997,
+        "calls": 144
+      },
+      {
+        "name": "triton_poi_fused_mul_sigmoid_transpose_unsqueeze_view_13",
+        "ms": 3.9580309999999987,
+        "calls": 288
+      },
+      {
+        "name": "nvjet_sm90_tst_64x8_64x16_1x4_h_bz_bias_TNT",
+        "ms": 3.628134000000002,
+        "calls": 576
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_3",
+        "ms": 3.5408030000000013,
+        "calls": 240
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_mul_transpose_unsqueeze_view_24",
+        "ms": 3.1938560000000003,
+        "calls": 48
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_2",
+        "ms": 3.1389090000000004,
+        "calls": 240
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_addcmul_slice_transpose_unsqueeze_view_39",
+        "ms": 3.109027,
+        "calls": 144
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm_view_14",
+        "ms": 2.6935340000000014,
+        "calls": 96
+      },
+      {
+        "name": "triton_poi_fused__fused_rms_norm_addcmul_mul_neg_slice_transpose_unsqueeze_view_23",
+        "ms": 2.4050200000000004,
+        "calls": 48
+      },
+      {
+        "name": "triton_red_fused__fused_rms_norm__scaled_dot_product_cudnn_attention_transpose_view_20",
+        "ms": 2.3967720000000003,
+        "calls": 48
+      },
+      {
+        "name": "nvjet_sm90_tst_32x64_64x16_2x1_v_bz_splitK_bias_TNN",
+        "ms": 2.2838080000000005,
+        "calls": 144
+      }
+    ]
+  },
+  "attention_weighted_ms": {
+    "default": 159.3338858485222,
+    "FLASH_ATTENTION": 268.0949715077877,
+    "CUDNN_ATTENTION": 159.15878516435623,
+    "EFFICIENT_ATTENTION": 543.9928314685822
+  },
+  "quality": {
+    "finite": true,
+    "relative_rms": 0.0,
+    "max_abs": 0.0
+  },
+  "selected_mm": {
+    "9216x4096x4096-bias1": {
+      "name": "cublaslt_tuned",
+      "index": 1
+    },
+    "9216x2048x4096-bias1": {
+      "name": "cublaslt_tuned",
+      "index": 1
+    }
+  },
+  "note": "Warmed frozen AR chunk, batch two, four steps, 768x512, original BF16, regional compilation. No end-to-end or long-video quality claim."
+}

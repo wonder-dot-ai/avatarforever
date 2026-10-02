@@ -1,0 +1,15 @@
+{
+  "html_links": 6,
+  "traces": {
+    "baseline": {
+      "kernel_events": 21076,
+      "sha256": "06ff28c7e1a30d30a533d9ccc1be0617a8a64e32961151a8c7b286138fd59724",
+      "local_path": "/Users/sebinkim/work/avatarforever/outputs/h100-kernels/baseline-trace.json.gz"
+    },
+    "tuned": {
+      "kernel_events": 21076,
+      "sha256": "781c55ba77fdc4649e66bd6f5195c144b851635a2a2d1785ad0b833f2cccfc2a",
+      "local_path": "/Users/sebinkim/work/avatarforever/outputs/h100-kernels/tuned-trace.json.gz"
+    }
+  }
+}
